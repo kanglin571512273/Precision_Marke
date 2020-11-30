@@ -4,7 +4,13 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
+  
   routes: [
+    {
+      path: '*',
+      component: () => import('@/views/404not_found')
+    },
     {
       path: '/',
       name: 'Index',
@@ -43,3 +49,4 @@ export default new Router({
     },
   ]
 })
+
