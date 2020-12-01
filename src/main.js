@@ -2,9 +2,10 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import 'ant-design-vue/dist/antd.css';
+import 'ant-design-vue/dist/antd.css'
 import router from './router'
-import F2 from '@antv/f2';
+// 引入css
+import "./assets/css/reset.css";
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */

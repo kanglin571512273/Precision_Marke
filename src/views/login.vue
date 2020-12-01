@@ -127,7 +127,7 @@ return{
 .bg-class {
   width: 40%;
   height: 100%;
-  background: url("../../assets/image/background.png") no-repeat;
+  background: url("../assets/image/background.png") no-repeat;
   background-size: cover;
 }
 .bg-font {

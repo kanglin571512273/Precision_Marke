@@ -50,17 +50,18 @@ export default {
   mounted() {},
   methods: {
     loginout() {
-      this.$confirm({
-        title: "Do you want to delete these items?",
-        content:
-          "When clicked the OK button, this dialog will be closed after 1 second",
-        onOk() {
-          return new Promise((resolve, reject) => {
-            setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-          }).catch(() => localStorage.removeItem("token"));
-        },
-        onCancel() {}
-      });
+      localStorage.removeItem("token")
+      // this.$confirm({
+      //   title: "Do you want to delete these items?",
+      //   content:
+      //     "When clicked the OK button, this dialog will be closed after 1 second",
+      //   onOk() {
+      //     return new Promise((resolve, reject) => {
+      //       setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+      //     }).catch(() => localStorage.removeItem("token"));
+      //   },
+      //   onCancel() {}
+      // });
     }
   }
 };
@@ -71,7 +72,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #eef0ff;
+  background: rgba(238, 240, 255, 0.3);
   .layoutH {
     height: 100px;
     display: flex;
