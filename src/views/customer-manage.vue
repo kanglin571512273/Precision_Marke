@@ -1,23 +1,47 @@
 <template>
   <div class="customerManage">
-    <div class="container">
+    <div class="container" v-if="analysisResoult">
+      <analysisResT></analysisResT>
+    </div>
+    <div class="container" v-if="!analysisResoult">
       <div class="btn-container">
-        <a-button type="primary" shape="round" size="small">新增客户</a-button>
-        <a-button type="primary" shape="round" size="small">客户分析</a-button>
+        <div class="left">
+          <a-button
+            type="primary"
+            shape="round"
+            size="small"
+            v-show="!isCusAnalysis"
+            >新增客户</a-button
+          >
+          <a-button
+            type="primary"
+            shape="round"
+            size="small"
+            v-show="isCusAnalysis"
+            @click="cusAnalysis"
+            >客户分析</a-button
+          >
+        </div>
+        <div class="right" v-show="!isCusAnalysis">
+          <a-button
+            shape="round"
+            size="small"
+            v-for="(item, index) in btnArr"
+            :key="index"
+            :class="currentBtn == index ? 'activeBtn' : ''"
+            @click="filterDataBtn(index)"
+            >{{ item }}</a-button
+          >
+        </div>
       </div>
       <a-table
         :columns="columns"
         :data-source="data"
         bordered
         @change="handleTableChange"
+        :row-selection="rowSelection"
       >
-        <!-- 判断是否是新人 -->
-        <span
-          :class="{ customerName: true, isNew: row.isNew ? true : false }"
-          slot="customerName"
-          slot-scope="row"
-          >{{ row.customerName }}</span
-        >
+        <!-- :row-selection="rowSelection" -->
         <!-- 用户名搜索 -->
         <!-- 搜索弹框 -->
         <div
@@ -33,22 +57,20 @@
         >
           <a-input
             v-ant-ref="(c) => (searchInput = c)"
-            :placeholder="`Search ${column.dataIndex}`"
+            placeholder="搜索客户姓名"
             :value="selectedKeys[0]"
             style="width: 188px; margin-bottom: 8px; display: block"
             @change="
               (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
             "
-            @pressEnter="
-              () => handleSearch(selectedKeys, confirm, column.dataIndex)
-            "
+            @pressEnter="() => handleSearch(selectedKeys, confirm, column.key)"
           />
           <a-button
             type="primary"
             icon="search"
             size="small"
             style="width: 90px; margin-right: 8px"
-            @click="() => handleSearch(selectedKeys, confirm, column.dataIndex)"
+            @click="() => handleSearch(selectedKeys, confirm, column.key)"
           >
             搜索
           </a-button>
@@ -67,12 +89,13 @@
           :style="{ color: filtered ? '#108ee9' : undefined }"
         />
         <template slot="customRender" slot-scope="text, record, index, column">
-          <span v-if="searchText && searchedColumn === column.dataIndex">
+          <span v-if="searchText && searchedColumn === column.key">
             <template
-              v-for="(fragment, i) in text
+              v-for="(fragment, i) in text.customerName
                 .toString()
                 .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"
             >
+              <!-- 索引值高亮 -->
               <mark
                 v-if="fragment.toLowerCase() === searchText.toLowerCase()"
                 :key="i"
@@ -83,11 +106,15 @@
             </template>
           </span>
           <template v-else>
-            {{ text }}
+            <!-- 判断是否是新人 -->
+            <span
+              :class="{ customerName: true, isNew: text.isNew ? true : false }"
+              >{{ text.customerName }}</span
+            >
           </template>
         </template>
         <!-- 客户标签  -->
-        <span slot="tags" slot-scope="tags">
+        <span class="tags" slot="tags" slot-scope="tags">
           <a-tag class="my-tag" v-for="tag in tags" :key="tag">
             {{ tag.toUpperCase() }}
           </a-tag>
@@ -103,13 +130,19 @@
         </span>
         <!-- 客户类别 -->
         <span slot="customerType" slot-scope="row">{{
-          row == 1 ? "分配客户" : row == 2 ? "私有客户" : "共有客户"
+          row == 1
+            ? "分配客户"
+            : row == 2
+            ? "私有客户"
+            : row == 3
+            ? "共有客户"
+            : ""
         }}</span>
         <!-- 编辑框 -->
         <a-button
-          class="editBtn"
           slot="operation"
           slot-scope="row"
+          class="editBtn"
           icon="edit"
           shape="round"
           size="small"
@@ -122,6 +155,7 @@
 </template>
 
 <script>
+import analysisResT from "../components/analysisResT";
 import Vue from "vue";
 import { Button, Table, Tag, Input } from "ant-design-vue";
 Vue.use(Button);
@@ -137,7 +171,7 @@ const data = [
     customerTel: 10086,
     customerTags: ["青年才俊", "高收入"],
     RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 0,
+    customerType: 3,
     handeler: "唐倩颖",
     isNew: false,
   },
@@ -154,9 +188,30 @@ const data = [
   },
 ];
 export default {
+  components: {
+    analysisResT,
+  },
   data() {
     return {
-      columns: [
+      filteredInfo: null,
+      data,
+      // rowSelection, //多选框
+      searchText: "", //搜索文本
+      searchedColumn: "", //搜索高亮
+      currPage: 1, //当前页
+      pageSize: 10,
+      currentBtn: 0, //所有客户、分配客户、私有客户、公有客户
+      btnArr: ["所有客户", "分配客户", "私有客户", "公有客户"],
+      isCusAnalysis: false, //是否点击了客户分析
+      selectedCheckbox: [], //被勾选的项
+      analysisResoult: false, //显示分析结果的表格
+    };
+  },
+  computed: {
+    columns() {
+      let { filteredInfo } = this;
+      filteredInfo = filteredInfo || {};
+      const columns = [
         {
           title: "序号",
           key: "index",
@@ -173,11 +228,11 @@ export default {
         {
           title: "客户姓名",
           key: "customerName",
-          // dataIndex: "customerName",
+          // dataIndex: "customerName",s
           scopedSlots: {
-            filterDropdown: "filterDropdown",
-            filterIcon: "filterIcon",
-            customRender: "customerName",
+            filterDropdown: "filterDropdown", //外层的slot Name
+            filterIcon: "filterIcon", //外层图标slot Name
+            customRender: "customRender", //内层的 slot Name
           },
           onFilter: (
             value,
@@ -219,13 +274,6 @@ export default {
           key: "customerType",
           dataIndex: "customerType",
           scopedSlots: { customRender: "customerType" },
-          filters: [
-            { text: "所有客户", value: 0 },
-            { text: "分配客户", value: 1 },
-            { text: "私有客户", value: 2 },
-            { text: "共有客户", value: 3 },
-          ],
-          filterMultiple: false,
         },
         {
           title: "客户经理",
@@ -237,35 +285,55 @@ export default {
           key: "handel",
           scopedSlots: { customRender: "operation" },
         },
-      ],
-      data,
-      searchText: "",
-      currPage: 1, //当前页
-      pageSize: 10,
-    };
+      ];
+      return columns;
+    },
+    rowSelection() {
+      return {
+        onChange: (selectedRowKeys, selectedRows) => {
+          // selectedRowKeys: 对应表格data里的key属性
+          this.isCusAnalysis = Boolean(selectedRowKeys.length);
+          this.selectedCheckbox = selectedRows;
+        },
+      };
+    },
   },
   methods: {
+    // 编辑
     edit(id) {
       console.log(id);
     },
+    //所有客户、分配客户、私有客户、公有客户
+    filterDataBtn(index) {
+      this.currentBtn = index;
+      if (index) {
+        this.data = data.filter((item) => {
+          return item.customerType == index;
+        });
+        return;
+      }
+      this.data = data;
+    },
+    // 客户分析
+    cusAnalysis() {
+      const { selectedCheckbox } = this;
+      if (selectedCheckbox.length) {
+        console.log(selectedCheckbox);
+      }
+    },
     // 搜索
-    handleSearch(selectedKeys, confirm, dataIndex) {
+    handleSearch(selectedKeys, confirm, key) {
       confirm();
       this.searchText = selectedKeys[0];
-      this.searchedColumn = dataIndex;
+      this.searchedColumn = key;
     },
-    // 重置
+    // 搜索重置
     handleReset(clearFilters) {
       clearFilters();
       this.searchText = "";
     },
     handleTableChange(pagination, filters, sorter) {
-      console.log(this.data);
-      this.data.filter((item) => {
-        console.log(item.customerType);
-        console.log(filters.customerType[0]);
-        return item.customerType === filters.customerType[0];
-      });
+      this.filteredInfo = filters;
     },
   },
 };
@@ -285,6 +353,12 @@ export default {
     text-align: left;
     .btn-container {
       margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      .activeBtn {
+        border: 1px solid #0060ff;
+        color: #0060ff;
+      }
     }
   }
   .editBtn {
@@ -296,10 +370,27 @@ export default {
     color: #0060ff;
     display: block;
     position: relative;
-    background-color: #fff;
+  }
+  td{
+    position: relative;
   }
   .isNew {
-    background-color: pink;
+    // background-color: pink;
+    display: block;
+    // position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: -20px;
+      right: -16px;
+      background: url(../assets/image/newPeople.png) no-repeat;
+      width: 55px;
+      height: 50px;
+    }
+  }
+  .tags {
+    text-align: center;
+    display: block;
   }
   .my-tag {
     border: none;
@@ -309,6 +400,20 @@ export default {
   }
   .RecomProducts {
     color: #5ad8a6;
+  }
+}
+</style>
+<style lang="less">
+.customerManage {
+  .ant-btn-round.ant-btn-sm {
+    padding: 0 30px;
+    margin: 0 5px;
+  }
+  .ant-btn:hover,
+  .ant-btn:focus {
+    color: #0060ff;
+    background-color: #fff;
+    border-color: #0060ff;
   }
 }
 </style>

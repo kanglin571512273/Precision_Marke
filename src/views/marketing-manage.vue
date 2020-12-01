@@ -48,10 +48,10 @@
         </ul>
       </div>
       <div class="card card-item">
-        <canvas id="container" width="700px" height="290px"></canvas>
+        <canvas id="container" ></canvas>
       </div>
       <div class="card">
-        <canvas id="charts" width="440px" height="290px"></canvas>
+        <canvas id="charts" ></canvas>
       </div>
     </div>
     <div class="teable-box">
@@ -482,5 +482,13 @@ export default {
 }
 .card-li:nth-child(2) {
   margin: 48px 0 30px 0;
+}
+#container{
+  width: 700px;
+  height: 290px;
+}
+#charts{
+  width: 440px;
+  height: 290px;
 }
 </style>
