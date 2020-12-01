@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@antv/f2": "^3.8.0",
+    "amfe-flexible": "^2.2.1",
     "ant-design-vue": "^1.7.2",
+    "px2rem-loader": "^0.1.9",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

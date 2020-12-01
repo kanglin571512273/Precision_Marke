@@ -6,6 +6,8 @@ import 'ant-design-vue/dist/antd.css'
 import router from './router'
 // 引入css
 import "./assets/css/reset.css";
+// 移动端适配
+import 'amfe-flexible/index.js'
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */

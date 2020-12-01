@@ -28,11 +28,15 @@ exports.cssLoaders = function (options) {
       sourceMap: options.sourceMap
     }
   }
+  const px2remLoader = {
+    loader: 'px2rem-loader',
+    options: {
+      remUnit: 192 //默认换算为1rem为75px，可根据你的原型图修改
+    }
+  }
 
-  // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
-    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
-
+    const loaders = options.usePostCSS ? [cssLoader, postcssLoader, px2remLoader] : [cssLoader, px2remLoader]
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
@@ -41,7 +45,6 @@ exports.cssLoaders = function (options) {
         })
       })
     }
-
     // Extract CSS when that option is specified
     // (which is the case during production build)
     if (options.extract) {
@@ -53,6 +56,31 @@ exports.cssLoaders = function (options) {
       return ['vue-style-loader'].concat(loaders)
     }
   }
+
+  // generate loader string to be used with extract text plugin
+  // function generateLoaders (loader, loaderOptions) {
+  //   const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+
+  //   if (loader) {
+  //     loaders.push({
+  //       loader: loader + '-loader',
+  //       options: Object.assign({}, loaderOptions, {
+  //         sourceMap: options.sourceMap
+  //       })
+  //     })
+  //   }
+
+  //   // Extract CSS when that option is specified
+  //   // (which is the case during production build)
+  //   if (options.extract) {
+  //     return ExtractTextPlugin.extract({
+  //       use: loaders,
+  //       fallback: 'vue-style-loader'
+  //     })
+  //   } else {
+  //     return ['vue-style-loader'].concat(loaders)
+  //   }
+  // }
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
