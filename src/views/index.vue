@@ -3,12 +3,14 @@
     <div class="layoutH">
       <div class="userInfo">
         <a-avatar icon="user" />
-        <span>工号:12270239</span>
+        <span class="userInfo-font">工号：567898768576890</span>
       </div>
       <div class="title">{{ $route.meta.name }}</div>
       <div class="logout">
-        退出
-        <a-icon type="close-circle" theme="twoTone" />
+        <a @click="loginout">
+          退出
+          <a-icon type="close-circle" theme="twoTone" />
+        </a>
       </div>
     </div>
     <div class="layoutC">
@@ -46,6 +48,21 @@ export default {
     return {};
   },
   mounted() {},
+  methods: {
+    loginout() {
+      this.$confirm({
+        title: "Do you want to delete these items?",
+        content:
+          "When clicked the OK button, this dialog will be closed after 1 second",
+        onOk() {
+          return new Promise((resolve, reject) => {
+            setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+          }).catch(() => localStorage.removeItem("token"));
+        },
+        onCancel() {}
+      });
+    }
+  }
 };
 </script>
 
@@ -54,30 +71,41 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #fbf7fd;
+  background-color: #eef0ff;
   .layoutH {
-    height: 60px;
+    height: 100px;
     display: flex;
-    line-height: 60px;
-    padding: 0 10px;
+    line-height: 100px;
+    padding: 0 50px;
     border-bottom: 1px solid #ddd;
     .userInfo {
-      width: 150px;
+      width: 256px;
+      line-height: 100px;
+      .userInfo-font {
+        font-size: 18px;
+        margin-left: 15px;
+      }
     }
     .title {
       flex: 1;
-      font-weight: 700;
+      font-weight: 400;
+      color: #333333;
+      line-height: 100px;
+      font-size: 28px;
+      text-align: center;
     }
     .logout {
       text-align: right;
-      width: 150px;
+      width: 256px;
+      font-size: 18px;
+      color: #333333;
     }
   }
   .layoutC {
     flex: 1;
   }
   .layoutF {
-    height: 60px;
+    height: 88px;
     background-color: #fff;
     border-radius: 20px 20px 0 0;
     display: flex;
@@ -85,6 +113,7 @@ export default {
     justify-content: space-between;
     align-content: center;
     align-items: center;
+    font-size: 22px;
     a {
       display: inline-block;
       display: flex;
@@ -96,7 +125,7 @@ export default {
       }
     }
     a.router-link-exact-active {
-      color: #0099ff;
+      color: #0060ff;
     }
   }
 }
