@@ -1,7 +1,13 @@
- <template>
+<template>
   <div class="customerManage">
+    <a-spin :spinning="spinning"> </a-spin>
     <div class="container" v-if="analysisResoult">
-      <analysisResT></analysisResT>
+      <a-button shape="round" size="small" @click="back">返回</a-button>
+      <tableCom
+        :data="selectedCheckbox"
+        :page="page"
+        :column="column"
+      ></tableCom>
     </div>
     <div class="container" v-if="!analysisResoult">
       <div class="btn-container">
@@ -18,7 +24,7 @@
             shape="round"
             size="small"
             v-show="isCusAnalysis"
-            @click="cusAnalysis"
+            @click="analysisFun"
             >客户分析</a-button
           >
         </div>
@@ -155,13 +161,15 @@
 </template>
 
 <script>
-import analysisResT from "../components/analysisResT";
+// import analysisResT from "../components/analysisResT";
+import tableCom from "../components/tableCom";
 import Vue from "vue";
-import { Button, Table, Tag, Input } from "ant-design-vue";
+import { Button, Table, Tag, Input, Spin } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Table);
 Vue.use(Tag);
 Vue.use(Input);
+Vue.use(Spin);
 
 const data = [
   {
@@ -189,25 +197,37 @@ const data = [
 ];
 export default {
   components: {
-    analysisResT,
+    tableCom,
   },
   data() {
     return {
       filteredInfo: null,
       data,
-      // rowSelection, //多选框
       searchText: "", //搜索文本
       searchedColumn: "", //搜索高亮
-      currPage: 1, //当前页
-      pageSize: 10,
+      page: {
+        currPage: 1, //当前页
+        pageSize: 10,
+      },
       currentBtn: 0, //所有客户、分配客户、私有客户、公有客户
       btnArr: ["所有客户", "分配客户", "私有客户", "公有客户"],
       isCusAnalysis: false, //是否点击了客户分析
       selectedCheckbox: [], //被勾选的项
       analysisResoult: false, //显示分析结果的表格
+      spinning: false, //加载中
     };
   },
   computed: {
+    column() {
+      const columns = [
+        {
+          title: "分析时间",
+          key: "anaTime",
+          dataIndex: "anaTime",
+        },
+      ];
+      return columns;
+    },
     columns() {
       let { filteredInfo } = this;
       filteredInfo = filteredInfo || {};
@@ -217,7 +237,9 @@ export default {
           key: "index",
           width: "65px",
           customRender: (t, r, index) => {
-            return parseInt((this.currPage - 1) * this.pageSize + index + 1);
+            return parseInt(
+              (this.page.currPage - 1) * this.page.pageSize + index + 1
+            );
           },
         },
         {
@@ -282,23 +304,61 @@ export default {
         },
         {
           title: "操作",
-          key: "handel",
+          key: "operation",
           scopedSlots: { customRender: "operation" },
         },
       ];
       return columns;
     },
+    // 选中某一项
     rowSelection() {
       return {
         onChange: (selectedRowKeys, selectedRows) => {
           // selectedRowKeys: 对应表格data里的key属性
+          let date = new Date();
+          let Y = date.getFullYear();
+          let M =
+            (date.getMonth() + 1).toString().length == 2
+              ? date.getMonth() + 1
+              : "0" + (date.getMonth() + 1);
+          let D =
+            date.getDate().toString().length == 2
+              ? date.getDate()
+              : "0" + date.getDate();
+          let hh =
+            date.getHours().toString().length == 2
+              ? date.getHours()
+              : "0" + date.getHours();
+          let mm =
+            date.getMinutes().toString().length == 2
+              ? date.getMinutes()
+              : "0" + date.getMinutes();
+          let ss =
+            date.getSeconds().toString().length == 2
+              ? date.getSeconds()
+              : "0" + date.getSeconds();
           this.isCusAnalysis = Boolean(selectedRowKeys.length);
-          this.selectedCheckbox = selectedRows;
+          this.selectedCheckbox = selectedRows.map((element) => {
+            element.isNew = false;
+            element.anaTime = `${Y}-${M}-${D} ${hh}:${mm}:${ss}`;
+            return element;
+          });
         },
       };
     },
   },
   methods: {
+    // 客户分析之后返回
+    back() {
+      this.analysisResoult = false;
+    },
+    analysisFun() {
+      this.spinning = true;
+      setTimeout(() => {
+        this.analysisResoult = true;
+        this.spinning = false;
+      }, 1500);
+    },
     // 编辑
     edit(id) {
       console.log(id);
@@ -313,13 +373,6 @@ export default {
         return;
       }
       this.data = data;
-    },
-    // 客户分析
-    cusAnalysis() {
-      const { selectedCheckbox } = this;
-      if (selectedCheckbox.length) {
-        console.log(selectedCheckbox);
-      }
     },
     // 搜索
     handleSearch(selectedKeys, confirm, key) {
@@ -371,7 +424,7 @@ export default {
     display: block;
     position: relative;
   }
-  td{
+  td {
     position: relative;
   }
   .isNew {
@@ -381,11 +434,12 @@ export default {
     &::after {
       content: "";
       position: absolute;
-      top: -20px;
-      right: -16px;
+      top: -21px;
+      right: -17px;
       background: url(../assets/image/newPeople.png) no-repeat;
-      width: 55px;
-      height: 50px;
+      background-size: contain;
+      width: 44px;
+      height: 44px;
     }
   }
   .tags {
@@ -401,6 +455,12 @@ export default {
   .RecomProducts {
     color: #5ad8a6;
   }
+  //  加载中
+  // .spin-content {
+  //   border: 1px solid #91d5ff;
+  //   background-color: #e6f7ff;
+  //   padding: 30px;
+  // }
 }
 </style>
 <style lang="less">

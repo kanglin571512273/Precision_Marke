@@ -1,18 +1,12 @@
 <template>
   <div class="tableCom">
     <a-table
-      :columns="columns"
+      :columns="lastColumns"
       :data-source="data"
       bordered
       @change="handleTableChange"
     >
-      <!-- 判断是否是新人 -->
-      <span
-        :class="{ customerName: true, isNew: row.isNew ? true : false }"
-        slot="customerName"
-        slot-scope="row"
-        >{{ row.customerName }}</span
-      >
+      <!-- :row-selection="rowSelection" -->
       <!-- 用户名搜索 -->
       <!-- 搜索弹框 -->
       <div
@@ -34,16 +28,14 @@
           @change="
             (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
           "
-          @pressEnter="
-            () => handleSearch(selectedKeys, confirm, column.dataIndex)
-          "
+          @pressEnter="() => handleSearch(selectedKeys, confirm, column.key)"
         />
         <a-button
           type="primary"
           icon="search"
           size="small"
           style="width: 90px; margin-right: 8px"
-          @click="() => handleSearch(selectedKeys, confirm, column.dataIndex)"
+          @click="() => handleSearch(selectedKeys, confirm, column.key)"
         >
           搜索
         </a-button>
@@ -62,12 +54,13 @@
         :style="{ color: filtered ? '#108ee9' : undefined }"
       />
       <template slot="customRender" slot-scope="text, record, index, column">
-        <span v-if="searchText && searchedColumn === column.dataIndex">
+        <span v-if="searchText && searchedColumn === column.key">
           <template
-            v-for="(fragment, i) in text
+            v-for="(fragment, i) in text.customerName
               .toString()
               .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"
           >
+            <!-- 索引值高亮 -->
             <mark
               v-if="fragment.toLowerCase() === searchText.toLowerCase()"
               :key="i"
@@ -78,7 +71,11 @@
           </template>
         </span>
         <template v-else>
-          {{ text }}
+          <!-- 判断是否是新人 -->
+          <span
+            :class="{ customerName: true, isNew: text.isNew ? true : false }"
+            >{{ text.customerName }}</span
+          >
         </template>
       </template>
       <!-- 客户标签  -->
@@ -98,14 +95,28 @@
       </span>
       <!-- 客户类别 -->
       <span slot="customerType" slot-scope="row">{{
-        row == 1
-          ? "分配客户"
-          : row == 2
-          ? "私有客户"
-          : row == 3
-          ? "共有客户"
-          : ""
+        row == 1 ? "分配客户" : row == 2 ? "私有客户" : "共有客户"
       }}</span>
+      <!-- 编辑框 -->
+      <a-button
+        slot="operation"
+        slot-scope="row"
+        class="editBtn"
+        icon="edit"
+        shape="round"
+        size="small"
+        @click="edit(row.key)"
+        >编辑</a-button
+      >
+      <!-- 跟进，待跟进 -->
+      <a-button
+        slot="indexOperation"
+        slot-scope="row"
+        :class="row.status === '已跟进' ? 'orangeBtn' : 'blueBtn'"
+        shape="round"
+        @click="followUp(row.key)"
+        >{{ row.status === "已跟进" ? "继续跟进" : "跟进" }}</a-button
+      >
     </a-table>
   </div>
 </template>
@@ -119,13 +130,20 @@ Vue.use(Tag);
 Vue.use(Input);
 export default {
   props: {
-    data: { type: Array, default: [] },
-    page: { type: Object, default: {} },
+    data: {
+      type: Array,
+      default: () => data,
+    },
+    column: { type: Array, default: () => [] },
+    page: { type: Object, default: () => {} },
   },
   data() {
     return {
-      searchText: "",
       filteredInfo: null,
+      searchText: "", //搜索文本
+      searchedColumn: "", //搜索高亮
+      currPage: 1, //当前页
+      pageSize: 10,
     };
   },
   computed: {
@@ -138,9 +156,7 @@ export default {
           key: "index",
           width: "65px",
           customRender: (t, r, index) => {
-            return parseInt(
-              (this.page.currPage - 1) * this.page.pageSize + index + 1
-            );
+            return parseInt((this.currPage - 1) * this.pageSize + index + 1);
           },
         },
         {
@@ -151,11 +167,11 @@ export default {
         {
           title: "客户姓名",
           key: "customerName",
-          //   dataIndex: "customerName",
+          // dataIndex: "customerName",
           scopedSlots: {
-            filterDropdown: "filterDropdown",
-            filterIcon: "filterIcon",
-            customRender: "customerName",
+            filterDropdown: "filterDropdown", //外层的slot Name
+            filterIcon: "filterIcon", //外层图标slot Name
+            customRender: "customRender", //内层的 slot Name
           },
           onFilter: (
             value,
@@ -197,30 +213,32 @@ export default {
           key: "customerType",
           dataIndex: "customerType",
           scopedSlots: { customRender: "customerType" },
-          filters: [
-            { text: "分配客户", value: 1 },
-            { text: "私有客户", value: 2 },
-            { text: "共有客户", value: 3 },
-          ],
-          filteredValue: filteredInfo.customerType || null,
-          onFilter: (value, record) => {
-            return record.customerType.toString().includes(value);
-          },
-          filterMultiple: false,
         },
       ];
       return columns;
     },
+    lastColumns() {
+      let aacolumns = [...this.columns, ...this.column];
+      return aacolumns;
+    },
+  },
+  created() {
+    // this.columns.push(...this.column);
+    // console.log(this.columns);
   },
   methods: {
-    edit(id) {
-      console.log(id);
+    edit(key) {
+      // console.log(key);
+      this.$emit("edit", key);
+    },
+    followUp(key) {
+      console.log(key);
     },
     // 搜索
-    handleSearch(selectedKeys, confirm, dataIndex) {
+    handleSearch(selectedKeys, confirm, key) {
       confirm();
       this.searchText = selectedKeys[0];
-      this.searchedColumn = dataIndex;
+      this.searchedColumn = key;
     },
     // 搜索重置
     handleReset(clearFilters) {
@@ -237,21 +255,45 @@ export default {
 <style lang="less" scoped>
 .tableCom {
   background-color: #fff;
-  margin: 15px 30px;
+  margin: 15px 0px;
 }
 .editBtn {
   background: #d78a4e;
   color: #fff;
   border: 1px solid #d78a4e;
 }
+.orangeBtn {
+  background: #ffa400;
+  color: #fff;
+  border: 1px solid#FFA400;
+}
+.blueBtn {
+  background: #0060ff;
+  color: #fff;
+  border: 1px solid #0060ff;
+}
 .customerName {
   color: #0060ff;
   display: block;
   position: relative;
-  background-color: #fff;
+}
+td {
+  position: relative;
 }
 .isNew {
-  background-color: pink;
+  // background-color: pink;
+  display: block;
+  // position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    top: -21px;
+    right: -17px;
+    background: url(../assets/image/newPeople.png) no-repeat;
+    background-size: contain;
+    width: 44px;
+    height: 44px;
+  }
 }
 .tags {
   text-align: center;

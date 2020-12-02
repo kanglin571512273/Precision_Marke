@@ -1,7 +1,7 @@
 <template>
   <div class="analysisResT">
     <!-- 分析结果 -->
-    <a-button shape="round" size="small">返回</a-button>
+    <a-button shape="round" size="small" @click="back">返回</a-button>
     <br /><br />
     <a-table
       :columns="columns"
@@ -120,10 +120,18 @@ Vue.use(Input);
 
 export default {
   props: {
-    data: { type: Array, default: [] },
+    data: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   data() {
     return {
+      filteredInfo: null,
+      searchText: "", //搜索文本
+      searchedColumn: "", //搜索高亮
       currPage: 1, //当前页
       pageSize: 10,
     };
@@ -204,6 +212,25 @@ export default {
         },
       ];
       return columns;
+    },
+  },
+  methods: {
+    back() {
+        this.$emit('back')
+    },
+    // 搜索
+    handleSearch(selectedKeys, confirm, key) {
+      confirm();
+      this.searchText = selectedKeys[0];
+      this.searchedColumn = key;
+    },
+    // 搜索重置
+    handleReset(clearFilters) {
+      clearFilters();
+      this.searchText = "";
+    },
+    handleTableChange(pagination, filters, sorter) {
+      this.filteredInfo = filters;
     },
   },
 };
