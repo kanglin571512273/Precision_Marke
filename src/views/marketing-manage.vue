@@ -55,37 +55,20 @@
       </div>
     </div>
     <div class="teable-box">
-      <a-table class="a-table" :columns="columns" :data-source="data" bordered>
-        <a slot="name" slot-scope="text">{{ text }}</a>
-        <span slot="customTitle"><a-icon type="smile-o" /> Name</span>
-        <span slot="tags" slot-scope="tags">
-          <a-tag
-            v-for="tag in tags"
-            :key="tag"
-            :color="
-              tag === 'loser'
-                ? 'volcano'
-                : tag.length > 5
-                ? 'geekblue'
-                : 'green'
-            "
-          >
-            {{ tag.toUpperCase() }}
-          </a-tag>
-        </span>
-        <span slot="action" slot-scope="text, record">
-          <a>Invite 一 {{ record.name }}</a>
-          <a-divider type="vertical" />
-          <a>Delete</a>
-          <a-divider type="vertical" />
-          <a class="ant-dropdown-link"> More actions <a-icon type="down" /> </a>
-        </span>
-      </a-table>
+      <div class="labelManage">
+        <tableCom
+          :data="resdata"
+          :page="page"
+          :column="columns"
+          @edit="edit"
+        ></tableCom>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import tableCom from "../components/tableCom";
 import { Chart } from "@antv/g2";
 import Vue from "vue";
 import { Button, Table, Tag, Divider } from "ant-design-vue";
@@ -93,71 +76,69 @@ Vue.use(Button);
 Vue.use(Table);
 Vue.use(Tag);
 Vue.use(Divider);
-const columns = [
-  {
-    dataIndex: "name",
-    key: "name",
-    slots: { title: "customTitle" },
-    scopedSlots: { customRender: "name" }
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-    key: "age"
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-    key: "address"
-  },
-  {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    scopedSlots: { customRender: "tags" }
-  },
-  {
-    title: "Action",
-    key: "action",
-    scopedSlots: { customRender: "action" }
-  }
-];
-
 const data = [
   {
     key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"]
+    customerId: "678974932",
+    customerName: "李明明",
+    customerTel: 10086,
+    customerTags: ["青年才俊", "高收入"],
+    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+    customerType: 3,
+    isNew: false,
+    status: "已跟进"
   },
   {
     key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"]
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"]
+    customerId: "678974933",
+    customerName: "赵芳芳",
+    customerTel: 10085,
+    customerTags: ["青年才俊", "高收入", "购物狂"],
+    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+    customerType: 1,
+    isNew: true,
+    status: "待跟进"
   }
 ];
 export default {
+  components: {
+    tableCom
+  },
   data() {
     return {
-      btnType: 1,
-      data,
-      columns,
+      resdata: data,
+      page: {
+        currPage: 1, //当前页
+        pageSize: 10
+      },
       active: 0
     };
   },
   mounted() {
     this.getchart();
     this.container();
+  },
+  computed: {
+    columns() {
+      const columns = [
+        {
+          title: "状态",
+          key: "status",
+          dataIndex: "status",
+          filters: [
+            { text: "待跟进", value: "待跟进" },
+            { text: "已跟进", value: "已跟进" }
+          ],
+          onFilter: (value, record) => record.status.indexOf(value) === 0
+        },
+        {
+          title: "操作",
+          key: "indexOperation",
+          scopedSlots: { customRender: "indexOperation" }
+        }
+      ];
+      return columns;
+    }
   },
   methods: {
     getchart() {
@@ -244,9 +225,9 @@ export default {
             value: percent
           };
         });
-     chart.legend('year', {
-  position: 'right',
-});
+      chart.legend("year", {
+        position: "right"
+      });
       chart.interaction("element-active");
 
       chart.render();
@@ -326,7 +307,10 @@ export default {
     },
     getData(index) {
       this.btnType = index;
-    }
+    },
+     edit(id) {
+      console.log(id);
+    },
   }
 };
 </script>
