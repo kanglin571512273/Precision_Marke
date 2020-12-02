@@ -62,8 +62,8 @@ export default {
       //   },
       //   onCancel() {}
       // });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -75,10 +75,16 @@ export default {
   background: rgba(238, 240, 255, 0.3);
   .layoutH {
     height: 100px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
     display: flex;
     line-height: 100px;
     padding: 0 50px;
     border-bottom: 1px solid #ddd;
+    background-color: rgba(238, 240, 255, 1);
     .userInfo {
       width: 270px;
       line-height: 100px;
@@ -99,14 +105,14 @@ export default {
       text-align: right;
       width: 256px;
       font-size: 18px;
-      a{
-      color: #333333;
-
+      a {
+        color: #333333;
       }
     }
   }
   .layoutC {
     flex: 1;
+    padding: 100px 0;
   }
   .layoutF {
     position: fixed;

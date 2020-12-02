@@ -162,6 +162,7 @@
 
 <script>
 // import analysisResT from "../components/analysisResT";
+import { formatDate } from "../utils";
 import tableCom from "../components/tableCom";
 import Vue from "vue";
 import { Button, Table, Tag, Input, Spin } from "ant-design-vue";
@@ -316,31 +317,11 @@ export default {
         onChange: (selectedRowKeys, selectedRows) => {
           // selectedRowKeys: 对应表格data里的key属性
           let date = new Date();
-          let Y = date.getFullYear();
-          let M =
-            (date.getMonth() + 1).toString().length == 2
-              ? date.getMonth() + 1
-              : "0" + (date.getMonth() + 1);
-          let D =
-            date.getDate().toString().length == 2
-              ? date.getDate()
-              : "0" + date.getDate();
-          let hh =
-            date.getHours().toString().length == 2
-              ? date.getHours()
-              : "0" + date.getHours();
-          let mm =
-            date.getMinutes().toString().length == 2
-              ? date.getMinutes()
-              : "0" + date.getMinutes();
-          let ss =
-            date.getSeconds().toString().length == 2
-              ? date.getSeconds()
-              : "0" + date.getSeconds();
+          let time = formatDate(date);
           this.isCusAnalysis = Boolean(selectedRowKeys.length);
           this.selectedCheckbox = selectedRows.map((element) => {
             element.isNew = false;
-            element.anaTime = `${Y}-${M}-${D} ${hh}:${mm}:${ss}`;
+            element.anaTime = time;
             return element;
           });
         },

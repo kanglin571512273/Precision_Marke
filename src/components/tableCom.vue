@@ -5,6 +5,8 @@
       :data-source="data"
       bordered
       @change="handleTableChange"
+        :scroll="{ y: 200 }"
+
     >
       <!-- :row-selection="rowSelection" -->
       <!-- 用户名搜索 -->
@@ -85,13 +87,13 @@
         </a-tag>
       </span>
       <!-- 推荐产品 -->
-      <span slot="RecomProducts" slot-scope="RecomProducts">
+      <span slot="RecomProducts" slot-scope="row">
         <span
-          class="RecomProducts"
-          v-for="(item, index) in RecomProducts"
-          :key="index"
-          >{{ item + " / " }}</span
+          :class="row.differ ? 'RecomProductsOrange' : 'RecomProductsGreen'"
+          >{{ row.RecomProducts.toString().replace(/\,/g, " / ") }}</span
         >
+        <!-- v-for="(item, index) in RecomProducts"
+          :key="index" -->
       </span>
       <!-- 客户类别 -->
       <span slot="customerType" slot-scope="row">{{
@@ -156,7 +158,9 @@ export default {
           key: "index",
           width: "65px",
           customRender: (t, r, index) => {
-            return parseInt((this.currPage - 1) * this.pageSize + index + 1);
+            return parseInt(
+              (this.page.currPage - 1) * this.page.pageSize + index + 1
+            );
           },
         },
         {
@@ -205,7 +209,7 @@ export default {
         {
           title: "推荐产品",
           key: "RecomProducts",
-          dataIndex: "RecomProducts",
+          // dataIndex: "RecomProducts",
           scopedSlots: { customRender: "RecomProducts" },
         },
         {
@@ -254,8 +258,10 @@ export default {
 
 <style lang="less" scoped>
 .tableCom {
+  width: 100%;
+  height: 100%;
   background-color: #fff;
-  margin: 15px 0px;
+  padding: 15px 15px 15px 0;
 }
 .editBtn {
   background: #d78a4e;
@@ -305,7 +311,10 @@ td {
   background-color: #eee;
   padding: 6px 16px;
 }
-.RecomProducts {
+.RecomProductsGreen {
   color: #5ad8a6;
+}
+.RecomProductsOrange {
+  color: #ffa400;
 }
 </style>
