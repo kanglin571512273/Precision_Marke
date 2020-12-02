@@ -10,7 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "@antv/f2": "^3.8.0",
+    "@antv/g2": "^4.1.0",
     "amfe-flexible": "^2.2.1",
     "ant-design-vue": "^1.7.2",
     "px2rem-loader": "^0.1.9",

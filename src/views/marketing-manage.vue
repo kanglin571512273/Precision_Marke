@@ -48,10 +48,10 @@
         </ul>
       </div>
       <div class="card card-item">
-        <canvas id="container" ></canvas>
+        <div id="container"></div>
       </div>
       <div class="card">
-        <canvas id="charts" ></canvas>
+        <div id="charts"></div>
       </div>
     </div>
     <div class="teable-box">
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import F2 from "@antv/f2";
+import { Chart } from "@antv/g2";
 import Vue from "vue";
 import { Button, Table, Tag, Divider } from "ant-design-vue";
 Vue.use(Button);
@@ -162,209 +162,165 @@ export default {
   methods: {
     getchart() {
       const data = [
-        {
-          name: "网易云联名卡",
-          percent: 40,
-          a: "1"
-        },
-        {
-          name: "环保卡",
-          percent: 10,
-          a: "1"
-        },
-        {
-          name: "诗意生活信用卡",
-          percent: 30,
-          a: "1"
-        },
-        {
-          name: "爱奇艺联名信用卡",
-          percent: 20,
-          a: "1"
-        }
+        { item: "事例一", count: 40, percent: 0.4 },
+        { item: "事例二", count: 21, percent: 0.21 },
+        { item: "事例三", count: 17, percent: 0.17 },
+        { item: "事例四", count: 13, percent: 0.13 },
+        { item: "事例五", count: 9, percent: 0.09 }
       ];
-
-      const map = {};
-      data.forEach(function(obj) {
-        map[obj.name] = obj.percent + "%";
+      const chart = new Chart({
+        container: "charts",
+        autoFit: true,
+        height: 500
       });
-
-      const chart = new F2.Chart({
-        id: "charts",
-        pixelRatio: window.devicePixelRatio,
-        padding: [20, "auto"]
-      });
-      chart.source(data, {
-        percent: {
-          formatter: function formatter(val) {
-            return val + "%";
-          }
+      chart.data(data);
+      chart.scale("percent", {
+        formatter: val => {
+          val = val * 100 + "%";
+          return val;
         }
       });
-      chart.tooltip(false);
-      chart.legend({
-        position: "right",
-        itemFormatter: function itemFormatter(val) {
-          return val + "    " + map[val];
-        }
+      chart.coordinate("theta", {
+        radius: 0.75,
+        innerRadius: 0.6
       });
-      chart.coord("polar", {
-        transposed: true,
-        innerRadius: 0.7,
-        radius: 0.85
+      chart.tooltip({
+        showTitle: false,
+        showMarkers: false,
+        itemTpl:
+          '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
       });
-      chart.axis(false);
+      // 辅助文本
+      chart
+        .annotation()
+        .text({
+          position: ["50%", "50%"],
+          content: "主机",
+          style: {
+            fontSize: 14,
+            fill: "#8c8c8c",
+            textAlign: "center"
+          },
+          offsetY: -20
+        })
+        .text({
+          position: ["50%", "50%"],
+          content: "200",
+          style: {
+            fontSize: 20,
+            fill: "#8c8c8c",
+            textAlign: "center"
+          },
+          offsetX: -10,
+          offsetY: 20
+        })
+        .text({
+          position: ["50%", "50%"],
+          content: "台",
+          style: {
+            fontSize: 14,
+            fill: "#8c8c8c",
+            textAlign: "center"
+          },
+          offsetY: 20,
+          offsetX: 20
+        });
       chart
         .interval()
-        .position("a*percent")
-        .color("name", ["#0052FF", "#5AD8A6", "#5D7092", "#FF6D3F"])
-        .adjust("stack");
+        .adjust("stack")
+        .position("percent")
+        .color("item")
+        .label("percent", percent => {
+          return {
+            content: data => {
+              return `${data.item}: ${percent * 100}%`;
+            }
+          };
+        })
+        .tooltip("item*percent", (item, percent) => {
+          percent = percent * 100 + "%";
+          return {
+            name: item,
+            value: percent
+          };
+        });
+     chart.legend('year', {
+  position: 'right',
+});
+      chart.interaction("element-active");
+
       chart.render();
     },
     container() {
       const data = [
-        {
-          time: "2016-08-08 00:00:00",
-          value: 10,
-          type: "预期收益率"
-        },
-        {
-          time: "2016-08-08 00:10:00",
-          value: 22,
-          type: "预期收益率"
-        },
-        {
-          time: "2016-08-08 00:30:00",
-          value: 16,
-          type: "预期收益率"
-        },
-        {
-          time: "2016-08-09 00:35:00",
-          value: 26,
-          type: "预期收益率"
-        },
-        {
-          time: "2016-08-09 01:00:00",
-          value: 12,
-          type: "预期收益率"
-        },
-        {
-          time: "2016-08-09 01:20:00",
-          value: 26,
-          type: "预期收益率"
-        },
-        {
-          time: "2016-08-10 01:40:00",
-          value: 18,
-          type: "预期收益率"
-        },
-        {
-          time: "2016-08-10 02:00:00",
-          value: 26,
-          type: "预期收益率"
-        },
-        {
-          time: "2016-08-10 02:20:00",
-          value: 12,
-          type: "预期收益率"
-        },
-        {
-          time: "2016-08-08 00:00:00",
-          value: 4,
-          type: "实际收益率"
-        },
-        {
-          time: "2016-08-08 00:10:00",
-          value: 3,
-          type: "实际收益率"
-        },
-        {
-          time: "2016-08-08 00:30:00",
-          value: 6,
-          type: "实际收益率"
-        },
-        {
-          time: "2016-08-09 00:35:00",
-          value: -12,
-          type: "实际收益率"
-        },
-        {
-          time: "2016-08-09 01:00:00",
-          value: 1,
-          type: "实际收益率"
-        },
-        {
-          time: "2016-08-09 01:20:00",
-          value: 9,
-          type: "实际收益率"
-        },
-        {
-          time: "2016-08-10 01:40:00",
-          value: 13,
-          type: "实际收益率"
-        },
-        {
-          time: "2016-08-10 02:00:00",
-          value: -3,
-          type: "实际收益率"
-        },
-        {
-          time: "2016-08-10 02:20:00",
-          value: 11,
-          type: "实际收益率"
-        }
+        { month: "Jan", city: "Tokyo", temperature: 7 },
+        { month: "Jan", city: "London", temperature: 3.9 },
+        { month: "Feb", city: "Tokyo", temperature: 6.9 },
+        { month: "Feb", city: "London", temperature: 4.2 },
+        { month: "Mar", city: "Tokyo", temperature: 9.5 },
+        { month: "Mar", city: "London", temperature: 5.7 },
+        { month: "Apr", city: "Tokyo", temperature: 14.5 },
+        { month: "Apr", city: "London", temperature: 8.5 },
+        { month: "May", city: "Tokyo", temperature: 18.4 },
+        { month: "May", city: "London", temperature: 11.9 },
+        { month: "Jun", city: "Tokyo", temperature: 21.5 },
+        { month: "Jun", city: "London", temperature: 15.2 },
+        { month: "Jul", city: "Tokyo", temperature: 25.2 },
+        { month: "Jul", city: "London", temperature: 17 },
+        { month: "Aug", city: "Tokyo", temperature: 26.5 },
+        { month: "Aug", city: "London", temperature: 16.6 },
+        { month: "Sep", city: "Tokyo", temperature: 23.3 },
+        { month: "Sep", city: "London", temperature: 14.2 },
+        { month: "Oct", city: "Tokyo", temperature: 18.3 },
+        { month: "Oct", city: "London", temperature: 10.3 },
+        { month: "Nov", city: "Tokyo", temperature: 13.9 },
+        { month: "Nov", city: "London", temperature: 6.6 },
+        { month: "Dec", city: "Tokyo", temperature: 9.6 },
+        { month: "Dec", city: "London", temperature: 4.8 }
       ];
-      const chart = new F2.Chart({
-        id: "container",
-        pixelRatio: window.devicePixelRatio
+
+      const chart = new Chart({
+        container: "container",
+        autoFit: true,
+        height: 500
       });
-      chart.source(data, {
-        time: {
-          type: "timeCat",
-          tickCount: 3,
-          mask: "hh:mm",
+
+      chart.data(data);
+      chart.scale({
+        month: {
           range: [0, 1]
         },
-        value: {
-          tickCount: 3,
-          formatter: function formatter(ivalue) {
-            return ivalue + "%";
-          }
+        temperature: {
+          nice: true
         }
       });
-      chart.axis("time", {
-        line: null,
-        label: function label(text, index, total) {
-          const textCfg = {};
-          if (index === 0) {
-            textCfg.textAlign = "left";
-          } else if (index === total - 1) {
-            textCfg.textAlign = "right";
-          }
-          return textCfg;
-        }
+
+      chart.tooltip({
+        showCrosshairs: true,
+        shared: true
       });
-      chart.axis("tem", {
-        grid: function grid(text) {
-          if (text === "0%") {
-            return {
-              lineDash: null,
-              lineWidth: 1
-            };
+
+      chart.axis("temperature", {
+        label: {
+          formatter: val => {
+            return val + " °C";
           }
         }
       });
       chart.legend({
-        position: "bottom",
-        offsetY: -5
+        position: "top"
       });
       chart
         .line()
-        .position("time*value")
-        .color("type")
-        .shape("type", function(type) {
-            return "line";
-        });
+        .position("month*temperature")
+        .color("city")
+        .shape("smooth");
+
+      chart
+        .point()
+        .position("month*temperature")
+        .color("city")
+        .shape("circle");
 
       chart.render();
     },
@@ -418,7 +374,7 @@ export default {
     .card {
       width: 500px;
       height: 350px;
-      background: #FFF;
+      background: #fff;
       border-radius: 10px;
       padding: 30px;
       .card-title {
@@ -435,7 +391,6 @@ export default {
     }
   }
   .teable-box {
-    height: 530px;
     background: #ffffff;
     box-shadow: 0px 2px 4px 0px rgba(0, 96, 255, 0.05);
     border-radius: 10px;
@@ -483,12 +438,12 @@ export default {
 .card-li:nth-child(2) {
   margin: 48px 0 30px 0;
 }
-#container{
+#container {
   width: 700px;
-  height: 290px;
+  height: 300px;
 }
-#charts{
+#charts {
   width: 440px;
-  height: 290px;
+  height: 300px;
 }
 </style>

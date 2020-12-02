@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="customerManage">
     <div class="container" v-if="analysisResoult">
       <analysisResT></analysisResT>

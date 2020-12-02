@@ -50,7 +50,7 @@ export default {
   mounted() {},
   methods: {
     loginout() {
-      localStorage.removeItem("token")
+      localStorage.removeItem("token");
       // this.$confirm({
       //   title: "Do you want to delete these items?",
       //   content:
@@ -80,7 +80,7 @@ export default {
     padding: 0 50px;
     border-bottom: 1px solid #ddd;
     .userInfo {
-      width: 256px;
+      width: 270px;
       line-height: 100px;
       .userInfo-font {
         font-size: 18px;
@@ -99,13 +99,20 @@ export default {
       text-align: right;
       width: 256px;
       font-size: 18px;
+      a{
       color: #333333;
+
+      }
     }
   }
   .layoutC {
     flex: 1;
   }
   .layoutF {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     height: 88px;
     background-color: #fff;
     border-radius: 20px 20px 0 0;
@@ -121,12 +128,15 @@ export default {
       flex-direction: column;
       margin: 0 10px;
       color: #ccc;
+      font-size: 18px;
       span {
         margin-top: 5px;
       }
     }
     a.router-link-exact-active {
       color: #0060ff;
+
+      font-size: 22px;
     }
   }
 }
