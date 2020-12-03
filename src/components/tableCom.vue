@@ -19,16 +19,18 @@
           selectedKeys,
           confirm,
           clearFilters,
-          column
+          column,
         }"
         style="padding: 8px"
       >
         <a-input
-          v-ant-ref="c => (searchInput = c)"
+          v-ant-ref="(c) => (searchInput = c)"
           placeholder="搜索客户姓名"
           :value="selectedKeys[0]"
           style="width: 188px; margin-bottom: 8px; display: block"
-          @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+          @change="
+            (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
+          "
           @pressEnter="() => handleSearch(selectedKeys, confirm, column.key)"
         />
         <a-button
@@ -55,7 +57,7 @@
         :style="{ color: filtered ? '#108ee9' : undefined }"
       />
       <template slot="customRender" slot-scope="text, record, index, column">
-        <span v-if="searchText && searchedColumn === column.key" >
+        <span v-if="searchText && searchedColumn === column.key">
           <template
             v-for="(fragment, i) in text.customerName
               .toString()
@@ -73,7 +75,8 @@
         </span>
         <template v-else>
           <!-- 判断是否是新人 -->
-          <span @click="showModal"
+          <span
+            @click="showModal"
             :class="{ customerName: true, isNew: text.isNew ? true : false }"
             >{{ text.customerName }}</span
           >
@@ -110,7 +113,7 @@
         >编辑</a-button
       >
       <!-- 跟进，待跟进 -->
-      <div style="text-align: center;" slot="indexOperation" slot-scope="row">
+      <div style="text-align: center" slot="indexOperation" slot-scope="row">
         <a-button
           :class="row.status === '已跟进' ? 'orangeBtn' : 'blueBtn'"
           shape="round"
@@ -119,14 +122,9 @@
         >
       </div>
     </a-table>
-     <a-modal
-          v-model="visible"
-          width="90%"
-          :footer="null"
-          @ok="hideModal"
-        >
-          <Panorama></Panorama>
-        </a-modal>
+    <a-modal v-model="visible" width="90%" :footer="null" @ok="hideModal">
+      <Panorama></Panorama>
+    </a-modal>
   </div>
 </template>
 
@@ -139,16 +137,16 @@ Vue.use(Table);
 Vue.use(Tag);
 Vue.use(Input);
 export default {
-    components: {
-    Panorama, 
+  components: {
+    Panorama,
   },
   props: {
     data: {
       type: Array,
-      default: () => data
+      default: () => data,
     },
     column: { type: Array, default: () => [] },
-    page: { type: Object, default: () => {} }
+    page: { type: Object, default: () => {} },
   },
   data() {
     return {
@@ -158,7 +156,6 @@ export default {
       currPage: 1, //当前页
       pageSize: 10,
       visible: false,
-
     };
   },
   computed: {
@@ -172,12 +169,12 @@ export default {
           width: "65px",
           customRender: (t, r, index) => {
             return parseInt((this.currPage - 1) * this.pageSize + index + 1);
-          }
+          },
         },
         {
           title: "客户号",
           key: "customerId",
-          dataIndex: "customerId"
+          dataIndex: "customerId",
         },
         {
           title: "客户姓名",
@@ -186,7 +183,7 @@ export default {
           scopedSlots: {
             filterDropdown: "filterDropdown", //外层的slot Name
             filterIcon: "filterIcon", //外层图标slot Name
-            customRender: "customRender" //内层的 slot Name
+            customRender: "customRender", //内层的 slot Name
           },
           onFilter: (
             value,
@@ -197,45 +194,45 @@ export default {
               .toLowerCase()
               .includes(value.toLowerCase()),
 
-          onFilterDropdownVisibleChange: visible => {
+          onFilterDropdownVisibleChange: (visible) => {
             //自动聚焦
             if (visible) {
               setTimeout(() => {
                 this.searchInput.focus();
               }, 0);
             }
-          }
+          },
         },
         {
           title: "联系电话",
           key: "customerTel",
-          dataIndex: "customerTel"
+          dataIndex: "customerTel",
         },
         {
           title: "客户标签",
           key: "customerTags",
           dataIndex: "customerTags",
-          scopedSlots: { customRender: "tags" }
+          scopedSlots: { customRender: "tags" },
         },
         {
           title: "推荐产品",
           key: "RecomProducts",
           dataIndex: "RecomProducts",
-          scopedSlots: { customRender: "RecomProducts" }
+          scopedSlots: { customRender: "RecomProducts" },
         },
         {
           title: "客户类别",
           key: "customerType",
           dataIndex: "customerType",
-          scopedSlots: { customRender: "customerType" }
-        }
+          scopedSlots: { customRender: "customerType" },
+        },
       ];
       return columns;
     },
     lastColumns() {
       let aacolumns = [...this.columns, ...this.column];
       return aacolumns;
-    }
+    },
   },
   created() {
     // this.columns.push(...this.column);
@@ -263,13 +260,13 @@ export default {
     handleTableChange(pagination, filters, sorter) {
       this.filteredInfo = filters;
     },
-     showModal() {
+    showModal() {
       this.visible = true;
     },
     hideModal() {
       this.visible = false;
     },
-  }
+  },
 };
 </script>
 
