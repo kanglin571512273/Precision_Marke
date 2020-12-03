@@ -6,8 +6,9 @@
       bordered
       @change="handleTableChange"
       :pagination="false"
-      :scroll="{ y: 300 }"
-      size="default"
+      :scroll="{ y: 200 }"
+      size="middle"
+      :customHeaderRow="customHeaderRow(column)"
     >
       <!-- :row-selection="rowSelection" -->
       <!-- 用户名搜索 -->
@@ -210,6 +211,7 @@ export default {
         },
         {
           title: "客户标签",
+          width:"200px",
           key: "customerTags",
           dataIndex: "customerTags",
           scopedSlots: { customRender: "tags" },
@@ -217,6 +219,7 @@ export default {
         {
           title: "推荐产品",
           key: "RecomProducts",
+           width:"200px",
           dataIndex: "RecomProducts",
           scopedSlots: { customRender: "RecomProducts" },
         },
@@ -266,6 +269,10 @@ export default {
     hideModal() {
       this.visible = false;
     },
+    // 表头
+    customHeaderRow(column) {
+       console.log(column,77777777777)
+    }
   },
 };
 </script>

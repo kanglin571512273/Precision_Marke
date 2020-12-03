@@ -158,6 +158,28 @@ const data = [
     customerType: 1,
     isNew: true,
     status: "待跟进"
+  },
+  {
+    key: "7",
+    customerId: "678974933",
+    customerName: "赵芳芳",
+    customerTel: 10085,
+    customerTags: ["青年才俊", "高收入", "购物狂"],
+    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+    customerType: 1,
+    isNew: true,
+    status: "待跟进"
+  },
+  {
+    key: "8",
+    customerId: "678974933",
+    customerName: "赵芳芳",
+    customerTel: 10085,
+    customerTags: ["青年才俊", "高收入", "购物狂"],
+    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+    customerType: 1,
+    isNew: true,
+    status: "待跟进"
   }
 ];
 export default {

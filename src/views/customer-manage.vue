@@ -57,17 +57,17 @@
             selectedKeys,
             confirm,
             clearFilters,
-            column,
+            column
           }"
           style="padding: 8px"
         >
           <a-input
-            v-ant-ref="(c) => (searchInput = c)"
+            v-ant-ref="c => (searchInput = c)"
             placeholder="搜索客户姓名"
             :value="selectedKeys[0]"
             style="width: 188px; margin-bottom: 8px; display: block"
             @change="
-              (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
+              e => setSelectedKeys(e.target.value ? [e.target.value] : [])
             "
             @pressEnter="() => handleSearch(selectedKeys, confirm, column.key)"
           />
@@ -366,7 +366,7 @@ import {
   FormModel,
   Select,
   Row,
-  Col,
+  Col
 } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Table);
@@ -389,7 +389,7 @@ const data = [
     RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
     customerType: 3,
     handeler: "唐倩颖",
-    isNew: false,
+    isNew: false
   },
   {
     key: "2",
@@ -400,12 +400,12 @@ const data = [
     RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
     customerType: 1,
     handeler: "潘唐颖",
-    isNew: true,
-  },
+    isNew: true
+  }
 ];
 export default {
   components: {
-    tableCom,
+    tableCom
   },
   data() {
     return {
@@ -415,7 +415,7 @@ export default {
       searchedColumn: "", //搜索高亮
       page: {
         currPage: 1, //当前页
-        pageSize: 10,
+        pageSize: 10
       },
       currentBtn: 0, //所有客户、分配客户、私有客户、公有客户
       btnArr: ["所有客户", "分配客户", "私有客户", "公有客户"],
@@ -442,123 +442,123 @@ export default {
         housingLoan: 1, //住房贷款
         personalLoan: 1, //个人贷款
         credit: 1, //信用状况
-        timeDeposit: 1, //定期存款
+        timeDeposit: 1 //定期存款
       },
       rules: {
         name: [
           {
             required: true,
             message: "请输入您的姓名",
-            trigger: "blur",
+            trigger: "blur"
           },
           {
             min: 3,
             max: 5,
             message: "请输入您的真实姓名",
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         gender: [
           {
             required: true,
             message: "请选择您的性别",
-            trigger: "change",
-          },
+            trigger: "change"
+          }
         ],
         email: [
           {
             required: true,
             message: "请输入您的邮箱",
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         certificatesType: [
           {
             required: true,
             message: "请选择您的证件类别",
-            trigger: "change",
-          },
+            trigger: "change"
+          }
         ],
         identifyNum: [
           {
             required: true,
             message: "请输入您的证件号码",
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         tel: [
           {
             required: true,
             message: "请输入您的电话号码",
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         maritalStatus: [
           {
             required: true,
             message: "请选择您的婚姻状况",
-            trigger: "change",
-          },
+            trigger: "change"
+          }
         ],
         educationStatus: [
           {
             required: true,
             message: "请选择您的教育状况",
-            trigger: "change",
-          },
+            trigger: "change"
+          }
         ],
         private: [
           {
             required: true,
             message: "您是否为私有客户",
-            trigger: "change",
-          },
+            trigger: "change"
+          }
         ],
         addr: [
           {
             required: true,
             message: "请输入您的联系地址",
-            trigger: "change",
-          },
+            trigger: "change"
+          }
         ],
         company: [
           {
             required: true,
             message: "请输入您的公司单位",
-            trigger: "change",
-          },
-        ],
+            trigger: "change"
+          }
+        ]
       },
       ruleeconomic: {
         housingLoan: [
           {
             required: true,
             message: "请选择",
-            trigger: "change",
-          },
+            trigger: "change"
+          }
         ],
         personalLoan: [
           {
             required: true,
             message: "请选择",
-            trigger: "change",
-          },
+            trigger: "change"
+          }
         ],
         credit: [
           {
             required: true,
             message: "请选择",
-            trigger: "change",
-          },
+            trigger: "change"
+          }
         ],
         timeDeposit: [
           {
             required: true,
             message: "请选择",
-            trigger: "change",
-          },
-        ],
-      },
+            trigger: "change"
+          }
+        ]
+      }
     };
   },
   computed: {
@@ -567,8 +567,8 @@ export default {
         {
           title: "分析时间",
           key: "anaTime",
-          dataIndex: "anaTime",
-        },
+          dataIndex: "anaTime"
+        }
       ];
       return columns;
     },
@@ -584,12 +584,12 @@ export default {
             return parseInt(
               (this.page.currPage - 1) * this.page.pageSize + index + 1
             );
-          },
+          }
         },
         {
           title: "客户号",
           key: "customerId",
-          dataIndex: "customerId",
+          dataIndex: "customerId"
         },
         {
           title: "客户姓名",
@@ -598,7 +598,7 @@ export default {
           scopedSlots: {
             filterDropdown: "filterDropdown", //外层的slot Name
             filterIcon: "filterIcon", //外层图标slot Name
-            customRender: "customRender", //内层的 slot Name
+            customRender: "customRender" //内层的 slot Name
           },
           onFilter: (
             value,
@@ -609,48 +609,48 @@ export default {
               .toLowerCase()
               .includes(value.toLowerCase()),
 
-          onFilterDropdownVisibleChange: (visible) => {
+          onFilterDropdownVisibleChange: visible => {
             //自动聚焦
             if (visible) {
               setTimeout(() => {
                 this.searchInput.focus();
               }, 0);
             }
-          },
+          }
         },
         {
           title: "联系电话",
           key: "customerTel",
-          dataIndex: "customerTel",
+          dataIndex: "customerTel"
         },
         {
           title: "客户标签",
           key: "customerTags",
           dataIndex: "customerTags",
-          scopedSlots: { customRender: "tags" },
+          scopedSlots: { customRender: "tags" }
         },
         {
           title: "推荐产品",
           key: "RecomProducts",
           dataIndex: "RecomProducts",
-          scopedSlots: { customRender: "RecomProducts" },
+          scopedSlots: { customRender: "RecomProducts" }
         },
         {
           title: "客户类别",
           key: "customerType",
           dataIndex: "customerType",
-          scopedSlots: { customRender: "customerType" },
+          scopedSlots: { customRender: "customerType" }
         },
         {
           title: "客户经理",
           key: "handeler",
-          dataIndex: "handeler",
+          dataIndex: "handeler"
         },
         {
           title: "操作",
           key: "operation",
-          scopedSlots: { customRender: "operation" },
-        },
+          scopedSlots: { customRender: "operation" }
+        }
       ];
       return columns;
     },
@@ -663,14 +663,14 @@ export default {
           let time = formatDate(date);
           console.log(time);
           this.isCusAnalysis = Boolean(selectedRowKeys.length);
-          this.selectedCheckbox = selectedRows.map((element) => {
+          this.selectedCheckbox = selectedRows.map(element => {
             element.isNew = false;
             element.anaTime = time;
             return element;
           });
-        },
+        }
       };
-    },
+    }
   },
   methods: {
     // 客户分析之后返回
@@ -693,7 +693,7 @@ export default {
     filterDataBtn(index) {
       this.currentBtn = index;
       if (index) {
-        this.data = data.filter((item) => {
+        this.data = data.filter(item => {
           return item.customerType == index;
         });
         return;
@@ -719,7 +719,7 @@ export default {
       this.visible = false;
     },
     onSubmit() {
-      this.$refs.ruleForm.validate((valid) => {
+      this.$refs.ruleForm.validate(valid => {
         if (valid) {
           alert("submit!");
         } else {
@@ -730,8 +730,8 @@ export default {
     },
     resetForm() {
       this.$refs.ruleForm.resetFields();
-    },
-  },
+    }
+  }
 };
 </script>
 

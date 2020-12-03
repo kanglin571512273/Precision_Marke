@@ -23,13 +23,40 @@
     <div class="Panorama-right">
       <div class="label-cont">
         <ul style="display: flex;">
-          <li class="bot-label bot-label-active">推荐产品</li>
-          <li class="bot-label">客户资料</li>
-          <li class="bot-label">本行业务办理</li>
-          <li class="bot-label">跟进结果</li>
+          <li class="bot-label " @click="num=0" :class="{'bot-label-active':num==0}">推荐产品</li>
+          <li class="bot-label"  @click="num=1" :class="{'bot-label-active':num==1}">客户资料</li>
+          <li class="bot-label"  @click="num=2" :class="{'bot-label-active':num==2}">本行业务办理</li>
+          <li class="bot-label"  @click="num=3" :class="{'bot-label-active':num==3}">跟进结果</li>
         </ul>
       </div>
-      <div class="contentarea">
+      <div class="contentarea" v-show="num==0">
+        <a-table
+          :columns="columns"
+          :data-source="data"
+          bordered
+          :pagination="false"
+        >
+          <template slot="name" slot-scope="text">
+            <a>{{ text }}</a>
+          </template>
+        </a-table>
+      </div>
+      <div class="contentarea" v-show="num==1">
+       <div></div>
+      </div>
+      <div class="contentarea" v-show="num==2">
+        <a-table
+          :columns="columns"
+          :data-source="data"
+          bordered
+          :pagination="false"
+        >
+          <template slot="name" slot-scope="text">
+            <a>{{ text }}</a>
+          </template>
+        </a-table>
+      </div>
+      <div class="contentarea" v-show="num==3">
         <a-table
           :columns="columns"
           :data-source="data"
@@ -60,6 +87,10 @@ const columns = [
   {
     title: "Address",
     dataIndex: "address"
+  },
+  {
+    title: "pink",
+    dataIndex: "pink"
   }
 ];
 
@@ -68,25 +99,30 @@ const data = [
     key: "1",
     name: "John Brown",
     money: "￥300,000.00",
-    address: "New York No. 1 Lake Park"
+    address: "New York No. 1 Lake Park",
+    pink: "New York No. 1 Lake Park",
   },
   {
     key: "2",
     name: "Jim Green",
     money: "￥1,256,000.00",
-    address: "London No. 1 Lake Park"
+    address: "London No. 1 Lake Park",
+    pink: "New York No. 1 Lake Park"
+
   },
   {
     key: "3",
     name: "Joe Black",
     money: "￥120,000.00",
-    address: "Sidney No. 1 Lake Park"
+    address: "Sidney No. 1 Lake Park",
+    pink: "New York No. 1 Lake Park",
   }
 ];
 export default {
   data() {
     return {
       name: "渠俊娴",
+      num:0,
       data,
       columns
     };
@@ -98,6 +134,7 @@ export default {
 .Panorama-box {
   width: 100%;
   display: flex;
+  padding:40px;
   .Panorama-left {
     width: 40%;
     height: 900px;
@@ -166,6 +203,13 @@ export default {
   font-size: 22px;
 }
 .contentarea {
-  margin: 83px 0 0 11px;
+  margin: 30px 0 0 11px;
+}
+.label-cont{
+    margin-top: 20px;
+}
+.Panorama-right{
+    width: 60%;
+    margin-left: 30px;
 }
 </style>
