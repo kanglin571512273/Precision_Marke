@@ -6,9 +6,8 @@
       bordered
       @change="handleTableChange"
       :pagination="false"
-      :scroll="{ y: 200 }"
-      size="middle"
-      :customHeaderRow="customHeaderRow(column)"
+      :scroll="{ y: 300 }"
+      size="default"
     >
       <!-- :row-selection="rowSelection" -->
       <!-- 用户名搜索 -->
@@ -22,7 +21,7 @@
           clearFilters,
           column,
         }"
-        style="padding: 8px"
+        style="padding: 15px;"
       >
         <a-input
           v-ant-ref="(c) => (searchInput = c)"
@@ -37,14 +36,12 @@
         <a-button
           type="primary"
           icon="search"
-          size="small"
           style="width: 90px; margin-right: 8px"
           @click="() => handleSearch(selectedKeys, confirm, column.key)"
         >
           搜索
         </a-button>
         <a-button
-          size="small"
           style="width: 90px"
           @click="() => handleReset(clearFilters)"
         >
@@ -211,16 +208,16 @@ export default {
         },
         {
           title: "客户标签",
-          width:"200px",
           key: "customerTags",
           dataIndex: "customerTags",
+          width: "200px",
           scopedSlots: { customRender: "tags" },
         },
         {
           title: "推荐产品",
           key: "RecomProducts",
-           width:"200px",
           dataIndex: "RecomProducts",
+          width: "200px",
           scopedSlots: { customRender: "RecomProducts" },
         },
         {
@@ -269,10 +266,6 @@ export default {
     hideModal() {
       this.visible = false;
     },
-    // 表头
-    customHeaderRow(column) {
-       console.log(column,77777777777)
-    }
   },
 };
 </script>
@@ -332,5 +325,8 @@ td {
 }
 .RecomProducts {
   color: #5ad8a6;
+}
+.highlight{
+  background-color: orange;
 }
 </style>

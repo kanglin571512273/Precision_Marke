@@ -2,7 +2,7 @@
   <div class="customerManage">
     <a-spin :spinning="spinning"> </a-spin>
     <div class="container" v-if="analysisResoult">
-      <a-button shape="round" size="small" @click="back">返回</a-button>
+      <a-button shape="round" @click="back">返回</a-button>
       <tableCom
         :data="selectedCheckbox"
         :page="page"
@@ -12,13 +12,9 @@
     <div class="container" v-if="!analysisResoult">
       <div class="btn-container">
         <div class="left">
-          <a-button
-            type="primary"
-            shape="round"
-            size="small"
-            v-show="!isCusAnalysis"
-            >新增客户</a-button
-          >
+          <button class="langPand primary round mybtn" v-show="!isCusAnalysis">
+            新增客户
+          </button>
           <a-button
             type="primary"
             shape="round"
@@ -29,15 +25,20 @@
           >
         </div>
         <div class="right" v-show="!isCusAnalysis">
-          <a-button
-            shape="round"
-            size="small"
+          <button
             v-for="(item, index) in btnArr"
             :key="index"
-            :class="currentBtn == index ? 'activeBtn' : ''"
+            :class="[
+              'mybtn',
+              'round',
+              'langPand',
+              'plain',
+              { activeBtn: currentBtn === index },
+            ]"
             @click="filterDataBtn(index)"
-            >{{ item }}</a-button
           >
+            {{ item }}
+          </button>
         </div>
       </div>
       <a-table
@@ -57,17 +58,17 @@
             selectedKeys,
             confirm,
             clearFilters,
-            column
+            column,
           }"
           style="padding: 8px"
         >
           <a-input
-            v-ant-ref="c => (searchInput = c)"
+            v-ant-ref="(c) => (searchInput = c)"
             placeholder="搜索客户姓名"
             :value="selectedKeys[0]"
             style="width: 188px; margin-bottom: 8px; display: block"
             @change="
-              e => setSelectedKeys(e.target.value ? [e.target.value] : [])
+              (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
             "
             @pressEnter="() => handleSearch(selectedKeys, confirm, column.key)"
           />
@@ -161,223 +162,38 @@
       v-model="visible"
       @ok="handleOk"
       :closable="false"
-      width="1820px"
+      width="90%"
+      :centered="true"
       :bodyStyle="{ textAlign: 'left' }"
     >
-      <!-- 个人信息 -->
-      <div class="personalInfo">
-        <p>个人信息</p>
-        <div class="personalForm">
-          <a-form-model
-            ref="ruleForm"
-            :model="form"
-            :rules="rules"
-            :label-col="labelCol"
-            :wrapper-col="wrapperCol"
-          >
-            <a-row>
-              <a-col :span="8">
-                <a-form-model-item label="客户姓名: " prop="name">
-                  <a-input placeholder="请输入您的姓名" v-model="form.name" />
-                </a-form-model-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-model-item label="性别: " prop="gender">
-                  <a-select v-model="form.gender" placeholder="请输入您的性别">
-                    <a-select-option value="man"> 男 </a-select-option>
-                    <a-select-option value="woman"> 女 </a-select-option>
-                  </a-select>
-                </a-form-model-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-model-item label="邮箱地址: " prop="email">
-                  <a-input v-model="form.email" placeholder="请输入您的邮箱" />
-                </a-form-model-item>
-              </a-col>
-            </a-row>
-            <a-row>
-              <a-col :span="8">
-                <a-form-model-item label="证件类型: " prop="certificatesType">
-                  <a-select
-                    v-model="form.certificatesType"
-                    placeholder="请输入您的证件类型"
-                  >
-                    <a-select-option :value="1"> 身份证 </a-select-option>
-                    <a-select-option :value="2"> 护照 </a-select-option>
-                    <a-select-option :value="3"> 军官证 </a-select-option>
-                  </a-select>
-                </a-form-model-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-model-item label="证件号码: " prop="identifyNum">
-                  <a-input
-                    v-model="form.identifyNum"
-                    placeholder="请输入您的邮箱"
-                  />
-                </a-form-model-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-model-item label="联系电话: " prop="tel">
-                  <a-input
-                    v-model="form.tel"
-                    placeholder="请输入您的电话号码"
-                  />
-                </a-form-model-item>
-              </a-col>
-            </a-row>
-            <a-row>
-              <a-col :span="8">
-                <a-form-model-item label="婚姻状况: " prop="maritalStatus">
-                  <a-select
-                    v-model="form.maritalStatus"
-                    placeholder="请输入您的婚姻状况"
-                  >
-                    <a-select-option :value="1"> 未婚 </a-select-option>
-                    <a-select-option :value="2"> 已婚 </a-select-option>
-                    <a-select-option :value="3"> 离异 </a-select-option>
-                  </a-select>
-                </a-form-model-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-model-item label="教育状况: " prop="educationStatus">
-                  <a-select
-                    v-model="form.educationStatus"
-                    placeholder="请输入您的教育状况"
-                  >
-                    <a-select-option :value="1"> 全日制本科 </a-select-option>
-                    <a-select-option :value="2"> 研究生 </a-select-option>
-                    <a-select-option :value="3"> 高中 </a-select-option>
-                  </a-select>
-                </a-form-model-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-model-item label="是否私有客户: " prop="private">
-                  <a-select v-model="form.private" placeholder="您是否私有客户">
-                    <a-select-option :value="1"> 是 </a-select-option>
-                    <a-select-option :value="2"> 否 </a-select-option>
-                  </a-select>
-                </a-form-model-item>
-              </a-col>
-            </a-row>
-            <a-row>
-              <a-col :span="24">
-                <a-form-model-item label="联系地址: " prop="addr">
-                  <a-input
-                    v-model="form.addr"
-                    placeholder="请输入您的联系地址"
-                    type="textarea"
-                  ></a-input>
-                </a-form-model-item>
-              </a-col>
-            </a-row>
-            <a-row>
-              <a-col :span="24">
-                <a-form-model-item label="公司单位: " prop="company">
-                  <a-input
-                    v-model="form.company"
-                    placeholder="请输入您的公司单位"
-                    type="textarea"
-                  ></a-input>
-                </a-form-model-item>
-              </a-col>
-            </a-row>
-          </a-form-model>
-        </div>
-      </div>
-      <!-- 经济情况 -->
-      <div class="economicSituat">
-        <p>经济情况</p>
-        <div class="economicForm">
-          <a-form-model
-            ref="ruleeconomicForm"
-            :model="form"
-            :rules="ruleeconomic"
-            :label-col="labelCol"
-            :wrapper-col="wrapperCol"
-          >
-            <a-row>
-              <a-col :span="12">
-                <a-form-model-item label="住房贷款: " prop="housingLoan">
-                  <a-select
-                    v-model="form.housingLoan"
-                    placeholder="请输入您的住房贷款"
-                  >
-                    <a-select-option :value="1"> 是 </a-select-option>
-                    <a-select-option :value="2"> 否 </a-select-option>
-                  </a-select>
-                </a-form-model-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-model-item label="个人贷款: " prop="personalLoan">
-                  <a-select
-                    v-model="form.personalLoan"
-                    placeholder="请输入您的个人贷款"
-                  >
-                    <a-select-option :value="1"> 是 </a-select-option>
-                    <a-select-option :value="2"> 否 </a-select-option>
-                  </a-select>
-                </a-form-model-item>
-              </a-col>
-            </a-row>
-            <a-row>
-              <a-col :span="12">
-                <a-form-model-item label="信用情况: " prop="credit">
-                  <a-select
-                    v-model="form.credit"
-                    placeholder="请输入客户的信用情况"
-                  >
-                    <a-select-option :value="1"> 良好 </a-select-option>
-                    <a-select-option :value="2"> 一般 </a-select-option>
-                    <a-select-option :value="3"> 差 </a-select-option>
-                  </a-select>
-                </a-form-model-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-model-item label="定期存款: " prop="timeDeposit">
-                  <a-select
-                    v-model="form.timeDeposit"
-                    placeholder="请输入您的定期存款"
-                  >
-                    <a-select-option :value="1"> 是 </a-select-option>
-                    <a-select-option :value="2"> 否 </a-select-option>
-                  </a-select>
-                </a-form-model-item>
-              </a-col>
-            </a-row>
-          </a-form-model>
-        </div>
-      </div>
+      <template slot="footer">
+        <a-button
+          key="submit"
+          type="primary"
+          :loading="loading"
+          @click="handleOk"
+        >
+          确定
+        </a-button>
+        <a-button key="back" @click="handleCancel"> 取消 </a-button>
+      </template>
+      <addCustomerForm></addCustomerForm>
     </a-modal>
   </div>
 </template>
 
 <script>
-// import analysisResT from "../components/analysisResT";
 import { formatDate } from "../utils";
 import tableCom from "../components/tableCom";
+import addCustomerForm from "../components/addCustomerForm";
 import Vue from "vue";
-import {
-  Button,
-  Table,
-  Tag,
-  Input,
-  Spin,
-  Modal,
-  FormModel,
-  Select,
-  Row,
-  Col
-} from "ant-design-vue";
+import { Button, Table, Tag, Input, Spin, Modal } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Table);
 Vue.use(Tag);
 Vue.use(Input);
 Vue.use(Spin);
 Vue.use(Modal);
-Vue.use(FormModel);
-Vue.use(Select);
-Vue.use(Row);
-Vue.use(Col);
 
 const data = [
   {
@@ -389,7 +205,7 @@ const data = [
     RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
     customerType: 3,
     handeler: "唐倩颖",
-    isNew: false
+    isNew: false,
   },
   {
     key: "2",
@@ -400,12 +216,13 @@ const data = [
     RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
     customerType: 1,
     handeler: "潘唐颖",
-    isNew: true
-  }
+    isNew: true,
+  },
 ];
 export default {
   components: {
-    tableCom
+    tableCom,
+    addCustomerForm,
   },
   data() {
     return {
@@ -415,7 +232,7 @@ export default {
       searchedColumn: "", //搜索高亮
       page: {
         currPage: 1, //当前页
-        pageSize: 10
+        pageSize: 10,
       },
       currentBtn: 0, //所有客户、分配客户、私有客户、公有客户
       btnArr: ["所有客户", "分配客户", "私有客户", "公有客户"],
@@ -424,141 +241,6 @@ export default {
       analysisResoult: false, //显示分析结果的表格
       spinning: false, //加载中
       visible: false, //弹框显示隐藏
-      labelCol: { span: 9 },
-      wrapperCol: { span: 14 },
-      other: "",
-      form: {
-        name: "",
-        gender: "man",
-        email: "",
-        certificatesType: 1, //证件类型
-        identifyNum: null, //证件号码
-        tel: null, //联系电话
-        maritalStatus: 1, //婚姻状况
-        educationStatus: 1, //教育状况
-        private: 1, //您是否为私有客户
-        addr: null, //联系地址
-        company: null, //公司单位
-        housingLoan: 1, //住房贷款
-        personalLoan: 1, //个人贷款
-        credit: 1, //信用状况
-        timeDeposit: 1 //定期存款
-      },
-      rules: {
-        name: [
-          {
-            required: true,
-            message: "请输入您的姓名",
-            trigger: "blur"
-          },
-          {
-            min: 3,
-            max: 5,
-            message: "请输入您的真实姓名",
-            trigger: "blur"
-          }
-        ],
-        gender: [
-          {
-            required: true,
-            message: "请选择您的性别",
-            trigger: "change"
-          }
-        ],
-        email: [
-          {
-            required: true,
-            message: "请输入您的邮箱",
-            trigger: "blur"
-          }
-        ],
-        certificatesType: [
-          {
-            required: true,
-            message: "请选择您的证件类别",
-            trigger: "change"
-          }
-        ],
-        identifyNum: [
-          {
-            required: true,
-            message: "请输入您的证件号码",
-            trigger: "blur"
-          }
-        ],
-        tel: [
-          {
-            required: true,
-            message: "请输入您的电话号码",
-            trigger: "blur"
-          }
-        ],
-        maritalStatus: [
-          {
-            required: true,
-            message: "请选择您的婚姻状况",
-            trigger: "change"
-          }
-        ],
-        educationStatus: [
-          {
-            required: true,
-            message: "请选择您的教育状况",
-            trigger: "change"
-          }
-        ],
-        private: [
-          {
-            required: true,
-            message: "您是否为私有客户",
-            trigger: "change"
-          }
-        ],
-        addr: [
-          {
-            required: true,
-            message: "请输入您的联系地址",
-            trigger: "change"
-          }
-        ],
-        company: [
-          {
-            required: true,
-            message: "请输入您的公司单位",
-            trigger: "change"
-          }
-        ]
-      },
-      ruleeconomic: {
-        housingLoan: [
-          {
-            required: true,
-            message: "请选择",
-            trigger: "change"
-          }
-        ],
-        personalLoan: [
-          {
-            required: true,
-            message: "请选择",
-            trigger: "change"
-          }
-        ],
-        credit: [
-          {
-            required: true,
-            message: "请选择",
-            trigger: "change"
-          }
-        ],
-        timeDeposit: [
-          {
-            required: true,
-            message: "请选择",
-            trigger: "change"
-          }
-        ]
-      }
     };
   },
   computed: {
@@ -567,8 +249,8 @@ export default {
         {
           title: "分析时间",
           key: "anaTime",
-          dataIndex: "anaTime"
-        }
+          dataIndex: "anaTime",
+        },
       ];
       return columns;
     },
@@ -584,12 +266,12 @@ export default {
             return parseInt(
               (this.page.currPage - 1) * this.page.pageSize + index + 1
             );
-          }
+          },
         },
         {
           title: "客户号",
           key: "customerId",
-          dataIndex: "customerId"
+          dataIndex: "customerId",
         },
         {
           title: "客户姓名",
@@ -598,7 +280,7 @@ export default {
           scopedSlots: {
             filterDropdown: "filterDropdown", //外层的slot Name
             filterIcon: "filterIcon", //外层图标slot Name
-            customRender: "customRender" //内层的 slot Name
+            customRender: "customRender", //内层的 slot Name
           },
           onFilter: (
             value,
@@ -609,48 +291,48 @@ export default {
               .toLowerCase()
               .includes(value.toLowerCase()),
 
-          onFilterDropdownVisibleChange: visible => {
+          onFilterDropdownVisibleChange: (visible) => {
             //自动聚焦
             if (visible) {
               setTimeout(() => {
                 this.searchInput.focus();
               }, 0);
             }
-          }
+          },
         },
         {
           title: "联系电话",
           key: "customerTel",
-          dataIndex: "customerTel"
+          dataIndex: "customerTel",
         },
         {
           title: "客户标签",
           key: "customerTags",
           dataIndex: "customerTags",
-          scopedSlots: { customRender: "tags" }
+          scopedSlots: { customRender: "tags" },
         },
         {
           title: "推荐产品",
           key: "RecomProducts",
           dataIndex: "RecomProducts",
-          scopedSlots: { customRender: "RecomProducts" }
+          scopedSlots: { customRender: "RecomProducts" },
         },
         {
           title: "客户类别",
           key: "customerType",
           dataIndex: "customerType",
-          scopedSlots: { customRender: "customerType" }
+          scopedSlots: { customRender: "customerType" },
         },
         {
           title: "客户经理",
           key: "handeler",
-          dataIndex: "handeler"
+          dataIndex: "handeler",
         },
         {
           title: "操作",
           key: "operation",
-          scopedSlots: { customRender: "operation" }
-        }
+          scopedSlots: { customRender: "operation" },
+        },
       ];
       return columns;
     },
@@ -663,14 +345,14 @@ export default {
           let time = formatDate(date);
           console.log(time);
           this.isCusAnalysis = Boolean(selectedRowKeys.length);
-          this.selectedCheckbox = selectedRows.map(element => {
+          this.selectedCheckbox = selectedRows.map((element) => {
             element.isNew = false;
             element.anaTime = time;
             return element;
           });
-        }
+        },
       };
-    }
+    },
   },
   methods: {
     // 客户分析之后返回
@@ -693,7 +375,7 @@ export default {
     filterDataBtn(index) {
       this.currentBtn = index;
       if (index) {
-        this.data = data.filter(item => {
+        this.data = data.filter((item) => {
           return item.customerType == index;
         });
         return;
@@ -719,7 +401,7 @@ export default {
       this.visible = false;
     },
     onSubmit() {
-      this.$refs.ruleForm.validate(valid => {
+      this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           alert("submit!");
         } else {
@@ -730,8 +412,8 @@ export default {
     },
     resetForm() {
       this.$refs.ruleForm.resetFields();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -798,13 +480,31 @@ export default {
   .RecomProducts {
     color: #5ad8a6;
   }
-}
-.economicForm,
-.personalForm {
-  border-radius: 5px;
-  box-shadow: 1px 2px 8px 1px rgba(0, 74, 196, 0.07) !important;
-  margin: 10px 0;
-  padding-top: 15px;
+
+  /////////////////////按钮
+  .mybtn {
+    font-size: 22px;
+    line-height: 43px;
+    outline: none;
+    margin: 0 5px;
+  }
+  .langPand {
+    width: 195px;
+    height: 43px;
+  }
+  .primary {
+    color: #fff;
+    background: #0060ff;
+    border: 1px solid #0060ff;
+  }
+  .round {
+    border-radius: 30px;
+  }
+  .plain {
+    background-color: #fff;
+    color: #999999;
+    border: 1px solid #999;
+  }
 }
 </style>
 <style lang="less">
