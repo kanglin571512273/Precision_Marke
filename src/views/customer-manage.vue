@@ -12,17 +12,20 @@
     <div class="container" v-if="!analysisResoult">
       <div class="btn-container">
         <div class="left">
-          <button class="langPand primary round mybtn" v-show="!isCusAnalysis">
+          <button
+            class="langPand primary round mybtn"
+            v-show="!isCusAnalysis"
+            @click="visible = true"
+          >
             新增客户
           </button>
-          <a-button
-            type="primary"
-            shape="round"
-            size="small"
+          <button
+            class="langPand primary round mybtn"
             v-show="isCusAnalysis"
             @click="analysisFun"
-            >客户分析</a-button
           >
+            客户分析
+          </button>
         </div>
         <div class="right" v-show="!isCusAnalysis">
           <button
@@ -165,19 +168,14 @@
       width="90%"
       :centered="true"
       :bodyStyle="{ textAlign: 'left' }"
+      :footer="null"
     >
-      <template slot="footer">
-        <a-button
-          key="submit"
-          type="primary"
-          :loading="loading"
-          @click="handleOk"
-        >
-          确定
-        </a-button>
-        <a-button key="back" @click="handleCancel"> 取消 </a-button>
-      </template>
-      <addCustomerForm></addCustomerForm>
+      <addCustomerForm
+        @resetForm="visible = false"
+        @submit="submit"
+        ref="child"
+      ></addCustomerForm>
+      <!-- :data="currentCustom" -->
     </a-modal>
   </div>
 </template>
@@ -195,39 +193,28 @@ Vue.use(Input);
 Vue.use(Spin);
 Vue.use(Modal);
 
-const data = [
-  {
-    key: "1",
-    customerId: "678974932",
-    customerName: "李明明",
-    customerTel: 10086,
-    customerTags: ["青年才俊", "高收入"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 3,
-    handeler: "唐倩颖",
-    isNew: false,
-  },
-  {
-    key: "2",
-    customerId: "678974933",
-    customerName: "赵芳芳",
-    customerTel: 10085,
-    customerTags: ["青年才俊", "高收入", "购物狂"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 1,
-    handeler: "潘唐颖",
-    isNew: true,
-  },
-];
 export default {
   components: {
     tableCom,
     addCustomerForm,
   },
+  mounted() {
+    let proxy = new Proxy(
+      {},
+      {
+        get: function (target, propKey) {
+          return 35;
+        },
+        set: function (target, propKey) {
+          return 33;
+        },
+      }
+    );
+    console.log(proxy.a);
+  },
   data() {
     return {
       filteredInfo: null,
-      data,
       searchText: "", //搜索文本
       searchedColumn: "", //搜索高亮
       page: {
@@ -241,9 +228,37 @@ export default {
       analysisResoult: false, //显示分析结果的表格
       spinning: false, //加载中
       visible: false, //弹框显示隐藏
+      // currentCustom: {}, //查看当前客户的信息
     };
   },
   computed: {
+    data() {
+      const data = [
+        {
+          key: "1",
+          customerId: "678974932",
+          customerName: "李明明",
+          customerTel: 10086,
+          customerTags: ["青年才俊", "高收入"],
+          RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+          customerType: 3,
+          handeler: "唐倩颖",
+          isNew: false,
+        },
+        {
+          key: "2",
+          customerId: "678974933",
+          customerName: "赵芳芳",
+          customerTel: 10085,
+          customerTags: ["青年才俊", "高收入", "购物狂"],
+          RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+          customerType: 1,
+          handeler: "潘唐颖",
+          isNew: true,
+        },
+      ];
+      return data;
+    },
     column() {
       const columns = [
         {
@@ -358,6 +373,7 @@ export default {
     // 客户分析之后返回
     back() {
       this.analysisResoult = false;
+      this.isCusAnalysis = false;
     },
     analysisFun() {
       this.spinning = true;
@@ -368,8 +384,14 @@ export default {
     },
     // 编辑
     edit(id) {
-      console.log(id);
       this.visible = true;
+      let currentCustom = this.data.find((item) => {
+        return item.key === id;
+      });
+      // console.log(this.$refs.child.dataForm(currentCustom));
+      setTimeout(() => {
+        this.$refs.child.dataForm && this.$refs.child.dataForm(currentCustom);
+      }, 0);
     },
     //所有客户、分配客户、私有客户、公有客户
     filterDataBtn(index) {
@@ -396,22 +418,22 @@ export default {
     handleTableChange(pagination, filters, sorter) {
       this.filteredInfo = filters;
     },
+    // 表单提交
+    submit(form) {
+      let index = this.data.findIndex((item) => {
+        return item.key == form.key;
+      });
+      if (index !== -1) {
+        this.data[index] = form;
+      } else {
+        this.data.push(form);
+      }
+      this.visible = false;
+      console.log(this.data);
+    },
     handleOk(e) {
       console.log(e);
       this.visible = false;
-    },
-    onSubmit() {
-      this.$refs.ruleForm.validate((valid) => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    resetForm() {
-      this.$refs.ruleForm.resetFields();
     },
   },
 };
