@@ -159,6 +159,7 @@ return{
 }
 #components-form-demo-normal-login .login-form {
   max-width: 300px;
+  max-height: 88px;
 }
 #components-form-demo-normal-login .login-form-forgot {
   float: right;

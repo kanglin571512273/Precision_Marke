@@ -84,7 +84,7 @@ export default {
     line-height: 100px;
     padding: 0 50px;
     border-bottom: 1px solid #ddd;
-    background-color: rgba(238, 240, 255, 1);
+    background-color: rgba(238, 240, 255, 0.3);
     .userInfo {
       width: 270px;
       line-height: 100px;

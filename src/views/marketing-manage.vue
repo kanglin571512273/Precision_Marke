@@ -55,6 +55,20 @@
       </div>
     </div>
     <div class="teable-box">
+      <div class="teable-conter">
+        <div class="teable-font">客户列表</div>
+        <div class="right" v-show="!isCusAnalysis">
+          <div
+            class="teabox"
+            v-for="(item, index) in btnArr"
+            :key="index"
+            :class="currentBtn == index ? 'activeBtn' : ''"
+            @click="filterDataBtn(index)"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </div>
       <div class="labelManage">
         <tableCom
           :data="resdata"
@@ -63,6 +77,7 @@
           @edit="edit"
         ></tableCom>
       </div>
+     
     </div>
   </div>
 </template>
@@ -71,11 +86,12 @@
 import tableCom from "../components/tableCom";
 import { Chart } from "@antv/g2";
 import Vue from "vue";
-import { Button, Table, Tag, Divider } from "ant-design-vue";
+import { Button, Table, Tag, Divider,Modal } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Table);
 Vue.use(Tag);
 Vue.use(Divider);
+Vue.use(Modal);
 const data = [
   {
     key: "1",
@@ -98,11 +114,55 @@ const data = [
     customerType: 1,
     isNew: true,
     status: "待跟进"
+  },
+  {
+    key: "3",
+    customerId: "678974933",
+    customerName: "赵芳芳",
+    customerTel: 10085,
+    customerTags: ["青年才俊", "高收入", "购物狂"],
+    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+    customerType: 1,
+    isNew: true,
+    status: "待跟进"
+  },
+  {
+    key: "4",
+    customerId: "678974933",
+    customerName: "赵芳芳",
+    customerTel: 10085,
+    customerTags: ["青年才俊", "高收入", "购物狂"],
+    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+    customerType: 1,
+    isNew: true,
+    status: "待跟进"
+  },
+  {
+    key: "5",
+    customerId: "678974933",
+    customerName: "赵芳芳",
+    customerTel: 10085,
+    customerTags: ["青年才俊", "高收入", "购物狂"],
+    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+    customerType: 1,
+    isNew: true,
+    status: "待跟进"
+  },
+  {
+    key: "6",
+    customerId: "678974933",
+    customerName: "赵芳芳",
+    customerTel: 10085,
+    customerTags: ["青年才俊", "高收入", "购物狂"],
+    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
+    customerType: 1,
+    isNew: true,
+    status: "待跟进"
   }
 ];
 export default {
   components: {
-    tableCom
+    tableCom, 
   },
   data() {
     return {
@@ -111,7 +171,10 @@ export default {
         currPage: 1, //当前页
         pageSize: 10
       },
-      active: 0
+      currentBtn: 0,
+      isCusAnalysis: false,
+      btnArr: ["所有客户", "分配客户", "私有客户"],
+      active: 0,
     };
   },
   mounted() {
@@ -305,12 +368,24 @@ export default {
 
       chart.render();
     },
+    // 按钮切换
+    filterDataBtn(index) {
+      this.currentBtn = index;
+      if (index) {
+        this.data = data.filter(item => {
+          return item.customerType == index;
+        });
+        return;
+      }
+      this.data = data;
+    },
     getData(index) {
       this.btnType = index;
     },
-     edit(id) {
+    edit(id) {
       console.log(id);
     },
+     
   }
 };
 </script>
@@ -378,6 +453,7 @@ export default {
     background: #ffffff;
     box-shadow: 0px 2px 4px 0px rgba(0, 96, 255, 0.05);
     border-radius: 10px;
+    padding: 30px;
   }
 }
 .round {
@@ -430,4 +506,34 @@ export default {
   width: 440px;
   height: 300px;
 }
+.teable-conter {
+  height: 73px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .teable-font {
+    font-size: 22px;
+  }
+  .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.teabox { 
+  width: 195px;
+height: 43px;
+line-height: 43px;
+border-radius: 30px;
+border: 2px solid #ccc;
+font-size:22px
+}
+.teabox:nth-child(2){
+  margin: 0 20px;
+}
+.activeBtn {
+  border: 2px solid #0060ff;
+  color: #0060ff;
+}
+
 </style>

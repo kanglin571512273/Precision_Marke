@@ -5,7 +5,7 @@
         :data-source="data"
         :columns="columns"
         bordered
-        :scroll="{ y: 200 }"
+        :pagination= false
       >
         <!-- 用户名搜索 -->
         <!-- 搜索弹框 -->
