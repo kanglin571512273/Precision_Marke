@@ -15,7 +15,7 @@
           <button
             class="langPand primary round mybtn"
             v-show="!isCusAnalysis"
-            @click="visible = true"
+            @click="addCustomer"
           >
             新增客户
           </button>
@@ -46,7 +46,7 @@
       </div>
       <a-table
         :columns="columns"
-        :data-source="data"
+        :data-source="dataSource"
         bordered
         @change="handleTableChange"
         :row-selection="rowSelection"
@@ -199,24 +199,13 @@ export default {
     addCustomerForm,
   },
   created() {
-    this.data = JSON.parse(localStorage.getItem("customData"));
-  },
-  mounted() {
-    let proxy = new Proxy(
-      {},
-      {
-        get: function (target, propKey) {
-          return 35;
-        },
-        set: function (target, propKey) {
-          return 33;
-        },
-      }
-    );
-    console.log(proxy.a);
+    console.log(211);
+    this.dataSource = JSON.parse(localStorage.getItem("customData"));
+    console.log(this.dataSource);
   },
   data() {
     return {
+      dataSource: [],
       filteredInfo: null,
       searchText: "", //搜索文本
       searchedColumn: "", //搜索高亮
@@ -332,21 +321,15 @@ export default {
     rowSelection() {
       return {
         onChange: (selectedRowKeys, selectedRows) => {
-          // selectedRowKeys: 对应表格data里的key属性
-
           this.isCusAnalysis = Boolean(selectedRowKeys.length);
           this.selectUsers = selectedRowKeys;
-          // this.selectedCheckbox = selectedRows.map((element) => {
-          //   element.isNew = false;
-          //   element.anaTime = time;
-          //   return element;
-          // });
         },
       };
     },
   },
   methods: {
     resetForm() {
+      this.dataSource = JSON.parse(localStorage.getItem("customData"));
       this.$refs.child.resetForm();
     },
     // 客户分析之后返回
@@ -356,13 +339,14 @@ export default {
     },
     analysisFun() {
       this.spinning = true;
-      let { selectUsers, data } = this;
+      let { selectUsers, dataSource } = this;
       this.selectedCheckbox = [];
       let date = new Date();
       let time = formatDate(date);
       selectUsers.map((item) => {
         console.log(item);
-        let one = data.find((child) => {
+        let one = dataSource.find((child) => {
+          console.log(child.id == item);
           return child.id == item;
         });
         one.isNew = false;
@@ -377,7 +361,9 @@ export default {
     // 编辑
     edit(id) {
       this.visible = true;
-      let currentCustom = this.data.find((item) => {
+      // console.log(this.data);
+      let data = JSON.parse(localStorage.getItem("customData"));
+      let currentCustom = data.find((item) => {
         return item.key === id;
       });
       setTimeout(() => {
@@ -387,13 +373,14 @@ export default {
     //所有客户、分配客户、私有客户、公有客户
     filterDataBtn(index) {
       this.currentBtn = index;
+      let data = JSON.parse(localStorage.getItem("customData"));
       if (index) {
-        this.data = data.filter((item) => {
+        this.dataSource = data.filter((item) => {
           return item.customerType == index;
         });
         return;
       }
-      this.data = data;
+      this.dataSource = data;
     },
     // 搜索
     handleSearch(selectedKeys, confirm, key) {
@@ -410,6 +397,11 @@ export default {
       this.page.currPage = pagination.current;
       this.filteredInfo = filters;
     },
+    // 添加客户
+    addCustomer() {
+      this.$refs.child && this.$refs.child.resetForm();
+      this.visible = true;
+    },
     // 表单提交
     submit(form) {
       // 获取本地
@@ -417,11 +409,12 @@ export default {
       let index = data.findIndex((item) => item.id == form.id);
       if (index == -1) {
         // 新增客户
+        console.log(1);
         let lastone = data[data.length - 1];
         let res = {
-          id: lastone.id + 1,
-          key: lastone.key + 1,
-          customerId: lastone.customerId + 1,
+          id: +lastone.id + 1,
+          key: +lastone.key + 1,
+          customerId: +lastone.customerId + 1,
           customerTags: [],
           RecomProducts: [],
           customerAge: null,
@@ -434,12 +427,14 @@ export default {
           ...form,
         });
       } else {
+        console.log(2);
+        // console.log(form);
         // 修改客户信息
         data[index] = form;
       }
       this.visible = false;
-      this.data = data;
-      localStorage.setItem("customerData", data);
+      this.dataSource = data;
+      localStorage.setItem("customData", JSON.stringify(data));
       console.log(data);
     },
     handleOk(e) {
@@ -546,12 +541,11 @@ export default {
     padding: 0 30px;
     margin: 0 5px;
   }
-  .ant-btn:hover,
-  .ant-btn:focus {
-    color: #0060ff;
-    background-color: #fff;
-    border-color: #0060ff;
-  }
+  // .ant-btn:focus {
+  //   color: #0060ff;
+  //   background-color: #fff;
+  //   border-color: #0060ff;
+  // }
   .economicForm,
   .personalForm {
     height: 20px;

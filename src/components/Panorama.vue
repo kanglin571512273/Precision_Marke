@@ -8,7 +8,7 @@
         :visible="visible"
         :get-container="false"
         :wrap-style="{
-          position: 'absolute'
+          position: 'absolute',
         }"
         @close="onClose"
       >
@@ -89,8 +89,8 @@
       </div>
       <div class="contentarea" v-show="num == 0">
         <a-table
-          :columns="columns"
-          :data-source="data"
+          :columns="firstColumns"
+          :data-source="fitstData"
           bordered
           :pagination="false"
         >
@@ -104,7 +104,7 @@
           <table class="gridtablse">
             <tr>
               <th>客户姓名：</th>
-              <td>{{datas.customerName}}</td>
+              <td>{{ datas.customerName }}</td>
             </tr>
             <tr>
               <th>教育程度：</th>
@@ -142,11 +142,11 @@
           <table class="gridtablse">
             <tr>
               <th>身份证号：</th>
-              <td>{{datas.identifyNum}}</td>
+              <td>{{ datas.identifyNum }}</td>
             </tr>
             <tr>
               <th>工作单位：</th>
-              <td>{{datas.addr}}</td>
+              <td>{{ datas.addr }}</td>
             </tr>
             <tr>
               <th>定期存款：</th>
@@ -181,23 +181,23 @@
           <template>
             <a-timeline>
               <a-timeline-item>
-                <p>2020/11/12  8:20:00   跟进人：陈志坚</p>
+                <p>2020/11/12 8:20:00 跟进人：陈志坚</p>
                 <p>沟通内容：海绵宝宝联名信用卡</p>
                 <p>办理情况：感兴趣</p>
               </a-timeline-item>
               <a-timeline-item>
-                <p>2020/11/30  13:20:00   跟进人：陈志坚</p>
+                <p>2020/11/30 13:20:00 跟进人：陈志坚</p>
                 <p>沟通内容:“安心得利”理财</p>
                 <p>办理情况：有意向</p>
               </a-timeline-item>
               <a-timeline-item>
-                <p>2020/11/15  16:20:00   跟进人：陈志坚</p>
+                <p>2020/11/15 16:20:00 跟进人：陈志坚</p>
                 <p>沟通内容:网易云音乐联名卡</p>
                 <p>办理情况：有意向</p>
               </a-timeline-item>
               <a-timeline-item>
-                <p>2020/11/12  8:20:00   跟进人：陈志坚</p>
-                <p>沟通内容:个人汽车贷款   </p>
+                <p>2020/11/12 8:20:00 跟进人：陈志坚</p>
+                <p>沟通内容:个人汽车贷款</p>
                 <p>办理情况：不感兴趣</p>
               </a-timeline-item>
             </a-timeline>
@@ -213,52 +213,100 @@ import Vue from "vue";
 import { Timeline, Drawer } from "ant-design-vue";
 Vue.use(Timeline);
 Vue.use(Drawer);
+const firstColumns = [
+  {
+    title: "序号",
+    key: "index",
+    width: "65px",
+    customRender: (t, r, index) => {
+      return parseInt((1 - 1) * 10 + index + 1);
+    },
+  },
+  {
+    title: "产品类型",
+    key: "productType",
+    dataIndex: "productType",
+  },
+  {
+    title: "产品名称",
+    key: "productName",
+    dataIndex: "productName",
+  },
+  {
+    title: "最近跟进时间",
+    key: "updateTime",
+    dataIndex: "updateTime",
+  },
+  {
+    title: "跟进结果",
+    key: "resoult",
+    dataIndex: "resoult",
+  },
+];
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    scopedSlots: { customRender: "name" }
+    title: "序号",
+    key: "index",
+    width: "65px",
+    customRender: (t, r, index) => {
+      return parseInt((1 - 1) * 10 + index + 1);
+    },
   },
   {
-    title: "Cash Assets",
-    className: "column-money",
-    dataIndex: "money"
+    title: "产品名称",
+    key: "productName",
+    dataIndex: "productName",
   },
   {
-    title: "Address",
-    dataIndex: "address"
+    title: "是否办理",
+    key: "isItHandled",
+    dataIndex: "isItHandled",
+  },
+];
+
+const fitstData = [
+  {
+    key: "1",
+    productType: "理财",
+    productName: "'安心得利'理财",
+    updateTime: "2020/11/30 13:20",
+    resoult: "有意向",
   },
   {
-    title: "pink",
-    dataIndex: "pink"
-  }
+    key: "2",
+    productType: "信用卡",
+    productName: "网易云音乐联名卡",
+    updateTime: "2020/11/15 13:20",
+    resoult: "有意向",
+  },
+  {
+    key: "3",
+    productType: "贷款",
+    productName: "个人汽车贷款",
+    updateTime: "2020/11/12 13:20",
+    resoult: "不敢兴趣",
+  },
 ];
 
 const data = [
   {
     key: "1",
-    name: "John Brown",
-    money: "￥300,000.00",
-    address: "New York No. 1 Lake Park",
-    pink: "New York No. 1 Lake Park"
+    productName: "'安心得利'理财",
+    isItHandled: "否",
   },
   {
     key: "2",
-    name: "Jim Green",
-    money: "￥1,256,000.00",
-    address: "London No. 1 Lake Park",
-    pink: "New York No. 1 Lake Park"
+    productName: "网易云音乐联名卡",
+    isItHandled: "否",
   },
   {
     key: "3",
-    name: "Joe Black",
-    money: "￥120,000.00",
-    address: "Sidney No. 1 Lake Park",
-    pink: "New York No. 1 Lake Park"
-  }
+    productName: "个人汽车贷款",
+    isItHandled: "否",
+  },
 ];
 export default {
-    props: {
+  props: {
     datas: Object,
   },
   data() {
@@ -266,10 +314,12 @@ export default {
       num: 0,
       data,
       columns,
+      firstColumns,
+      fitstData,
       visible: false,
       isShow: 0,
       labelData: [],
-      labelDatas: []
+      labelDatas: [],
     };
   },
   mounted() {
@@ -297,8 +347,8 @@ export default {
       console.log(this.labelDatas, 2222);
       // this.isShow = index;
       // console.log(index,2222)
-    }
-  }
+    },
+  },
 };
 </script>
 

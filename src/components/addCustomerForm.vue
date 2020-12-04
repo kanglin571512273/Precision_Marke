@@ -245,8 +245,8 @@ export default {
             trigger: "blur",
           },
           {
-            min: 3,
-            max: 5,
+            min: 2,
+            max: 6,
             message: "请输入客户真实姓名",
             trigger: "blur",
           },

@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import Vue from "vue";
+import { Modal } from "ant-design-vue";
+Vue.use(Modal);
 import tableCom from "../components/tableCom";
 const data = [
   {
