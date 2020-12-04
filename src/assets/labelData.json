@@ -1,0 +1,188 @@
+[
+    [
+        {
+            "id": 1,
+            "key": 1,
+            "labelName": "高风险",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 426
+        },
+        {
+            "id": 2,
+            "key": 2,
+            "labelName": "中风险",
+            "source": "系统",
+            "labelType": "特征标签",
+            "resoult": 54
+        },
+        {
+            "id": 3,
+            "key": 3,
+            "labelName": "稳健型",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 2445
+        },
+        {
+            "id": 4,
+            "key": 4,
+            "labelName": "积极型",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 3452
+        },
+        {
+            "id": 5,
+            "key": 5,
+            "labelName": "保守型",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 6436
+        },
+        {
+            "id": 6,
+            "key": 6,
+            "labelName": "有信用卡",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 523
+        },
+        {
+            "id": 7,
+            "key": 7,
+            "labelName": "有理财",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 656
+        },
+        {
+            "id": 8,
+            "key": 8,
+            "labelName": "有房贷",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 332
+        },
+        {
+            "id": 9,
+            "key": 9,
+            "labelName": "无信用卡",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 452
+        },
+        {
+            "id": 10,
+            "key": 10,
+            "labelName": "无贷款",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 456
+        },
+        {
+            "id": 11,
+            "key": 11,
+            "labelName": "无理财",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 8378
+        },
+        {
+            "id": 12,
+            "key": 12,
+            "labelName": "有车贷",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 1356
+        },
+        {
+            "id": 13,
+            "key": 13,
+            "labelName": "无车",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 3532
+        },
+        {
+            "id": 14,
+            "key": 14,
+            "labelName": "中等收入",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 4536
+        },
+        {
+            "id": 15,
+            "key": 15,
+            "labelName": "高收入",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 2327
+        },
+        {
+            "id": 16,
+            "key": 16,
+            "labelName": "A级客户",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 4654
+        },
+        {
+            "id": 17,
+            "key": 17,
+            "labelName": "B级客户",
+            "labelType": "特征标签",
+            "source": "系统",
+            "resoult": 4678
+        },
+        {
+            "id": 18,
+            "key": 18,
+            "labelName": "高消费",
+            "labelType": "特征标签",
+            "source": "自定义",
+            "resoult": 3465
+        },
+        {
+            "id": 19,
+            "key": 19,
+            "labelName": "旅游达人",
+            "labelType": "特征标签",
+            "source": "自定义",
+            "resoult": 35
+        },
+        {
+            "id": 20,
+            "key": 20,
+            "labelName": "喜欢运动",
+            "labelType": "特征标签",
+            "source": "自定义",
+            "resoult": 56
+        },
+        {
+            "id": 21,
+            "key": 21,
+            "labelName": "爱喝茶",
+            "labelType": "特征标签",
+            "source": "自定义",
+            "resoult": 15
+        },
+        {
+            "id": 22,
+            "key": 22,
+            "labelName": "男",
+            "labelType": "基本标签",
+            "source": "系统",
+            "resoult": 7734
+        },
+        {
+            "id": 23,
+            "key": 23,
+            "labelName": "女",
+            "labelType": "基本标签",
+            "source": "系统",
+            "resoult": 9734
+        }
+    ]
+]

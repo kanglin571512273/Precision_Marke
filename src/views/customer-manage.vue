@@ -125,7 +125,7 @@
         </template>
         <!-- 客户标签  -->
         <span class="tags" slot="tags" slot-scope="tags">
-          <a-tag class="my-tag" v-for="tag in tags" :key="tag">
+          <a-tag class="my-tag" v-for="tag in tags.splice(0, 3)" :key="tag">
             {{ tag.toUpperCase() }}
           </a-tag>
         </span>
@@ -198,6 +198,9 @@ export default {
     tableCom,
     addCustomerForm,
   },
+  created() {
+    this.data = JSON.parse(localStorage.getItem("customData"));
+  },
   mounted() {
     let proxy = new Proxy(
       {},
@@ -229,36 +232,10 @@ export default {
       spinning: false, //加载中
       visible: false, //弹框显示隐藏
       // currentCustom: {}, //查看当前客户的信息
+      selectUsers: [], //勾选的用户
     };
   },
   computed: {
-    data() {
-      const data = [
-        {
-          key: "1",
-          customerId: "678974932",
-          customerName: "李明明",
-          customerTel: 10086,
-          customerTags: ["青年才俊", "高收入"],
-          RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-          customerType: 3,
-          handeler: "唐倩颖",
-          isNew: false,
-        },
-        {
-          key: "2",
-          customerId: "678974933",
-          customerName: "赵芳芳",
-          customerTel: 10085,
-          customerTags: ["青年才俊", "高收入", "购物狂"],
-          RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-          customerType: 1,
-          handeler: "潘唐颖",
-          isNew: true,
-        },
-      ];
-      return data;
-    },
     column() {
       const columns = [
         {
@@ -356,15 +333,14 @@ export default {
       return {
         onChange: (selectedRowKeys, selectedRows) => {
           // selectedRowKeys: 对应表格data里的key属性
-          let date = new Date();
-          let time = formatDate(date);
-          console.log(time);
+
           this.isCusAnalysis = Boolean(selectedRowKeys.length);
-          this.selectedCheckbox = selectedRows.map((element) => {
-            element.isNew = false;
-            element.anaTime = time;
-            return element;
-          });
+          this.selectUsers = selectedRowKeys;
+          // this.selectedCheckbox = selectedRows.map((element) => {
+          //   element.isNew = false;
+          //   element.anaTime = time;
+          //   return element;
+          // });
         },
       };
     },
@@ -377,6 +353,17 @@ export default {
     },
     analysisFun() {
       this.spinning = true;
+      // console.log(this.data, this.selectUsers);
+      let { selectUsers } = this;
+      let date = new Date();
+      let time = formatDate(date);
+      let newArr = [];
+      selectUsers.map((item) => {
+        console.log(item);
+        // item.isNew = false;
+        // item.anaTime = time;
+        // newArr.push(item);
+      });
       setTimeout(() => {
         this.analysisResoult = true;
         this.spinning = false;
@@ -416,6 +403,7 @@ export default {
       this.searchText = "";
     },
     handleTableChange(pagination, filters, sorter) {
+      this.page.currPage = pagination.current;
       this.filteredInfo = filters;
     },
     // 表单提交

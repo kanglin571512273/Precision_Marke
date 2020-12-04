@@ -20,18 +20,18 @@
                   'userName',
                   {
                     rules: [{ required: true, message: '请输入手机号/工号' }],
-                    initialValue:'admin'
-                  }
+                    initialValue: 'admin',
+                  },
                 ]"
                 placeholder="请输入手机号/工号"
                 allow-clear
                 size="large"
-                :maxLength=20
+                :maxLength="20"
               >
                 <a-icon
                   slot="prefix"
                   type="user"
-                  style="color: rgba(0,0,0,.25)"
+                  style="color: rgba(0, 0, 0, 0.25)"
                 />
               </a-input>
             </a-form-item>
@@ -40,8 +40,8 @@
                 v-decorator="[
                   'password',
                   {
-                    rules: [{ required: true, message: '请输入密码' }]
-                  }
+                    rules: [{ required: true, message: '请输入密码' }],
+                  },
                 ]"
                 type="password"
                 placeholder="请输入密码"
@@ -50,7 +50,7 @@
                 <a-icon
                   slot="prefix"
                   type="lock"
-                  style="color: rgba(0,0,0,.25)"
+                  style="color: rgba(0, 0, 0, 0.25)"
                 />
               </a-input-password>
             </a-form-item>
@@ -60,8 +60,8 @@
                   'remember',
                   {
                     valuePropName: 'checked',
-                    initialValue: true
-                  }
+                    initialValue: true,
+                  },
                 ]"
               >
                 记住密码
@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { labelData, customData } from "../utils/data";
 import Vue from "vue";
 import { Form, Input, Icon, Button, Checkbox } from "ant-design-vue";
 Vue.use(Form);
@@ -91,11 +92,10 @@ Vue.use(Icon);
 Vue.use(Button);
 Vue.use(Checkbox);
 export default {
-  data () {
-return{
-  name:'admin'
-}
-
+  data() {
+    return {
+      name: "admin",
+    };
   },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "normal_login" });
@@ -106,15 +106,22 @@ return{
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          localStorage.setItem('token',true)
+          // 存token
+          localStorage.setItem("token", true);
+          // 存客户详情数据
+          let custom = customData();
+          localStorage.setItem("customData", JSON.stringify(custom));
+          // 存lable数据
+          let label = labelData();
+          localStorage.setItem("labelData", JSON.stringify(label));
+
           this.$router.push({
-          path: '/marketingManage',
-        })
+            path: "/marketingManage",
+          });
         }
-        
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -171,7 +178,7 @@ return{
   float: left;
 }
 .ant-btn-primary {
-font-size: 26px;
+  font-size: 26px;
   margin-top: 80px;
   background: #0060ff;
   border-radius: 31px;

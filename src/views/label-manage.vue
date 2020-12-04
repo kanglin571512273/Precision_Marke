@@ -5,7 +5,7 @@
         :data-source="data"
         :columns="columns"
         bordered
-        :pagination= false
+        :pagination="false"
       >
         <!-- 用户名搜索 -->
         <!-- 搜索弹框 -->
@@ -87,66 +87,18 @@ Vue.use(Button);
 Vue.use(Table);
 Vue.use(Input);
 
-const data = [
-  {
-    key: "1",
-    labelName: "青年才俊",
-    resoult: 32,
-    source: "自定义",
-    labelType: "基本标签",
-  },
-  {
-    key: "2",
-    labelName: "高收入",
-    resoult: 42,
-    source: "系统",
-    labelType: "基本标签",
-  },
-  {
-    key: "3",
-    labelName: "购物狂",
-    resoult: 32,
-    source: "自定义",
-    labelType: "特征标签",
-  },
-  {
-    key: "4",
-    labelName: "购物狂",
-    resoult: 32,
-    source: "自定义",
-    labelType: "特征标签",
-  },
-  {
-    key: "5",
-    labelName: "购物狂",
-    resoult: 32,
-    source: "自定义",
-    labelType: "特征标签",
-  },
-  {
-    key: "6",
-    labelName: "购物狂",
-    resoult: 32,
-    source: "自定义",
-    labelType: "特征标签",
-  },
-  {
-    key: "7",
-    labelName: "购物狂",
-    resoult: 32,
-    source: "自定义",
-    labelType: "特征标签",
-  },
-];
 export default {
   data() {
     return {
-      data,
+      data: [],
       currPage: 1,
       pageSize: 10,
       searchText: "", //搜索文本
       searchedColumn: "", //搜索高亮
     };
+  },
+  created() {
+    this.data = JSON.parse(localStorage.getItem("labelData")) ;
   },
   computed: {
     columns() {
