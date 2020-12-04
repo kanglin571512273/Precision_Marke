@@ -131,12 +131,11 @@
         </span>
         <!-- 推荐产品 -->
         <span slot="RecomProducts" slot-scope="RecomProducts">
-          <span
-            class="RecomProducts"
-            v-for="(item, index) in RecomProducts"
-            :key="index"
-            >{{ item + " / " }}</span
-          >
+          <span class="RecomProducts">{{
+            RecomProducts.slice(0, 3).toString().replace(/\,/g, " / ")
+          }}</span>
+          <!-- v-for="(item, index) in RecomProducts.slice(0, 3)"
+            :key="index" -->
         </span>
         <!-- 客户类别 -->
         <span slot="customerType" slot-scope="row">{{
@@ -169,6 +168,7 @@
       :centered="true"
       :bodyStyle="{ textAlign: 'left' }"
       :footer="null"
+      @cancel="resetForm"
     >
       <addCustomerForm
         @resetForm="visible = false"
@@ -346,6 +346,9 @@ export default {
     },
   },
   methods: {
+    resetForm() {
+      this.$refs.child.resetForm();
+    },
     // 客户分析之后返回
     back() {
       this.analysisResoult = false;
@@ -354,18 +357,17 @@ export default {
     analysisFun() {
       this.spinning = true;
       let { selectUsers, data } = this;
+      this.selectedCheckbox = [];
       let date = new Date();
       let time = formatDate(date);
-      let newArr = [];
       selectUsers.map((item) => {
         console.log(item);
         let one = data.find((child) => {
           return child.id == item;
         });
-        newArr.push(one);
-        // item.isNew = false;
-        // item.anaTime = time;
-        // newArr.push(item);
+        one.isNew = false;
+        one.anaTime = time;
+        this.selectedCheckbox.push(one);
       });
       setTimeout(() => {
         this.analysisResoult = true;
@@ -378,7 +380,6 @@ export default {
       let currentCustom = this.data.find((item) => {
         return item.key === id;
       });
-      // console.log(this.$refs.child.dataForm(currentCustom));
       setTimeout(() => {
         this.$refs.child.dataForm && this.$refs.child.dataForm(currentCustom);
       }, 0);
@@ -411,16 +412,35 @@ export default {
     },
     // 表单提交
     submit(form) {
-      let index = this.data.findIndex((item) => {
-        return item.key == form.key;
-      });
-      if (index !== -1) {
-        this.data[index] = form;
+      // 获取本地
+      let data = JSON.parse(localStorage.getItem("customData"));
+      let index = data.findIndex((item) => item.id == form.id);
+      if (index == -1) {
+        // 新增客户
+        let lastone = data[data.length - 1];
+        let res = {
+          id: lastone.id + 1,
+          key: lastone.key + 1,
+          customerId: lastone.customerId + 1,
+          customerTags: [],
+          RecomProducts: [],
+          customerAge: null,
+          followUpStatus: "待跟进",
+          handeler: null,
+          isNew: true,
+        };
+        data.unshift({
+          ...res,
+          ...form,
+        });
       } else {
-        this.data.push(form);
+        // 修改客户信息
+        data[index] = form;
       }
       this.visible = false;
-      console.log(this.data);
+      this.data = data;
+      localStorage.setItem("customerData", data);
+      console.log(data);
     },
     handleOk(e) {
       console.log(e);

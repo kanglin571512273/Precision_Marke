@@ -21,7 +21,7 @@
           clearFilters,
           column,
         }"
-        style="padding: 15px;"
+        style="padding: 15px"
       >
         <a-input
           v-ant-ref="(c) => (searchInput = c)"
@@ -41,10 +41,7 @@
         >
           搜索
         </a-button>
-        <a-button
-          style="width: 90px"
-          @click="() => handleReset(clearFilters)"
-        >
+        <a-button style="width: 90px" @click="() => handleReset(clearFilters)">
           重置
         </a-button>
       </div>
@@ -82,18 +79,17 @@
       </template>
       <!-- 客户标签  -->
       <span class="tags" slot="tags" slot-scope="tags">
-        <a-tag class="my-tag" v-for="tag in tags" :key="tag">
+        <a-tag class="my-tag" v-for="tag in tags.slice(0, 3)" :key="tag">
           {{ tag.toUpperCase() }}
         </a-tag>
       </span>
       <!-- 推荐产品 -->
       <span slot="RecomProducts" slot-scope="RecomProducts">
-        <span
-          class="RecomProducts"
-          v-for="(item, index) in RecomProducts"
-          :key="index"
-          >{{ item + " / " }}</span
-        >
+        <span class="RecomProducts">{{
+          RecomProducts.slice(0, 3).toString().replace(/\,/g, " / ")
+        }}</span>
+        <!-- v-for="(item, index) in RecomProducts.slice(0, 3)"
+          :key="index" -->
       </span>
       <!-- 客户类别 -->
       <span slot="customerType" slot-scope="row">{{
@@ -326,7 +322,7 @@ td {
 .RecomProducts {
   color: #5ad8a6;
 }
-.highlight{
+.highlight {
   background-color: orange;
 }
 </style>

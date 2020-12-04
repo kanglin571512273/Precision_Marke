@@ -23,7 +23,7 @@
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="性别: " prop="gender">
-                <a-select v-model="form.gender" placeholder="请输入客户性别">
+                <a-select v-model="form.gender" placeholder="请选择客户性别">
                   <a-select-option value="man"> 男 </a-select-option>
                   <a-select-option value="woman"> 女 </a-select-option>
                 </a-select>
@@ -97,7 +97,7 @@
                   placeholder="您是否私有客户"
                 >
                   <a-select-option :value="2"> 是 </a-select-option>
-                  <a-select-option :value="1 || 3"> 否 </a-select-option>
+                  <a-select-option :value="1 && 3"> 否 </a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
@@ -213,33 +213,30 @@ Vue.use(FormModel);
 Vue.use(Select);
 Vue.use(Row);
 Vue.use(Col);
+let form = {
+  customerName: "",
+  gender: "man",
+  email: "",
+  certificatesType: 1, //证件类型
+  identifyNum: null, //证件号码
+  customerTel: null, //联系电话
+  maritalStatus: 1, //婚姻状况
+  educationStatus: 1, //教育状况
+  customerType: 1, //您是否为私有客户
+  addr: null, //联系地址
+  company: null, //公司单位
+  housingLoan: 1, //住房贷款
+  personalLoan: 1, //个人贷款
+  credit: 1, //信用状况
+  timeDeposit: 1, //定期存款
+};
 export default {
-  //   props: { data: { type: Object, default: () => {} } },
-  created() {
-    // console.log(this.data);
-  },
   data() {
     return {
       labelCol: { span: 6 },
       wrapperCol: { span: 18 },
       other: "",
-      form: {
-        customerName: "",
-        gender: "man",
-        email: "",
-        certificatesType: 1, //证件类型
-        identifyNum: null, //证件号码
-        customerTel: null, //联系电话
-        maritalStatus: 1, //婚姻状况
-        educationStatus: 1, //教育状况
-        customerType: 1, //您是否为私有客户
-        addr: null, //联系地址
-        company: null, //公司单位
-        housingLoan: 1, //住房贷款
-        personalLoan: 1, //个人贷款
-        credit: 1, //信用状况
-        timeDeposit: 1, //定期存款
-      },
+      form: form,
       rules: {
         customerName: [
           {
@@ -325,36 +322,6 @@ export default {
           },
         ],
       },
-      //   ruleeconomic: {
-      //     housingLoan: [
-      //       {
-      //         required: true,
-      //         message: "请选择",
-      //         trigger: "change",
-      //       },
-      //     ],
-      //     personalLoan: [
-      //       {
-      //         required: true,
-      //         message: "请选择",
-      //         trigger: "change",
-      //       },
-      //     ],
-      //     credit: [
-      //       {
-      //         required: true,
-      //         message: "请选择",
-      //         trigger: "change",
-      //       },
-      //     ],
-      //     timeDeposit: [
-      //       {
-      //         required: true,
-      //         message: "请选择",
-      //         trigger: "change",
-      //       },
-      //     ],
-      //   },
     };
   },
   computed: {},
@@ -380,6 +347,7 @@ export default {
     resetForm() {
       this.$refs.ruleForm.resetFields();
       this.$emit("resetForm");
+      this.form = {};
     },
   },
 };
