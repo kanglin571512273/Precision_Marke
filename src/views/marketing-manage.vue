@@ -92,96 +92,7 @@ Vue.use(Table);
 Vue.use(Tag);
 Vue.use(Divider);
 Vue.use(Modal);
-const data = [
-  {
-    key: "1",
-    customerId: "678974932",
-    customerName: "李明明",
-    customerTel: 10086,
-    customerTags: ["青年才俊", "高收入"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 3,
-    isNew: false,
-    status: "已跟进"
-  },
-  {
-    key: "2",
-    customerId: "678974933",
-    customerName: "赵芳芳",
-    customerTel: 10085,
-    customerTags: ["青年才俊", "高收入", "购物狂"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 1,
-    isNew: true,
-    status: "待跟进"
-  },
-  {
-    key: "3",
-    customerId: "678974933",
-    customerName: "赵芳芳",
-    customerTel: 10085,
-    customerTags: ["青年才俊", "高收入", "购物狂"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 1,
-    isNew: true,
-    status: "待跟进"
-  },
-  {
-    key: "4",
-    customerId: "678974933",
-    customerName: "赵芳芳",
-    customerTel: 10085,
-    customerTags: ["青年才俊", "高收入", "购物狂"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 1,
-    isNew: true,
-    status: "待跟进"
-  },
-  {
-    key: "5",
-    customerId: "678974933",
-    customerName: "赵芳芳",
-    customerTel: 10085,
-    customerTags: ["青年才俊", "高收入", "购物狂"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 1,
-    isNew: true,
-    status: "待跟进"
-  },
-  {
-    key: "6",
-    customerId: "678974933",
-    customerName: "赵芳芳",
-    customerTel: 10085,
-    customerTags: ["青年才俊", "高收入", "购物狂"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 1,
-    isNew: true,
-    status: "待跟进"
-  },
-  {
-    key: "7",
-    customerId: "678974933",
-    customerName: "赵芳芳",
-    customerTel: 10085,
-    customerTags: ["青年才俊", "高收入", "购物狂"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 1,
-    isNew: true,
-    status: "待跟进"
-  },
-  {
-    key: "8",
-    customerId: "678974933",
-    customerName: "赵芳芳",
-    customerTel: 10085,
-    customerTags: ["青年才俊", "高收入", "购物狂"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 1,
-    isNew: true,
-    status: "待跟进"
-  }
-];
+const data = JSON.parse(localStorage.getItem("customData"));
 export default {
   components: {
     tableCom, 
@@ -200,6 +111,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.resdata,22222)
     this.getchart();
     this.container();
   },
@@ -208,13 +120,13 @@ export default {
       const columns = [
         {
           title: "状态",
-          key: "status",
-          dataIndex: "status",
+          key: "followUpStatus",
+          dataIndex: "followUpStatus",
           filters: [
             { text: "待跟进", value: "待跟进" },
             { text: "已跟进", value: "已跟进" }
           ],
-          onFilter: (value, record) => record.status.indexOf(value) === 0
+          onFilter: (value, record) => record.followUpStatus.indexOf(value) === 0
         },
         {
           title: "操作",

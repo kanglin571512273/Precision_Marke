@@ -19,7 +19,7 @@ export function customData() {
                 "个人汽车贷款"
             ],
             "customerType": 3,
-            "followUpStatus": null,
+            "followUpStatus": '跟进',
             "handeler": "戴晓军",
             "gender": "man",
             "certificatesType": 1,
@@ -54,7 +54,7 @@ export function customData() {
                 "诗意生活信用卡"
             ],
             "customerType": 3,
-            "followUpStatus": null,
+            "followUpStatus": '跟进',
             "handeler": "李小引",
             "gender": "man",
             "certificatesType": 1,
@@ -91,7 +91,7 @@ export function customData() {
                 "随薪贷"
             ],
             "customerType": 3,
-            "followUpStatus": null,
+            "followUpStatus": '跟进',
             "handeler": "潘成志",
             "gender": "man",
             "certificatesType": 1,
@@ -127,7 +127,7 @@ export function customData() {
                 "随薪贷"
             ],
             "customerType": 3,
-            "followUpStatus": null,
+            "followUpStatus": '跟进',
             "handeler": "戴丽曼",
             "gender": "woman",
             "certificatesType": 1,
@@ -163,7 +163,7 @@ export function customData() {
                 "留学贷款"
             ],
             "customerType": 3,
-            "followUpStatus": null,
+            "followUpStatus": '跟进',
             "handeler": "林胜洁",
             "gender": "man",
             "certificatesType": 1,
@@ -199,7 +199,7 @@ export function customData() {
                 "随薪贷"
             ],
             "customerType": 3,
-            "followUpStatus": null,
+            "followUpStatus": '跟进',
             "handeler": "李克俊",
             "gender": "man",
             "certificatesType": 1,

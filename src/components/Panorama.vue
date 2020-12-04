@@ -2,13 +2,13 @@
   <div class="Panorama-box">
     <div class="Panorama-left">
       <a-drawer
-        width="35%"
+        width="37%"
         placement="left"
         :closable="false"
         :visible="visible"
         :get-container="false"
         :wrap-style="{
-          position: 'absolute',
+          position: 'absolute'
         }"
         @close="onClose"
       >
@@ -16,12 +16,21 @@
           <div class="outer">
             <div class="inner">
               <div class="inner-font">请选择标签</div>
-              <ul>
-                <li>爱旅游</li>
-                <li>爱旅游</li>
-                <li>爱旅游</li>
-                <li>爱旅游</li>
+              <ul class="labelbox">
+                <li
+                  class="labelson"
+                  :class="{ 'labelson-active': labelDatas.indexOf(index) > -1 }"
+                  @click="active(index)"
+                  v-for="(item, index) in labelData"
+                  :key="index"
+                >
+                  {{ item.labelName }}
+                </li>
               </ul>
+              <div class="button-box">
+                <div class="button-item">确定</div>
+                <div class="button-item">取消</div>
+              </div>
             </div>
           </div>
         </div>
@@ -172,24 +181,24 @@
           <template>
             <a-timeline>
               <a-timeline-item>
-                <p>2020-01-26 11:02 跟进人：仁欣美</p>
+                <p>2020/11/12  8:20:00   跟进人：陈志坚</p>
                 <p>沟通内容：海绵宝宝联名信用卡</p>
                 <p>办理情况：感兴趣</p>
               </a-timeline-item>
               <a-timeline-item>
-                <p>2020-01-26 11:02 跟进人：仁欣美</p>
-                <p>沟通内容：海绵宝宝联名信用卡</p>
-                <p>办理情况：感兴趣</p>
+                <p>2020/11/30  13:20:00   跟进人：陈志坚</p>
+                <p>沟通内容:“安心得利”理财</p>
+                <p>办理情况：有意向</p>
               </a-timeline-item>
               <a-timeline-item>
-                <p>2020-01-26 11:02 跟进人：仁欣美</p>
-                <p>沟通内容：海绵宝宝联名信用卡</p>
-                <p>办理情况：感兴趣</p>
+                <p>2020/11/15  16:20:00   跟进人：陈志坚</p>
+                <p>沟通内容:网易云音乐联名卡</p>
+                <p>办理情况：有意向</p>
               </a-timeline-item>
               <a-timeline-item>
-                <p>2020-01-26 11:02 跟进人：仁欣美</p>
-                <p>沟通内容：海绵宝宝联名信用卡</p>
-                <p>办理情况：感兴趣</p>
+                <p>2020/11/12  8:20:00   跟进人：陈志坚</p>
+                <p>沟通内容:个人汽车贷款   </p>
+                <p>办理情况：不感兴趣</p>
               </a-timeline-item>
             </a-timeline>
           </template>
@@ -208,21 +217,21 @@ const columns = [
   {
     title: "Name",
     dataIndex: "name",
-    scopedSlots: { customRender: "name" },
+    scopedSlots: { customRender: "name" }
   },
   {
     title: "Cash Assets",
     className: "column-money",
-    dataIndex: "money",
+    dataIndex: "money"
   },
   {
     title: "Address",
-    dataIndex: "address",
+    dataIndex: "address"
   },
   {
     title: "pink",
-    dataIndex: "pink",
-  },
+    dataIndex: "pink"
+  }
 ];
 
 const data = [
@@ -231,22 +240,22 @@ const data = [
     name: "John Brown",
     money: "￥300,000.00",
     address: "New York No. 1 Lake Park",
-    pink: "New York No. 1 Lake Park",
+    pink: "New York No. 1 Lake Park"
   },
   {
     key: "2",
     name: "Jim Green",
     money: "￥1,256,000.00",
     address: "London No. 1 Lake Park",
-    pink: "New York No. 1 Lake Park",
+    pink: "New York No. 1 Lake Park"
   },
   {
     key: "3",
     name: "Joe Black",
     money: "￥120,000.00",
     address: "Sidney No. 1 Lake Park",
-    pink: "New York No. 1 Lake Park",
-  },
+    pink: "New York No. 1 Lake Park"
+  }
 ];
 export default {
   data() {
@@ -256,7 +265,13 @@ export default {
       data,
       columns,
       visible: false,
+      isShow: 0,
+      labelData: [],
+      labelDatas: []
     };
+  },
+  mounted() {
+    this.labelData = JSON.parse(localStorage.getItem("labelData"));
   },
   methods: {
     afterVisibleChange(val) {
@@ -268,7 +283,20 @@ export default {
     onClose() {
       this.visible = false;
     },
-  },
+    active(index) {
+      let arrIndex = this.labelDatas.indexOf(index);
+      console.log(arrIndex);
+
+      if (arrIndex > -1) {
+        this.labelDatas.splice(arrIndex, 1);
+      } else {
+        this.labelDatas.push(index);
+      }
+      console.log(this.labelDatas, 2222);
+      // this.isShow = index;
+      // console.log(index,2222)
+    }
+  }
 };
 </script>
 
@@ -401,7 +429,7 @@ export default {
 
 .outer {
   height: 560px;
-  width: 582px;
+  width: 555px;
   margin: auto 0;
   z-index: 1;
 }
@@ -419,7 +447,7 @@ export default {
 }
 .inner {
   height: 100%;
-  width: 100%;
+  width: 600px;
   padding-top: 40px;
   .inner-font {
     font-size: 33px;
@@ -431,15 +459,55 @@ export default {
 }
 .outer-box {
   height: 950px;
-  width: 580px;
+  width: 555px;
   position: relative;
 }
+.labelbox {
+  width: 100%;
+  height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  .labelson {
+    width: 118px;
+    height: 50px;
+    line-height: 50px;
+    background: #ffffff;
+    border-radius: 25px;
+    border: 2px solid #ced0d7;
+    margin: 10px 30px 31px 0;
+  }
+  .labelson-active {
+    border: 2px solid #0060ff;
+  }
+}
+.button-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  .button-item {
+    width: 112px;
+    height: 43px;
+    line-height: 43px;
+    background: #0060ff;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 22px;
+  }
+  .button-item:nth-child(2) {
+    background: rgba(8, 0, 0, 0);
+    border: 2px solid #ced0d7;
+    margin-left: 30px;
+    color: #999999;
+  }
+}
 </style>
-<style >
+<style>
 .ant-modal-body {
   padding-left: 0;
 }
-.ant-drawer-content{
+.ant-drawer-content {
   box-shadow: 0px 2px 10px 0px rgba(0, 74, 196, 0.07);
   border-radius: 10px;
 }
