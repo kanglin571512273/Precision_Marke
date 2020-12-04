@@ -19,16 +19,18 @@
           selectedKeys,
           confirm,
           clearFilters,
-          column
+          column,
         }"
         style="padding: 15px"
       >
         <a-input
-          v-ant-ref="c => (searchInput = c)"
+          v-ant-ref="(c) => (searchInput = c)"
           placeholder="搜索客户姓名"
           :value="selectedKeys[0]"
           style="width: 188px; margin-bottom: 8px; display: block"
-          @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+          @change="
+            (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
+          "
           @pressEnter="() => handleSearch(selectedKeys, confirm, column.key)"
         />
         <a-button
@@ -84,9 +86,7 @@
       <!-- 推荐产品 -->
       <span slot="RecomProducts" slot-scope="RecomProducts">
         <span class="RecomProducts">{{
-          RecomProducts.slice(0, 3)
-            .toString()
-            .replace(/\,/g, " / ")
+          RecomProducts.slice(0, 3).toString().replace(/\,/g, " / ")
         }}</span>
         <!-- v-for="(item, index) in RecomProducts.slice(0, 3)"
           :key="index" -->
@@ -132,15 +132,15 @@ Vue.use(Tag);
 Vue.use(Input);
 export default {
   components: {
-    Panorama
+    Panorama,
   },
   props: {
     data: {
       type: Array,
-      default: () => data
+      default: () => data,
     },
     column: { type: Array, default: () => [] },
-    page: { type: Object, default: () => {} }
+    page: { type: Object, default: () => {} },
   },
   data() {
     return {
@@ -150,7 +150,7 @@ export default {
       currPage: 1, //当前页
       pageSize: 10,
       visible: false,
-      name: {}
+      name: {},
     };
   },
   computed: {
@@ -161,15 +161,15 @@ export default {
         {
           title: "序号",
           key: "index",
-          width: "65px",
+          width: "40px",
           customRender: (t, r, index) => {
             return parseInt((this.currPage - 1) * this.pageSize + index + 1);
-          }
+          },
         },
         {
           title: "客户号",
           key: "customerId",
-          dataIndex: "customerId"
+          dataIndex: "customerId",
         },
         {
           title: "客户姓名",
@@ -178,7 +178,7 @@ export default {
           scopedSlots: {
             filterDropdown: "filterDropdown", //外层的slot Name
             filterIcon: "filterIcon", //外层图标slot Name
-            customRender: "customRender" //内层的 slot Name
+            customRender: "customRender", //内层的 slot Name
           },
           onFilter: (
             value,
@@ -189,47 +189,48 @@ export default {
               .toLowerCase()
               .includes(value.toLowerCase()),
 
-          onFilterDropdownVisibleChange: visible => {
+          onFilterDropdownVisibleChange: (visible) => {
             //自动聚焦
             if (visible) {
               setTimeout(() => {
                 this.searchInput.focus();
               }, 0);
             }
-          }
+          },
         },
         {
           title: "联系电话",
           key: "customerTel",
-          dataIndex: "customerTel"
+          width: "80px",
+          dataIndex: "customerTel",
         },
         {
           title: "客户标签",
           key: "customerTags",
           dataIndex: "customerTags",
           width: "200px",
-          scopedSlots: { customRender: "tags" }
+          scopedSlots: { customRender: "tags" },
         },
         {
           title: "推荐产品",
           key: "RecomProducts",
           dataIndex: "RecomProducts",
           width: "200px",
-          scopedSlots: { customRender: "RecomProducts" }
+          scopedSlots: { customRender: "RecomProducts" },
         },
         {
           title: "客户类别",
           key: "customerType",
           dataIndex: "customerType",
-          scopedSlots: { customRender: "customerType" }
-        }
+          scopedSlots: { customRender: "customerType" },
+        },
       ];
       return columns;
     },
     lastColumns() {
       let aacolumns = [...this.columns, ...this.column];
       return aacolumns;
-    }
+    },
   },
   created() {
     // this.columns.push(...this.column);
@@ -263,8 +264,8 @@ export default {
     },
     hideModal() {
       this.visible = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -293,6 +294,7 @@ export default {
   display: block;
   position: relative;
 }
+
 td {
   position: relative;
 }
@@ -303,7 +305,7 @@ td {
   &::after {
     content: "";
     position: absolute;
-    top: -17px;
+    top: -15px;
     right: -13px;
     background: url(../assets/image/newPeople.png) no-repeat;
     background-size: contain;
@@ -326,5 +328,13 @@ td {
 }
 .highlight {
   background-color: orange;
+}
+</style>
+<style lang="less">
+tr.ant-table-row {
+  font-size: 20px;
+}
+.ant-table-thead tr {
+  font-size: 24px;
 }
 </style>

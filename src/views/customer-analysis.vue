@@ -54,6 +54,7 @@ export default {
         {
           title: "分析时间",
           key: "anaTime",
+          width: "150px",
           dataIndex: "anaTime",
         },
       ];

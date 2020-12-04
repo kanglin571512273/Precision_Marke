@@ -63,13 +63,19 @@
             clearFilters,
             column,
           }"
-          style="padding: 8px"
+          style="padding: 18px"
         >
           <a-input
             v-ant-ref="(c) => (searchInput = c)"
             placeholder="搜索客户姓名"
             :value="selectedKeys[0]"
-            style="width: 188px; margin-bottom: 8px; display: block"
+            style="
+              width: 188px;
+              height: 25px;
+              fontSize: 12px;
+              margin-bottom: 8px;
+              display: block;
+            "
             @change="
               (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
             "
@@ -78,15 +84,15 @@
           <a-button
             type="primary"
             icon="search"
-            size="small"
+            size="large"
             style="width: 90px; margin-right: 8px"
             @click="() => handleSearch(selectedKeys, confirm, column.key)"
           >
             搜索
           </a-button>
           <a-button
-            size="small"
             style="width: 90px"
+            size="large"
             @click="() => handleReset(clearFilters)"
           >
             重置
@@ -96,7 +102,14 @@
           slot="filterIcon"
           slot-scope="filtered"
           type="search"
-          :style="{ color: filtered ? '#108ee9' : undefined }"
+          :style="{
+            color: filtered ? '#108ee9' : undefined,
+            fontSize: '14px',
+            top: '3px',
+            right: '5px',
+            height: '20px',
+            background: '#fafafa',
+          }"
         />
         <template slot="customRender" slot-scope="text, record, index, column">
           <span v-if="searchText && searchedColumn === column.key">
@@ -487,8 +500,8 @@ export default {
     &::after {
       content: "";
       position: absolute;
-      top: -21px;
-      right: -17px;
+      top: -17px;
+      right: -13px;
       background: url(../assets/image/newPeople.png) no-repeat;
       background-size: contain;
       width: 44px;

@@ -73,10 +73,10 @@ export default {
           localStorage.removeItem("labelData");
           that.$router.push("/login");
         },
-        onCancel() {}
+        onCancel() {},
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -97,7 +97,7 @@ export default {
     line-height: 100px;
     padding: 0 50px;
     border-bottom: 1px solid #ddd;
-    background-color: rgba(238, 240, 255, 0.3);
+    background-color: rgba(238, 240, 255, 1);
     .userInfo {
       width: 270px;
       line-height: 100px;
@@ -141,7 +141,7 @@ export default {
     align-content: center;
     align-items: center;
     font-size: 22px;
-    .layoutf{
+    .layoutf {
       width: 25%;
     }
     a {
