@@ -2,8 +2,7 @@
   <div class="Panorama-box">
     <div class="Panorama-left">
       <a-drawer
-        title="Basic Drawer"
-        width='35%'
+        width="35%"
         placement="left"
         :closable="false"
         :visible="visible"
@@ -11,7 +10,19 @@
         :wrap-style="{ position: 'absolute' }"
         @close="onClose"
       >
-        <p>Some contents...</p>
+        <div class="outer-box">
+          <div class="outer">
+            <div class="inner">
+              <div class="inner-font">请选择标签</div>
+              <ul>
+                <li>爱旅游</li>
+                <li>爱旅游</li>
+                <li>爱旅游</li>
+                <li>爱旅游</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </a-drawer>
       <div class="label-boxs">
         <span class="label-info">爱旅游</span>
@@ -384,5 +395,42 @@ export default {
   p {
     text-align: left;
   }
+}
+
+.outer {
+  position: relative;
+  height: 560px;
+  width: 582px;
+  margin: auto 0;
+  z-index: 1;
+}
+.inner:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  filter: blur(25px);
+  background: url(../assets/image/glass.png) no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+.inner {
+  height: 100%;
+  width: 100%;
+  margin-top: 40px;
+  .inner-font {
+    font-size: 33px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 50px;
+    text-align: left;
+    
+  }
+}
+.outer-box {
+  height: 950px;
+  width: 580px;
 }
 </style>
