@@ -28,8 +28,8 @@
                 </li>
               </ul>
               <div class="button-box">
-                <div class="button-item">确定</div>
-                <div class="button-item">取消</div>
+                <div class="button-item" @click="onClose">确定</div>
+                <div class="button-item" @click="onClose">取消</div>
               </div>
             </div>
           </div>
@@ -42,7 +42,7 @@
         <span class="label-info">年龄：25</span>
       </div>
       <div class="Panorama-gif">
-        <div class="gif-font">{{ name }}</div>
+        <div class="gif-font">{{ datas.customerName }}</div>
       </div>
       <div class="label-boxs">
         <span class="label-info">爱旅游</span>
@@ -103,54 +103,54 @@
         <div class="table-box">
           <table class="gridtablse">
             <tr>
-              <th>客户姓名:</th>
-              <td>李小男</td>
+              <th>客户姓名：</th>
+              <td>{{datas.customerName}}</td>
             </tr>
             <tr>
-              <th>营业收入:</th>
-              <td>1500万</td>
+              <th>教育程度：</th>
+              <td>本科</td>
             </tr>
             <tr>
-              <th>上级机构:</th>
-              <td>中山支行</td>
+              <th>住房贷款：</th>
+              <td>5151</td>
             </tr>
             <tr>
-              <th>参保人员:</th>
+              <th>账户余额：</th>
               <td>599</td>
             </tr>
           </table>
 
           <table class="gridtablse">
             <tr>
-              <th>客户姓名:</th>
-              <td>李小男</td>
+              <th>性别：</th>
+              <td>男</td>
             </tr>
             <tr>
-              <th>营业收入:</th>
+              <th>婚姻状况:</th>
               <td>1500万</td>
             </tr>
             <tr>
-              <th>上级机构:</th>
-              <td>中山支行</td>
+              <th>个人贷款：</th>
+              <td>599</td>
             </tr>
             <tr>
-              <th>参保人员:</th>
+              <th>信用情况：</th>
               <td>599</td>
             </tr>
           </table>
 
           <table class="gridtablse">
             <tr>
-              <th>资产总额</th>
-              <td>20000万</td>
+              <th>身份证号：</th>
+              <td>{{datas.identifyNum}}</td>
             </tr>
             <tr>
-              <th>成立日期</th>
-              <td>2017年1月5日</td>
+              <th>工作单位：</th>
+              <td>{{datas.addr}}</td>
             </tr>
             <tr>
-              <th>企业电话</th>
-              <td>400-800-8888</td>
+              <th>定期存款：</th>
+              <td>否</td>
             </tr>
           </table>
         </div>
@@ -258,9 +258,11 @@ const data = [
   }
 ];
 export default {
+    props: {
+    datas: Object,
+  },
   data() {
     return {
-      name: "赵芳芳",
       num: 0,
       data,
       columns,
@@ -440,9 +442,9 @@ export default {
   right: 0;
   left: 0;
   bottom: 0;
-  filter: blur(100px);
-  background: url(../assets/image/Snipaste.png) no-repeat 20% 50%;
-  background-size: 90%;
+  filter: blur(90px);
+  background: url(../assets/image/Snipaste.png) no-repeat 50% 50%;
+  background-size: 50%;
   z-index: -1;
 }
 .inner {
@@ -474,7 +476,7 @@ export default {
     line-height: 50px;
     background: #ffffff;
     border-radius: 25px;
-    border: 2px solid #ced0d7;
+    border: 2px dashed #ced0d7;
     margin: 10px 30px 31px 0;
   }
   .labelson-active {

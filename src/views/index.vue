@@ -17,22 +17,30 @@
       <router-view></router-view>
     </div>
     <div class="layoutF">
-      <router-link to="/marketingManage">
-        <a-icon type="line-chart" />
-        <span>营销管理</span>
-      </router-link>
-      <router-link to="/customerManage">
-        <a-icon type="pic-center" />
-        <span>客户管理</span>
-      </router-link>
-      <router-link to="/customerAnalysis">
-        <a-icon type="pie-chart" />
-        <span>客户分析</span>
-      </router-link>
-      <router-link to="/labelManage">
-        <a-icon type="book" />
-        <span>标签管理</span>
-      </router-link>
+      <div class="layoutf">
+        <router-link to="/marketingManage">
+          <a-icon type="line-chart" />
+          <span>营销管理</span>
+        </router-link>
+      </div>
+      <div class="layoutf">
+        <router-link to="/customerManage">
+          <a-icon type="pic-center" />
+          <span>客户管理</span>
+        </router-link>
+      </div>
+      <div class="layoutf">
+        <router-link to="/customerAnalysis">
+          <a-icon type="pie-chart" />
+          <span>客户分析</span>
+        </router-link>
+      </div>
+      <div class="layoutf">
+        <router-link to="/labelManage">
+          <a-icon type="book" />
+          <span>标签管理</span>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -65,10 +73,10 @@ export default {
           localStorage.removeItem("labelData");
           that.$router.push("/login");
         },
-        onCancel() {},
+        onCancel() {}
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -133,6 +141,9 @@ export default {
     align-content: center;
     align-items: center;
     font-size: 22px;
+    .layoutf{
+      width: 25%;
+    }
     a {
       display: inline-block;
       display: flex;

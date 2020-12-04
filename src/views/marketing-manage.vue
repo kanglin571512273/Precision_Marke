@@ -29,21 +29,21 @@
               <span class="round"></span>
               <span>总客户数</span>
             </div>
-            <span class="card-bot">67879789</span>
+            <span class="card-bot">600</span>
           </li>
           <li class="card-li">
             <div class="card-font">
               <span class="round color-1"></span>
               <span>新增客户</span>
             </div>
-            <span class="card-bot">987655</span>
+            <span class="card-bot">200</span>
           </li>
           <li class="card-li">
             <div class="card-font">
               <span class="round color-2"></span>
               <span>待跟进</span>
             </div>
-            <span class="color-bot">5678</span>
+            <span class="color-bot">302</span>
           </li>
         </ul>
       </div>
@@ -111,7 +111,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.resdata,22222)
     this.getchart();
     this.container();
   },
@@ -140,11 +139,10 @@ export default {
   methods: {
     getchart() {
       const data = [
-        { item: "事例一", count: 40, percent: 0.4 },
-        { item: "事例二", count: 21, percent: 0.21 },
-        { item: "事例三", count: 17, percent: 0.17 },
-        { item: "事例四", count: 13, percent: 0.13 },
-        { item: "事例五", count: 9, percent: 0.09 }
+        { item: "安居贷", count: 30, percent: 0.3 },
+        { item: "消费贷", count: 80, percent: 0.8 },
+        { item: "创业贷", count: 5, percent: 0.05 },
+        { item: "特色贷", count: 12, percent: 0.12 },
       ];
       const chart = new Chart({
         container: "charts",
@@ -169,40 +167,6 @@ export default {
           '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
       });
       // 辅助文本
-      chart
-        .annotation()
-        .text({
-          position: ["50%", "50%"],
-          content: "主机",
-          style: {
-            fontSize: 14,
-            fill: "#8c8c8c",
-            textAlign: "center"
-          },
-          offsetY: -20
-        })
-        .text({
-          position: ["50%", "50%"],
-          content: "200",
-          style: {
-            fontSize: 20,
-            fill: "#8c8c8c",
-            textAlign: "center"
-          },
-          offsetX: -10,
-          offsetY: 20
-        })
-        .text({
-          position: ["50%", "50%"],
-          content: "台",
-          style: {
-            fontSize: 14,
-            fill: "#8c8c8c",
-            textAlign: "center"
-          },
-          offsetY: 20,
-          offsetX: 20
-        });
       chart
         .interval()
         .adjust("stack")
@@ -231,30 +195,16 @@ export default {
     },
     container() {
       const data = [
-        { month: "Jan", city: "Tokyo", temperature: 7 },
-        { month: "Jan", city: "London", temperature: 3.9 },
-        { month: "Feb", city: "Tokyo", temperature: 6.9 },
-        { month: "Feb", city: "London", temperature: 4.2 },
-        { month: "Mar", city: "Tokyo", temperature: 9.5 },
-        { month: "Mar", city: "London", temperature: 5.7 },
-        { month: "Apr", city: "Tokyo", temperature: 14.5 },
-        { month: "Apr", city: "London", temperature: 8.5 },
-        { month: "May", city: "Tokyo", temperature: 18.4 },
-        { month: "May", city: "London", temperature: 11.9 },
-        { month: "Jun", city: "Tokyo", temperature: 21.5 },
-        { month: "Jun", city: "London", temperature: 15.2 },
-        { month: "Jul", city: "Tokyo", temperature: 25.2 },
-        { month: "Jul", city: "London", temperature: 17 },
-        { month: "Aug", city: "Tokyo", temperature: 26.5 },
-        { month: "Aug", city: "London", temperature: 16.6 },
-        { month: "Sep", city: "Tokyo", temperature: 23.3 },
-        { month: "Sep", city: "London", temperature: 14.2 },
-        { month: "Oct", city: "Tokyo", temperature: 18.3 },
-        { month: "Oct", city: "London", temperature: 10.3 },
-        { month: "Nov", city: "Tokyo", temperature: 13.9 },
-        { month: "Nov", city: "London", temperature: 6.6 },
-        { month: "Dec", city: "Tokyo", temperature: 9.6 },
-        { month: "Dec", city: "London", temperature: 4.8 }
+        { month: "1日", city: "Tokyo", temperature: 7 },
+        { month: "2日", city: "London", temperature: 3.9 },
+        { month: "2日", city: "Tokyo", temperature: 6.9 },
+        { month: "1日", city: "London", temperature: 4.2 },
+        { month: "1日", city: "Tokyo", temperature: 9.5 },
+        { month: "1日", city: "London", temperature: 5.7 },
+        { month: "1日", city: "Tokyo", temperature: 14.5 },
+        { month: "1日", city: "London", temperature: 8.5 },
+        { month: "1日", city: "Tokyo", temperature: 18.4 },
+        { month: "1日", city: "London", temperature: 11.9 },
       ];
 
       const chart = new Chart({
