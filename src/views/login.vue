@@ -174,7 +174,7 @@ export default {
 #components-form-demo-normal-login .login-form-button {
   width: 100%;
 }
-.ant-checkbox-wrapper-checked {
+.ant-checkbox-wrapper {
   float: left;
 }
 .ant-btn-primary {
@@ -183,5 +183,15 @@ export default {
   background: #0060ff;
   border-radius: 31px;
   height: 62px;
+}
+.ant-form-item{
+  margin-top: 40px;
+}
+</style>
+
+<style >
+.right-login .ant-form-explain {
+  text-align: left;
+  margin-top: 5px;
 }
 </style>

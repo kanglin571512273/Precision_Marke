@@ -39,7 +39,7 @@
 
 <script>
 import Vue from "vue";
-import { Avatar, Icon } from "ant-design-vue";
+import { Avatar, Icon, Modal } from "ant-design-vue";
 Vue.use(Avatar);
 Vue.use(Icon);
 
@@ -50,18 +50,23 @@ export default {
   mounted() {},
   methods: {
     loginout() {
-      localStorage.removeItem("token");
-      // this.$confirm({
-      //   title: "Do you want to delete these items?",
-      //   content:
-      //     "When clicked the OK button, this dialog will be closed after 1 second",
-      //   onOk() {
-      //     return new Promise((resolve, reject) => {
-      //       setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-      //     }).catch(() => localStorage.removeItem("token"));
-      //   },
-      //   onCancel() {}
-      // });
+      let that = this;
+      // localStorage.removeItem("token");
+      console.log(Modal.confirm, 22222);
+      Modal.confirm({
+        content: "确定退出登录吗？",
+        width: "400px",
+        centered: true,
+        footer: {},
+        onOk() {
+          console.log(2222);
+          localStorage.removeItem("token");
+          localStorage.removeItem("customData");
+          localStorage.removeItem("labelData");
+          that.$router.push("/login");
+        },
+        onCancel() {},
+      });
     },
   },
 };

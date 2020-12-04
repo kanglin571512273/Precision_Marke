@@ -125,7 +125,7 @@
         </template>
         <!-- 客户标签  -->
         <span class="tags" slot="tags" slot-scope="tags">
-          <a-tag class="my-tag" v-for="tag in tags.splice(0, 3)" :key="tag">
+          <a-tag class="my-tag" v-for="tag in tags.slice(0, 3)" :key="tag">
             {{ tag.toUpperCase() }}
           </a-tag>
         </span>
@@ -353,13 +353,16 @@ export default {
     },
     analysisFun() {
       this.spinning = true;
-      // console.log(this.data, this.selectUsers);
-      let { selectUsers } = this;
+      let { selectUsers, data } = this;
       let date = new Date();
       let time = formatDate(date);
       let newArr = [];
       selectUsers.map((item) => {
         console.log(item);
+        let one = data.find((child) => {
+          return child.id == item;
+        });
+        newArr.push(one);
         // item.isNew = false;
         // item.anaTime = time;
         // newArr.push(item);

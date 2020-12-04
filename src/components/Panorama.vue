@@ -7,7 +7,9 @@
         :closable="false"
         :visible="visible"
         :get-container="false"
-        :wrap-style="{ position: 'absolute' }"
+        :wrap-style="{
+          position: 'absolute',
+        }"
         @close="onClose"
       >
         <div class="outer-box">
@@ -45,9 +47,9 @@
     </div>
     <div class="Panorama-right">
       <div class="label-cont">
-        <ul style="display: flex;">
+        <ul style="display: flex">
           <li
-            class="bot-label "
+            class="bot-label"
             @click="num = 0"
             :class="{ 'bot-label-active': num == 0 }"
           >
@@ -206,21 +208,21 @@ const columns = [
   {
     title: "Name",
     dataIndex: "name",
-    scopedSlots: { customRender: "name" }
+    scopedSlots: { customRender: "name" },
   },
   {
     title: "Cash Assets",
     className: "column-money",
-    dataIndex: "money"
+    dataIndex: "money",
   },
   {
     title: "Address",
-    dataIndex: "address"
+    dataIndex: "address",
   },
   {
     title: "pink",
-    dataIndex: "pink"
-  }
+    dataIndex: "pink",
+  },
 ];
 
 const data = [
@@ -229,22 +231,22 @@ const data = [
     name: "John Brown",
     money: "￥300,000.00",
     address: "New York No. 1 Lake Park",
-    pink: "New York No. 1 Lake Park"
+    pink: "New York No. 1 Lake Park",
   },
   {
     key: "2",
     name: "Jim Green",
     money: "￥1,256,000.00",
     address: "London No. 1 Lake Park",
-    pink: "New York No. 1 Lake Park"
+    pink: "New York No. 1 Lake Park",
   },
   {
     key: "3",
     name: "Joe Black",
     money: "￥120,000.00",
     address: "Sidney No. 1 Lake Park",
-    pink: "New York No. 1 Lake Park"
-  }
+    pink: "New York No. 1 Lake Park",
+  },
 ];
 export default {
   data() {
@@ -253,7 +255,7 @@ export default {
       num: 0,
       data,
       columns,
-      visible: false
+      visible: false,
     };
   },
   methods: {
@@ -265,16 +267,16 @@ export default {
     },
     onClose() {
       this.visible = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
 .Panorama-box {
   width: 100%;
+  margin: 40px 40px 40px 0;
   display: flex;
-  padding: 40px;
   .Panorama-left {
     width: 40%;
     height: 900px;
@@ -398,39 +400,47 @@ export default {
 }
 
 .outer {
-  position: relative;
   height: 560px;
   width: 582px;
   margin: auto 0;
   z-index: 1;
 }
-.inner:before {
+.outer:before {
   content: "";
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
-  filter: blur(25px);
-  background: url(../assets/image/glass.png) no-repeat;
-  background-size: cover;
+  filter: blur(100px);
+  background: url(../assets/image/Snipaste.png) no-repeat 20% 50%;
+  background-size: 90%;
   z-index: -1;
 }
 .inner {
   height: 100%;
   width: 100%;
-  margin-top: 40px;
+  padding-top: 40px;
   .inner-font {
     font-size: 33px;
     font-weight: 600;
     color: #333333;
     line-height: 50px;
     text-align: left;
-    
   }
 }
 .outer-box {
   height: 950px;
   width: 580px;
+  position: relative;
+}
+</style>
+<style >
+.ant-modal-body {
+  padding-left: 0;
+}
+.ant-drawer-content{
+  box-shadow: 0px 2px 10px 0px rgba(0, 74, 196, 0.07);
+  border-radius: 10px;
 }
 </style>
