@@ -9,7 +9,7 @@
       <div class="logout">
         <a @click="loginout">
           退出
-          <a-icon type="close-circle" theme="twoTone" />
+          <span class="iconfont icontuichu"></span>
         </a>
       </div>
     </div>
@@ -19,25 +19,25 @@
     <div class="layoutF">
       <div class="layoutf">
         <router-link to="/marketingManage">
-          <a-icon type="line-chart" />
+                    <span class="iconfont iconyingxiaoguanli"></span>
           <span>营销管理</span>
         </router-link>
       </div>
       <div class="layoutf">
         <router-link to="/customerManage">
-          <a-icon type="pic-center" />
+        <span class="iconfont iconkehuguanli"></span>
           <span>客户管理</span>
         </router-link>
       </div>
       <div class="layoutf">
         <router-link to="/customerAnalysis">
-          <a-icon type="pie-chart" />
+          <span class="iconfont iconkehuguanli"></span>
           <span>客户分析</span>
         </router-link>
       </div>
       <div class="layoutf">
         <router-link to="/labelManage">
-          <a-icon type="book" />
+          <span class="iconfont iconbiaoqianguanli"></span>
           <span>标签管理</span>
         </router-link>
       </div>
@@ -161,5 +161,11 @@ export default {
       font-size: 22px;
     }
   }
+}
+.iconfont{
+  font-size: 40px;
+}
+.icontuichu{
+  color: #0060FF;
 }
 </style>

@@ -8,6 +8,8 @@ import router from './router'
 import "./assets/css/reset.css";
 // 移动端适配
 import 'amfe-flexible/index.js'
+// 引入iconfont
+import "./assets/iconfont/iconfont.css"
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */

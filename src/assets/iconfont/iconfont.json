@@ -1,0 +1,86 @@
+{
+  "id": "2244666",
+  "name": "精准营销",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "18601263",
+      "name": "Close-circle",
+      "font_class": "Close-circle1",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "18601264",
+      "name": "Check-circle",
+      "font_class": "Check-circle1",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "18601039",
+      "name": "符号-筛选",
+      "font_class": "fuhao-shaixuan",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "18601040",
+      "name": "闭眼",
+      "font_class": "biyan",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "18601041",
+      "name": "标签管理",
+      "font_class": "biaoqianguanli",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "18601042",
+      "name": "编辑",
+      "font_class": "bianji",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "18601043",
+      "name": "开眼",
+      "font_class": "kaiyan",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "18601044",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "18601045",
+      "name": "客户管理",
+      "font_class": "kehuguanli",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "18601046",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "18601048",
+      "name": "营销管理",
+      "font_class": "yingxiaoguanli",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    }
+  ]
+}

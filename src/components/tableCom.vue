@@ -285,6 +285,8 @@ export default {
   border: 1px solid#FFA400;
 }
 .blueBtn {
+  font-size: 18px;
+    font-weight: 600; 
   background: #0060ff;
   color: #fff;
   border: 1px solid #0060ff;

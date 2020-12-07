@@ -77,7 +77,6 @@
           @edit="edit"
         ></tableCom>
       </div>
-     
     </div>
   </div>
 </template>
@@ -86,7 +85,7 @@
 import tableCom from "../components/tableCom";
 import { Chart } from "@antv/g2";
 import Vue from "vue";
-import { Button, Table, Tag, Divider,Modal } from "ant-design-vue";
+import { Button, Table, Tag, Divider, Modal } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Table);
 Vue.use(Tag);
@@ -95,7 +94,7 @@ Vue.use(Modal);
 const data = JSON.parse(localStorage.getItem("customData"));
 export default {
   components: {
-    tableCom, 
+    tableCom
   },
   data() {
     return {
@@ -107,7 +106,7 @@ export default {
       currentBtn: 0,
       isCusAnalysis: false,
       btnArr: ["所有客户", "分配客户", "私有客户"],
-      active: 0,
+      active: 0
     };
   },
   mounted() {
@@ -125,7 +124,8 @@ export default {
             { text: "待跟进", value: "待跟进" },
             { text: "已跟进", value: "已跟进" }
           ],
-          onFilter: (value, record) => record.followUpStatus.indexOf(value) === 0
+          onFilter: (value, record) =>
+            record.followUpStatus.indexOf(value) === 0
         },
         {
           title: "操作",
@@ -142,7 +142,7 @@ export default {
         { item: "安居贷", count: 30, percent: 0.3 },
         { item: "消费贷", count: 80, percent: 0.8 },
         { item: "创业贷", count: 5, percent: 0.05 },
-        { item: "特色贷", count: 12, percent: 0.12 },
+        { item: "特色贷", count: 12, percent: 0.12 }
       ];
       const chart = new Chart({
         container: "charts",
@@ -173,6 +173,7 @@ export default {
         .position("percent")
         .color("item")
         .label("percent", percent => {
+          position: "top";
           return {
             content: data => {
               return `${data.item}: ${percent * 100}%`;
@@ -195,16 +196,26 @@ export default {
     },
     container() {
       const data = [
-        { month: "1日", city: "Tokyo", temperature: 7 },
-        { month: "2日", city: "London", temperature: 3.9 },
-        { month: "2日", city: "Tokyo", temperature: 6.9 },
-        { month: "1日", city: "London", temperature: 4.2 },
-        { month: "1日", city: "Tokyo", temperature: 9.5 },
-        { month: "1日", city: "London", temperature: 5.7 },
-        { month: "1日", city: "Tokyo", temperature: 14.5 },
-        { month: "1日", city: "London", temperature: 8.5 },
-        { month: "1日", city: "Tokyo", temperature: 18.4 },
-        { month: "1日", city: "London", temperature: 11.9 },
+        { month: "1日", city: "总客户数", temperature: 100 },
+        { month: "1日", city: "新增客户", temperature: 100 },
+        { month: "2日", city: "总客户数", temperature: 150 },
+        { month: "2日", city: "新增客户", temperature: 50 },
+        { month: "3日", city: "总客户数", temperature: 200 },
+        { month: "3日", city: "新增客户", temperature: 50 },
+        { month: "4日", city: "总客户数", temperature: 220 },
+        { month: "4日", city: "新增客户", temperature: 20 },
+        { month: "5日", city: "总客户数", temperature: 280 },
+        { month: "5日", city: "新增客户", temperature: 60 },
+        { month: "6日", city: "总客户数", temperature: 400 },
+        { month: "6日", city: "新增客户", temperature: 120 },
+        { month: "7日", city: "总客户数", temperature: 460 },
+        { month: "7日", city: "新增客户", temperature: 60 },
+        { month: "8日", city: "总客户数", temperature: 490 },
+        { month: "8日", city: "新增客户", temperature: 30 },
+        { month: "9日", city: "总客户数", temperature: 570 },
+        { month: "9日", city: "新增客户", temperature: 80 },
+        { month: "10日", city: "总客户数", temperature: 600 },
+        { month: "10日", city: "新增客户", temperature: 30 }
       ];
 
       const chart = new Chart({
@@ -222,16 +233,21 @@ export default {
           nice: true
         }
       });
-
       chart.tooltip({
         showCrosshairs: true,
         shared: true
       });
-
+      chart.scale("temperature", {
+        title: {
+          style: {
+            fill: "#1890ff"
+          }
+        }
+      });
       chart.axis("temperature", {
         label: {
           formatter: val => {
-            return val + " °C";
+            return val + " 户";
           }
         }
       });
@@ -268,8 +284,7 @@ export default {
     },
     edit(id) {
       console.log(id);
-    },
-     
+    }
   }
 };
 </script>
@@ -321,10 +336,10 @@ export default {
       border-radius: 10px;
       padding: 30px;
       .card-title {
-        font-weight: 600;
+        font-weight: 700;
         color: #666666;
         line-height: 30px;
-        font-size: 22px;
+        font-size: 24px;
         text-align: left;
       }
     }
@@ -359,7 +374,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 20px;
   color: #666666;
 }
 .card-bot {
@@ -404,20 +419,24 @@ export default {
     align-items: center;
   }
 }
-.teabox { 
+.teabox {
   width: 195px;
-height: 43px;
-line-height: 43px;
-border-radius: 30px;
-border: 2px solid #ccc;
-font-size:22px
+  height: 43px;
+  line-height: 43px;
+  border-radius: 30px;
+  border: 2px solid #ccc;
+  font-size: 22px;
 }
-.teabox:nth-child(2){
+.teabox:nth-child(2) {
   margin: 0 20px;
 }
 .activeBtn {
   border: 2px solid #0060ff;
   color: #0060ff;
 }
-
+</style>
+<style>
+.ant-table-thead tr td {
+  font-size: 18px;
+}
 </style>
