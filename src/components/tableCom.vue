@@ -307,7 +307,7 @@ td {
   &::after {
     content: "";
     position: absolute;
-    top: -15px;
+    top: -14px;
     right: -13px;
     background: url(../assets/image/newPeople.png) no-repeat;
     background-size: contain;

@@ -78,6 +78,18 @@
         ></tableCom>
       </div>
     </div>
+    <!-- 弹框 -->
+    <a-modal
+      v-model="visible"
+      @ok="handleOk"
+      :closable="false"
+      width="90%"
+      :centered="true"
+      :bodyStyle="{ textAlign: 'left' }"
+      :footer="null"
+      @cancel="resetForm"
+    >
+    </a-modal>
   </div>
 </template>
 
@@ -85,28 +97,28 @@
 import tableCom from "../components/tableCom";
 import { Chart } from "@antv/g2";
 import Vue from "vue";
-import { Button, Table, Tag, Divider, Modal } from "ant-design-vue";
+import { Button, Table, Tag, Modal } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Table);
 Vue.use(Tag);
-Vue.use(Divider);
 Vue.use(Modal);
 const data = JSON.parse(localStorage.getItem("customData"));
 export default {
   components: {
-    tableCom
+    tableCom,
   },
   data() {
     return {
       resdata: data,
       page: {
         currPage: 1, //当前页
-        pageSize: 10
+        pageSize: 10,
       },
       currentBtn: 0,
       isCusAnalysis: false,
       btnArr: ["所有客户", "分配客户", "私有客户"],
-      active: 0
+      active: 0,
+      visible: false,
     };
   },
   mounted() {
@@ -122,19 +134,19 @@ export default {
           dataIndex: "followUpStatus",
           filters: [
             { text: "待跟进", value: "待跟进" },
-            { text: "已跟进", value: "已跟进" }
+            { text: "已跟进", value: "已跟进" },
           ],
           onFilter: (value, record) =>
-            record.followUpStatus.indexOf(value) === 0
+            record.followUpStatus.indexOf(value) === 0,
         },
         {
           title: "操作",
           key: "indexOperation",
-          scopedSlots: { customRender: "indexOperation" }
-        }
+          scopedSlots: { customRender: "indexOperation" },
+        },
       ];
       return columns;
-    }
+    },
   },
   methods: {
     getchart() {
@@ -142,29 +154,29 @@ export default {
         { item: "安居贷", count: 30, percent: 0.3 },
         { item: "消费贷", count: 80, percent: 0.8 },
         { item: "创业贷", count: 5, percent: 0.05 },
-        { item: "特色贷", count: 12, percent: 0.12 }
+        { item: "特色贷", count: 12, percent: 0.12 },
       ];
       const chart = new Chart({
         container: "charts",
         autoFit: true,
-        height: 500
+        height: 500,
       });
       chart.data(data);
       chart.scale("percent", {
-        formatter: val => {
+        formatter: (val) => {
           val = val * 100 + "%";
           return val;
-        }
+        },
       });
       chart.coordinate("theta", {
         radius: 0.75,
-        innerRadius: 0.6
+        innerRadius: 0.6,
       });
       chart.tooltip({
         showTitle: false,
         showMarkers: false,
         itemTpl:
-          '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
+          '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>',
       });
       // 辅助文本
       chart
@@ -172,23 +184,23 @@ export default {
         .adjust("stack")
         .position("percent")
         .color("item")
-        .label("percent", percent => {
+        .label("percent", (percent) => {
           position: "top";
           return {
-            content: data => {
+            content: (data) => {
               return `${data.item}: ${percent * 100}%`;
-            }
+            },
           };
         })
         .tooltip("item*percent", (item, percent) => {
           percent = percent * 100 + "%";
           return {
             name: item,
-            value: percent
+            value: percent,
           };
         });
       chart.legend("year", {
-        position: "right"
+        position: "right",
       });
       chart.interaction("element-active");
 
@@ -215,56 +227,48 @@ export default {
         { month: "9日", city: "总客户数", temperature: 570 },
         { month: "9日", city: "新增客户", temperature: 80 },
         { month: "10日", city: "总客户数", temperature: 600 },
-        { month: "10日", city: "新增客户", temperature: 30 }
+        { month: "10日", city: "新增客户", temperature: 30 },
       ];
 
       const chart = new Chart({
         container: "container",
         autoFit: true,
-        height: 500
+        height: 500,
       });
 
       chart.data(data);
       chart.scale({
         month: {
-          range: [0, 1]
+          range: [0, 1],
         },
         temperature: {
-          nice: true
-        }
+          nice: true,
+        },
       });
       chart.tooltip({
         showCrosshairs: true,
-        shared: true
+        shared: true,
       });
       chart.scale("temperature", {
         title: {
           style: {
-            fill: "#1890ff"
-          }
-        }
+            fill: "#1890ff",
+          },
+        },
       });
       chart.axis("temperature", {
         label: {
-          formatter: val => {
+          formatter: (val) => {
             return val + " 户";
-          }
-        }
+          },
+        },
       });
       chart.legend({
-        position: "top"
+        position: "top",
       });
-      chart
-        .line()
-        .position("month*temperature")
-        .color("city")
-        .shape("smooth");
+      chart.line().position("month*temperature").color("city").shape("smooth");
 
-      chart
-        .point()
-        .position("month*temperature")
-        .color("city")
-        .shape("circle");
+      chart.point().position("month*temperature").color("city").shape("circle");
 
       chart.render();
     },
@@ -272,7 +276,7 @@ export default {
     filterDataBtn(index) {
       this.currentBtn = index;
       if (index) {
-        this.data = data.filter(item => {
+        this.data = data.filter((item) => {
           return item.customerType == index;
         });
         return;
@@ -284,8 +288,19 @@ export default {
     },
     edit(id) {
       console.log(id);
-    }
-  }
+    },
+    followUp(row) {
+      console.log(row);
+      this.visible = true;
+    },
+    handleOk(e) {
+      console.log(e);
+      this.visible = false;
+    },
+    resetForm() {
+      this.$refs.child.resetForm();
+    },
+  },
 };
 </script>
 

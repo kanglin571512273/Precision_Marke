@@ -184,14 +184,37 @@ export default {
   border-radius: 31px;
   height: 62px;
 }
-.ant-form-item{
+.ant-form-item {
   margin-top: 40px;
 }
 </style>
 
-<style >
+<style lang="less">
 .right-login .ant-form-explain {
   text-align: left;
   margin-top: 5px;
+}
+.login-box {
+  .ant-input {
+    font-size: 24px;
+    height: 62px;
+    padding: 6px 50px !important;
+  }
+  .ant-input-clear-icon,
+  .ant-input-password-icon,
+  .anticon-lock,
+  .anticon-user,
+  .ant-checkbox-wrapper,
+  .ant-form-explain {
+    font-size: 24px;
+  }
+  .ant-checkbox-inner {
+    width: 24px;
+    height: 24px;
+  }
+  .ant-checkbox-inner::after {
+    width: 12px;
+    height: 12px;
+  }
 }
 </style>
