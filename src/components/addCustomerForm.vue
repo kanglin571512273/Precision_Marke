@@ -354,6 +354,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.addCustomerForm{
+  padding-left: 25px;
+}
 /////////////////////按钮
 .btnContainer {
   text-align: center;

@@ -74,7 +74,7 @@
           :data="resdata"
           :page="page"
           :column="columns"
-          @edit="edit"
+          @followUp="followUp"
         ></tableCom>
       </div>
     </div>
@@ -89,12 +89,14 @@
       :footer="null"
       @cancel="resetForm"
     >
+      <followUpFeedback @hiddenModel="visible = false"></followUpFeedback>
     </a-modal>
   </div>
 </template>
 
 <script>
 import tableCom from "../components/tableCom";
+import followUpFeedback from "../components/followUpFeedback";
 import { Chart } from "@antv/g2";
 import Vue from "vue";
 import { Button, Table, Tag, Modal } from "ant-design-vue";
@@ -106,6 +108,7 @@ const data = JSON.parse(localStorage.getItem("customData"));
 export default {
   components: {
     tableCom,
+    followUpFeedback,
   },
   data() {
     return {
@@ -298,7 +301,7 @@ export default {
       this.visible = false;
     },
     resetForm() {
-      this.$refs.child.resetForm();
+      // this.$refs.child.resetForm();
     },
   },
 };

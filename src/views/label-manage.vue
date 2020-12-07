@@ -24,7 +24,13 @@
             v-ant-ref="(c) => (searchInput = c)"
             placeholder="搜索标签名称"
             :value="selectedKeys[0]"
-            style="width: 188px; margin-bottom: 8px; display: block"
+            style="
+              width: 188px;
+              height: 25px;
+              font-size: 12px;
+              margin-bottom: 8px;
+              display: block;
+            "
             @change="
               (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
             "
@@ -34,14 +40,19 @@
             type="primary"
             icon="search"
             size="small"
-            style="width: 90px; margin-right: 8px"
+            style="
+              width: 90px;
+              margin-right: 8px;
+              height: 25px;
+              font-size: 12px;
+            "
             @click="() => handleSearch(selectedKeys, confirm, column.key)"
           >
             搜索
           </a-button>
           <a-button
             size="small"
-            style="width: 90px"
+            style="width: 90px; height: 25px; font-size: 12px"
             @click="() => handleReset(clearFilters)"
           >
             重置
@@ -51,7 +62,14 @@
           slot="filterIcon"
           slot-scope="filtered"
           type="search"
-          :style="{ color: filtered ? '#108ee9' : undefined }"
+          :style="{
+            color: filtered ? '#108ee9' : undefined,
+            fontSize: '14px',
+            top: '3px',
+            right: '5px',
+            height: '20px',
+            background: '#fafafa',
+          }"
         />
         <template slot="customRender" slot-scope="text, record, index, column">
           <span v-if="searchText && searchedColumn === column.key">
@@ -98,7 +116,7 @@ export default {
     };
   },
   created() {
-    this.data = JSON.parse(localStorage.getItem("labelData")) ;
+    this.data = JSON.parse(localStorage.getItem("labelData"));
   },
   computed: {
     columns() {

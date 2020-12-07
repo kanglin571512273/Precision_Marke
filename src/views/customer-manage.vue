@@ -72,7 +72,7 @@
             style="
               width: 188px;
               height: 25px;
-              fontSize: 12px;
+              font-size: 12px;
               margin-bottom: 8px;
               display: block;
             "
@@ -85,13 +85,18 @@
             type="primary"
             icon="search"
             size="large"
-            style="width: 90px; margin-right: 8px"
+            style="
+              width: 90px;
+              margin-right: 8px;
+              height: 25px;
+              font-size: 12px;
+            "
             @click="() => handleSearch(selectedKeys, confirm, column.key)"
           >
             搜索
           </a-button>
           <a-button
-            style="width: 90px"
+            style="width: 90px; height: 25px; font-size: 12px"
             size="large"
             @click="() => handleReset(clearFilters)"
           >
@@ -131,6 +136,7 @@
           <template v-else>
             <!-- 判断是否是新人 -->
             <span
+              @click="showModal(text)"
               :class="{ customerName: true, isNew: text.isNew ? true : false }"
               >{{ text.customerName }}</span
             >
@@ -190,6 +196,9 @@
       ></addCustomerForm>
       <!-- :data="currentCustom" -->
     </a-modal>
+    <a-modal v-model="previsible" width="90%" :footer="null" @ok="hideModal">
+      <Panorama :datas="name"></Panorama>
+    </a-modal>
   </div>
 </template>
 
@@ -197,6 +206,7 @@
 import { formatDate } from "../utils";
 import tableCom from "../components/tableCom";
 import addCustomerForm from "../components/addCustomerForm";
+import Panorama from "@/components/Panorama.vue";
 import Vue from "vue";
 import { Button, Table, Tag, Input, Spin, Modal } from "ant-design-vue";
 Vue.use(Button);
@@ -210,6 +220,7 @@ export default {
   components: {
     tableCom,
     addCustomerForm,
+    Panorama,
   },
   created() {
     console.log(211);
@@ -226,8 +237,8 @@ export default {
         currPage: 1, //当前页
         pageSize: 10,
       },
-      currentBtn: 0, //所有客户、分配客户、私有客户、公有客户
-      btnArr: ["所有客户", "分配客户", "私有客户", "公有客户"],
+      currentBtn: 0, //所有客户、分配客户、私有客户、共有客户
+      btnArr: ["所有客户", "分配客户", "私有客户", "共有客户"],
       isCusAnalysis: false, //是否点击了客户分析
       selectedCheckbox: [], //被勾选的项
       analysisResoult: false, //显示分析结果的表格
@@ -235,6 +246,8 @@ export default {
       visible: false, //弹框显示隐藏
       // currentCustom: {}, //查看当前客户的信息
       selectUsers: [], //勾选的用户
+      previsible: false,
+      name: {},
     };
   },
   computed: {
@@ -383,7 +396,7 @@ export default {
         this.$refs.child.dataForm && this.$refs.child.dataForm(currentCustom);
       }, 0);
     },
-    //所有客户、分配客户、私有客户、公有客户
+    //所有客户、分配客户、私有客户、共有客户
     filterDataBtn(index) {
       this.currentBtn = index;
       let data = JSON.parse(localStorage.getItem("customData"));
@@ -454,6 +467,13 @@ export default {
       console.log(e);
       this.visible = false;
     },
+    showModal(index) {
+      this.name = index;
+      this.previsible = true;
+    },
+    hideModal() {
+      this.visible = false;
+    },
   },
 };
 </script>
@@ -500,7 +520,7 @@ export default {
     &::after {
       content: "";
       position: absolute;
-      top: -17px;
+      top: -14px;
       right: -13px;
       background: url(../assets/image/newPeople.png) no-repeat;
       background-size: contain;
@@ -554,11 +574,6 @@ export default {
     padding: 0 30px;
     margin: 0 5px;
   }
-  // .ant-btn:focus {
-  //   color: #0060ff;
-  //   background-color: #fff;
-  //   border-color: #0060ff;
-  // }
   .economicForm,
   .personalForm {
     height: 20px;

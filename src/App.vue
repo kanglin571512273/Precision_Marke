@@ -31,6 +31,23 @@ export default {
   height: 100%;
 }
 </style>
-
-<style lang="less" scoped>
+<style lang="less">
+.ant-table-filter-dropdown-btns {
+  font-size: 25px;
+}
+.ant-dropdown-menu-item {
+  font-size: 25px;
+  padding: 10px 0;
+  vertical-align: middle;
+}
+.ant-dropdown-menu {
+  padding: 20px;
+}
+.ant-checkbox-inner {
+  width: 20px;
+  height: 20px;
+}
+.ant-checkbox-wrapper {
+  vertical-align: top;
+}
 </style>

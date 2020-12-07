@@ -21,13 +21,19 @@
           clearFilters,
           column,
         }"
-        style="padding: 15px"
+        style="padding: 18px"
       >
         <a-input
           v-ant-ref="(c) => (searchInput = c)"
           placeholder="搜索客户姓名"
           :value="selectedKeys[0]"
-          style="width: 188px; margin-bottom: 8px; display: block"
+          style="
+            width: 188px;
+            height: 25px;
+            font-size: 12px;
+            margin-bottom: 8px;
+            display: block;
+          "
           @change="
             (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
           "
@@ -36,12 +42,15 @@
         <a-button
           type="primary"
           icon="search"
-          style="width: 90px; margin-right: 8px"
+          style="width: 90px; margin-right: 8px; height: 25px; font-size: 12px"
           @click="() => handleSearch(selectedKeys, confirm, column.key)"
         >
           搜索
         </a-button>
-        <a-button style="width: 90px" @click="() => handleReset(clearFilters)">
+        <a-button
+          style="width: 90px; height: 25px; font-size: 12px"
+          @click="() => handleReset(clearFilters)"
+        >
           重置
         </a-button>
       </div>
@@ -49,7 +58,14 @@
         slot="filterIcon"
         slot-scope="filtered"
         type="search"
-        :style="{ color: filtered ? '#108ee9' : undefined }"
+        :style="{
+          color: filtered ? '#108ee9' : undefined,
+          fontSize: '14px',
+          top: '3px',
+          right: '5px',
+          height: '20px',
+          background: '#fafafa',
+        }"
       />
       <template slot="customRender" slot-scope="text, record, index, column">
         <span v-if="searchText && searchedColumn === column.key">
@@ -111,7 +127,7 @@
         <a-button
           :class="row.status === '已跟进' ? 'orangeBtn' : 'blueBtn'"
           shape="round"
-          @click="followUp(row.key)"
+          @click="followUp(row)"
           >{{ row.status === "已跟进" ? "继续跟进" : "跟进" }}</a-button
         >
       </div>
@@ -242,7 +258,7 @@ export default {
       this.$emit("edit", key);
     },
     followUp(key) {
-      console.log(key);
+      this.$emit("followUp", key);
     },
     // 搜索
     handleSearch(selectedKeys, confirm, key) {
@@ -286,7 +302,7 @@ export default {
 }
 .blueBtn {
   font-size: 18px;
-    font-weight: 600; 
+  font-weight: 600;
   background: #0060ff;
   color: #fff;
   border: 1px solid #0060ff;
