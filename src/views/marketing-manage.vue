@@ -3,21 +3,11 @@
     <div class="headBt">
       <a
         class="botton"
-        @click="active = 0"
-        :class="{ 'botton-active': active == 0 }"
-        >信用卡</a
-      >
-      <a
-        class="botton"
-        @click="active = 1"
-        :class="{ 'botton-active': active == 1 }"
-        >贷款</a
-      >
-      <a
-        class="botton"
-        @click="active = 2"
-        :class="{ 'botton-active': active == 2 }"
-        >理财</a
+        @click="botactive(index)"
+        :class="{ 'botton-active': active == index }"
+        v-for="(item, index) in barr"
+        :key="index"
+        >{{ item }}</a
       >
     </div>
     <div class="card-box">
@@ -29,21 +19,21 @@
               <span class="round"></span>
               <span>总客户数</span>
             </div>
-            <span class="card-bot">600</span>
+            <span class="card-bot">{{ customers.total }}</span>
           </li>
           <li class="card-li">
             <div class="card-font">
               <span class="round color-1"></span>
               <span>新增客户</span>
             </div>
-            <span class="card-bot">200</span>
+            <span class="card-bot">{{ customers.new }}</span>
           </li>
           <li class="card-li">
             <div class="card-font">
               <span class="round color-2"></span>
               <span>待跟进</span>
             </div>
-            <span class="color-bot">302</span>
+            <span class="color-bot">{{ customers.followed }}</span>
           </li>
         </ul>
       </div>
@@ -99,7 +89,7 @@ import tableCom from "../components/tableCom";
 import followUpFeedback from "../components/followUpFeedback";
 import { Chart } from "@antv/g2";
 import Vue from "vue";
-import { Button, Table, Tag, Modal } from "ant-design-vue";
+import { Button, Table, Tag, Modal, Switch } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Table);
 Vue.use(Tag);
@@ -108,109 +98,26 @@ const data = JSON.parse(localStorage.getItem("customData"));
 export default {
   components: {
     tableCom,
-    followUpFeedback,
+    followUpFeedback
   },
   data() {
     return {
       resdata: data,
       page: {
         currPage: 1, //当前页
-        pageSize: 10,
+        pageSize: 10
       },
       currentBtn: 0,
       isCusAnalysis: false,
       btnArr: ["所有客户", "分配客户", "私有客户"],
       active: 0,
       visible: false,
-    };
-  },
-  mounted() {
-    this.getchart();
-    this.container();
-  },
-  computed: {
-    columns() {
-      const columns = [
-        {
-          title: "状态",
-          key: "followUpStatus",
-          dataIndex: "followUpStatus",
-          filters: [
-            { text: "待跟进", value: "待跟进" },
-            { text: "已跟进", value: "已跟进" },
-          ],
-          onFilter: (value, record) =>
-            record.followUpStatus.indexOf(value) === 0,
-        },
-        {
-          title: "操作",
-          key: "indexOperation",
-          scopedSlots: { customRender: "indexOperation" },
-        },
-      ];
-      return columns;
-    },
-  },
-  methods: {
-    getchart() {
-      const data = [
-        { item: "安居贷", count: 30, percent: 0.3 },
-        { item: "消费贷", count: 80, percent: 0.8 },
-        { item: "创业贷", count: 5, percent: 0.05 },
-        { item: "特色贷", count: 12, percent: 0.12 },
-      ];
-      const chart = new Chart({
-        container: "charts",
-        autoFit: true,
-        height: 500,
-      });
-      chart.data(data);
-      chart.scale("percent", {
-        formatter: (val) => {
-          val = val * 100 + "%";
-          return val;
-        },
-      });
-      chart.coordinate("theta", {
-        radius: 0.75,
-        innerRadius: 0.6,
-      });
-      chart.tooltip({
-        showTitle: false,
-        showMarkers: false,
-        itemTpl:
-          '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>',
-      });
-      // 辅助文本
-      chart
-        .interval()
-        .adjust("stack")
-        .position("percent")
-        .color("item")
-        .label("percent", (percent) => {
-          position: "top";
-          return {
-            content: (data) => {
-              return `${data.item}: ${percent * 100}%`;
-            },
-          };
-        })
-        .tooltip("item*percent", (item, percent) => {
-          percent = percent * 100 + "%";
-          return {
-            name: item,
-            value: percent,
-          };
-        });
-      chart.legend("year", {
-        position: "right",
-      });
-      chart.interaction("element-active");
-
-      chart.render();
-    },
-    container() {
-      const data = [
+      barr: ["信用卡", "贷款", "理财"],
+      customers: {},
+      customers1: { total: 300, new: 100, followed: 120 },
+      customers2: { total: 600, new: 200, followed: 302 },
+      data: [],
+      data1: [
         { month: "1日", city: "总客户数", temperature: 100 },
         { month: "1日", city: "新增客户", temperature: 100 },
         { month: "2日", city: "总客户数", temperature: 150 },
@@ -230,48 +137,201 @@ export default {
         { month: "9日", city: "总客户数", temperature: 570 },
         { month: "9日", city: "新增客户", temperature: 80 },
         { month: "10日", city: "总客户数", temperature: 600 },
-        { month: "10日", city: "新增客户", temperature: 30 },
+        { month: "10日", city: "新增客户", temperature: 30 }
+      ],
+      data2: [
+        { month: "1日", city: "总客户数", temperature: 30 },
+        { month: "1日", city: "新增客户", temperature: 30 },
+        { month: "2日", city: "总客户数", temperature: 70 },
+        { month: "2日", city: "新增客户", temperature: 40 },
+        { month: "3日", city: "总客户数", temperature: 80 },
+        { month: "3日", city: "新增客户", temperature: 10 },
+        { month: "4日", city: "总客户数", temperature: 90 },
+        { month: "4日", city: "新增客户", temperature: 10 },
+        { month: "5日", city: "总客户数", temperature: 110 },
+        { month: "5日", city: "新增客户", temperature: 20 },
+        { month: "6日", city: "总客户数", temperature: 160 },
+        { month: "6日", city: "新增客户", temperature: 50 },
+        { month: "7日", city: "总客户数", temperature: 180 },
+        { month: "7日", city: "新增客户", temperature: 20 },
+        { month: "8日", city: "总客户数", temperature: 190 },
+        { month: "8日", city: "新增客户", temperature: 10 },
+        { month: "9日", city: "总客户数", temperature: 240 },
+        { month: "9日", city: "新增客户", temperature: 50 },
+        { month: "10日", city: "总客户数", temperature: 300 },
+        { month: "10日", city: "新增客户", temperature: 60 }
+      ],
+      data3: [
+        { month: "1日", city: "总客户数", temperature: 100 },
+        { month: "1日", city: "新增客户", temperature: 100 },
+        { month: "2日", city: "总客户数", temperature: 150 },
+        { month: "2日", city: "新增客户", temperature: 50 },
+        { month: "3日", city: "总客户数", temperature: 200 },
+        { month: "3日", city: "新增客户", temperature: 50 },
+        { month: "4日", city: "总客户数", temperature: 220 },
+        { month: "4日", city: "新增客户", temperature: 20 },
+        { month: "5日", city: "总客户数", temperature: 280 },
+        { month: "5日", city: "新增客户", temperature: 60 },
+        { month: "6日", city: "总客户数", temperature: 400 },
+        { month: "6日", city: "新增客户", temperature: 120 },
+        { month: "7日", city: "总客户数", temperature: 460 },
+        { month: "7日", city: "新增客户", temperature: 60 },
+        { month: "8日", city: "总客户数", temperature: 490 },
+        { month: "8日", city: "新增客户", temperature: 30 },
+        { month: "9日", city: "总客户数", temperature: 570 },
+        { month: "9日", city: "新增客户", temperature: 80 },
+        { month: "10日", city: "总客户数", temperature: 600 },
+        { month: "10日", city: "新增客户", temperature: 30 }
+      ],
+      ring: [
+        { item: "网易云音乐联名卡", count: 30, percent: 0.3 },
+        { item: "环保卡", count: 20, percent: 0.2 },
+        { item: "诗意生活信用卡", count: 24, percent: 0.24 },
+        { item: "爱奇艺联名信用卡", count: 26, percent: 0.26 }
+      ],
+      ring1: [
+        { item: "汇利丰结构性存款2020年第1167期", count: 50, percent: 0.5 },
+        { item: "安心·270天”人民币理财产品", count: 25, percent: 0.25  },
+        { item: "农银私行·安心得利·灵珑", count: 5, percent: 0.05 },
+        { item: "农银私享·稳健·日增利", count: 2, percent: 0.2 }
+      ],
+      ring2: [
+        { item: "安居贷", count: 30, percent: 0.3 },
+        { item: "消费贷", count: 80, percent: 0.8 },
+        { item: "创业贷", count: 5, percent: 0.05 },
+        { item: "特色贷", count: 12, percent: 0.12 }
+      ]
+    };
+  },
+  mounted() {
+    this.getchart(this.ring);
+    this.data =this.data1
+    this.container(this.data);
+  },
+  computed: {
+    columns() {
+      const columns = [
+        {
+          title: "状态",
+          key: "followUpStatus",
+          dataIndex: "followUpStatus",
+          filters: [
+            { text: "待跟进", value: "待跟进" },
+            { text: "已跟进", value: "已跟进" }
+          ],
+          onFilter: (value, record) =>
+            record.followUpStatus.indexOf(value) === 0
+        },
+        {
+          title: "操作",
+          key: "indexOperation",
+          scopedSlots: { customRender: "indexOperation" }
+        }
       ];
+      return columns;
+    }
+  },
+  methods: {
+    getchart(data) {
+      this.customers = { total: 600, new: 100, followed: 102 };
+      const chart = new Chart({
+        container: "charts",
+        autoFit: true,
+        height: 500
+      });
+      chart.data(data);
+      chart.scale("percent", {
+        formatter: val => {
+          val = val * 100 + "%";
+          return val;
+        }
+      });
+      chart.coordinate("theta", {
+        radius: 0.75,
+        innerRadius: 0.6
+      });
+      chart.tooltip({
+        showTitle: false,
+        showMarkers: false,
+        itemTpl:
+          '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
+      });
+      // 辅助文本
+      chart
+        .interval()
+        .adjust("stack")
+        .position("percent")
+        .color("item")
+        .label("percent", percent => {
+          position: "top";
+          return {
+            content: data => {
+              return `${data.item}: ${percent * 100}%`;
+            }
+          };
+        })
+        .tooltip("item*percent", (item, percent) => {
+          percent = percent * 100 + "%";
+          return {
+            name: item,
+            value: percent
+          };
+        });
+      chart.legend("year", {
+        position: "right"
+      });
+      chart.interaction("element-active");
 
+      chart.render();
+    },
+    container(data) {
       const chart = new Chart({
         container: "container",
         autoFit: true,
-        height: 500,
+        height: 500
       });
 
       chart.data(data);
       chart.scale({
         month: {
-          range: [0, 1],
+          range: [0, 1]
         },
         temperature: {
-          nice: true,
-        },
+          nice: true
+        }
       });
       chart.tooltip({
         showCrosshairs: true,
-        shared: true,
+        shared: true
       });
       chart.scale("temperature", {
         title: {
           style: {
-            fill: "#1890ff",
-          },
-        },
+            fill: "#1890ff"
+          }
+        }
       });
       chart.axis("temperature", {
         label: {
-          formatter: (val) => {
+          formatter: val => {
             return val + " 户";
-          },
-        },
+          }
+        }
       });
       chart.legend({
-        position: "top",
+        position: "top"
       });
-      chart.line().position("month*temperature").color("city").shape("smooth");
+      chart
+        .line()
+        .position("month*temperature")
+        .color("city")
+        .shape("smooth");
 
-      chart.point().position("month*temperature").color("city").shape("circle");
+      chart
+        .point()
+        .position("month*temperature")
+        .color("city")
+        .shape("circle");
 
       chart.render();
     },
@@ -279,12 +339,35 @@ export default {
     filterDataBtn(index) {
       this.currentBtn = index;
       if (index) {
-        this.data = data.filter((item) => {
+        this.data = data.filter(item => {
           return item.customerType == index;
         });
         return;
       }
       this.data = data;
+    },
+    botactive(index) {
+      this.active = index;
+      switch (index) {
+        case 0:
+          this.customers = { total: 600, new: 100, followed: 102 };
+          this.data=[]
+          // this.container(this.data);
+          // this.container(this.data);
+          break;
+        case 1:
+           this.data=[]
+          this.customers = this. customers1;
+            // this.container(this.data2);
+
+          // this.getchart(this.ring1);
+          break;
+        default:
+           this.data=[]
+          this.customers =this. customers2 ;
+          // this.container(this.data3);
+          // this.getchart(this.ring2);
+      }
     },
     getData(index) {
       this.btnType = index;
@@ -302,8 +385,8 @@ export default {
     },
     resetForm() {
       // this.$refs.child.resetForm();
-    },
-  },
+    }
+  }
 };
 </script>
 
