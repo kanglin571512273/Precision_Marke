@@ -38,9 +38,11 @@
         </ul>
       </div>
       <div class="card card-item">
+        <div class="card-title">每日概览</div>
         <div id="container"></div>
       </div>
       <div class="card">
+        <div class="card-title">意向产品分布</div>
         <div id="charts"></div>
       </div>
     </div>
@@ -101,14 +103,14 @@ const data = JSON.parse(localStorage.getItem("customData"));
 export default {
   components: {
     tableCom,
-    followUpFeedback,
+    followUpFeedback
   },
   data() {
     return {
       resdata: data,
       page: {
         currPage: 1, //当前页
-        pageSize: 10,
+        pageSize: 10
       },
       currentBtn: 0,
       isCusAnalysis: false,
@@ -141,7 +143,7 @@ export default {
         { month: "9日", city: "总客户数", temperature: 570 },
         { month: "9日", city: "新增客户", temperature: 80 },
         { month: "10日", city: "总客户数", temperature: 600 },
-        { month: "10日", city: "新增客户", temperature: 30 },
+        { month: "10日", city: "新增客户", temperature: 30 }
       ],
       data2: [
         { month: "1日", city: "总客户数", temperature: 30 },
@@ -163,7 +165,7 @@ export default {
         { month: "9日", city: "总客户数", temperature: 240 },
         { month: "9日", city: "新增客户", temperature: 50 },
         { month: "10日", city: "总客户数", temperature: 300 },
-        { month: "10日", city: "新增客户", temperature: 60 },
+        { month: "10日", city: "新增客户", temperature: 60 }
       ],
       data3: [
         { month: "1日", city: "总客户数", temperature: 100 },
@@ -185,30 +187,30 @@ export default {
         { month: "9日", city: "总客户数", temperature: 570 },
         { month: "9日", city: "新增客户", temperature: 80 },
         { month: "10日", city: "总客户数", temperature: 600 },
-        { month: "10日", city: "新增客户", temperature: 30 },
+        { month: "10日", city: "新增客户", temperature: 30 }
       ],
       ring: [
         { item: "网易云音乐联名卡", count: 30, percent: 0.3 },
         { item: "环保卡", count: 20, percent: 0.2 },
         { item: "诗意生活信用卡", count: 24, percent: 0.24 },
-        { item: "爱奇艺联名信用卡", count: 26, percent: 0.26 },
+        { item: "爱奇艺联名信用卡", count: 26, percent: 0.26 }
       ],
       ring1: [
         { item: "汇利丰结构性存款2020年第1167期", count: 50, percent: 0.5 },
         { item: "安心·270天”人民币理财产品", count: 25, percent: 0.25 },
         { item: "农银私行·安心得利·灵珑", count: 5, percent: 0.05 },
-        { item: "农银私享·稳健·日增利", count: 2, percent: 0.2 },
+        { item: "农银私享·稳健·日增利", count: 2, percent: 0.2 }
       ],
       ring2: [
         { item: "安居贷", count: 30, percent: 0.3 },
         { item: "消费贷", count: 80, percent: 0.8 },
         { item: "创业贷", count: 5, percent: 0.05 },
-        { item: "特色贷", count: 12, percent: 0.12 },
-      ],
+        { item: "特色贷", count: 12, percent: 0.12 }
+      ]
     };
   },
   created() {
-    this.resdata = data.filter((item) => item.customerType !== 3);
+    this.resdata = data.filter(item => item.customerType !== 3);
   },
   mounted() {
     this.getchart(this.ring);
@@ -225,19 +227,19 @@ export default {
           width: "50px",
           filters: [
             { text: "待跟进", value: "待跟进" },
-            { text: "已跟进", value: "跟进" },
+            { text: "已跟进", value: "跟进" }
           ],
           onFilter: (value, record) =>
-            record.followUpStatus.indexOf(value) === 0,
+            record.followUpStatus.indexOf(value) === 0
         },
         {
           title: "操作",
           key: "indexOperation",
-          scopedSlots: { customRender: "indexOperation" },
-        },
+          scopedSlots: { customRender: "indexOperation" }
+        }
       ];
       return columns;
-    },
+    }
   },
   methods: {
     getchart(data) {
@@ -245,24 +247,24 @@ export default {
       const chart = new Chart({
         container: "charts",
         autoFit: true,
-        height: 500,
+        height: 500
       });
       chart.data(data);
       chart.scale("percent", {
-        formatter: (val) => {
+        formatter: val => {
           val = val * 100 + "%";
           return val;
-        },
+        }
       });
       chart.coordinate("theta", {
         radius: 0.75,
-        innerRadius: 0.6,
+        innerRadius: 0.6
       });
       chart.tooltip({
         showTitle: false,
         showMarkers: false,
         itemTpl:
-          '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>',
+          '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
       });
       // 辅助文本
       chart
@@ -270,23 +272,23 @@ export default {
         .adjust("stack")
         .position("percent")
         .color("item")
-        .label("percent", (percent) => {
+        .label("percent", percent => {
           position: "top";
           return {
-            content: (data) => {
+            content: data => {
               return `${data.item}: ${percent * 100}%`;
-            },
+            }
           };
         })
         .tooltip("item*percent", (item, percent) => {
           percent = percent * 100 + "%";
           return {
             name: item,
-            value: percent,
+            value: percent
           };
         });
       chart.legend("year", {
-        position: "right",
+        position: "right"
       });
       chart.interaction("element-active");
 
@@ -296,55 +298,79 @@ export default {
       const chart = new Chart({
         container: "container",
         autoFit: true,
-        height: 500,
+        height: 500
       });
 
       chart.data(data);
       chart.scale({
         month: {
-          range: [0, 1],
+          range: [0, 1]
         },
         temperature: {
-          nice: true,
-        },
+          nice: true
+        }
       });
       chart.tooltip({
         showCrosshairs: true,
-        shared: true,
+        shared: true
       });
       chart.scale("temperature", {
         title: {
           style: {
-            fill: "#1890ff",
-          },
-        },
+            fill: "#1890ff"
+          }
+        }
       });
+      chart.source(data, {
+        month: {
+          alias: "时间",
+          type: "time",
+          mask: "MM:ss",
+          tickCount: 10,
+          nice: false
+        },
+        temperature: {
+          alias: "平均温度(°C)",
+          min: 10,
+          max: 35
+        }
+      });
+
       chart.axis("temperature", {
         label: {
-          formatter: (val) => {
+          formatter: val => {
             return val + " 户";
-          },
-        },
+          }
+        }
       });
       chart.legend({
-        position: "top",
+        position: "top"
       });
-      chart.line().position("month*temperature").color("city").shape("smooth");
+      chart
+        .line()
+        .position("month*temperature")
+        .color("city")
+        .shape("smooth");
 
-      chart.point().position("month*temperature").color("city").shape("circle");
+      chart
+        .point()
+        .position("month*temperature")
+        .color("city")
+        .shape("circle");
 
       chart.render();
     },
     // 按钮切换
     filterDataBtn(index) {
       this.currentBtn = index;
+      let data = JSON.parse(localStorage.getItem("customData"));
       if (index) {
-        this.data = data.filter((item) => {
+        this.resdata = data.filter((item) => {
           return item.customerType == index;
         });
         return;
       }
-      this.data = data;
+      this.resdata = data;
     },
     botactive(index) {
       this.active = index;
@@ -386,7 +412,7 @@ export default {
       // console.log(row);
       let { followUpStatus, RecomProducts, key } = this.currentRow;
       let arr = [];
-      row.forEach((element) => {
+      row.forEach(element => {
         if (element.intention) {
           arr.push(element.RecomProducts);
         }
@@ -395,7 +421,7 @@ export default {
       this.currentRow.followUpStatus = "跟进";
       this.currentRow.RecomProducts = [...arr, ...RecomProducts];
       let data = JSON.parse(localStorage.getItem("customData"));
-      this.resdata = data.filter((item) => {
+      this.resdata = data.filter(item => {
         if (item.key == key) {
           item.followUpStatus = "跟进";
           item.RecomProducts = [...arr, ...RecomProducts];
@@ -413,8 +439,8 @@ export default {
     },
     resetForm() {
       // this.$refs.child.resetForm();
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -463,14 +489,16 @@ export default {
       height: 350px;
       background: #fff;
       border-radius: 10px;
-      padding: 30px;
+      padding: 0 30px;
       .card-title {
         font-weight: 700;
         color: #666666;
         line-height: 30px;
         font-size: 24px;
         text-align: left;
+        margin-top: 10px;
       }
+     
     }
     .card-item {
       flex: 1;
