@@ -181,11 +181,6 @@
           <template>
             <a-timeline>
               <a-timeline-item>
-                <p>2020/11/12 8:20:00 跟进人：陈志坚</p>
-                <p>沟通内容：海绵宝宝联名信用卡</p>
-                <p>办理情况：感兴趣</p>
-              </a-timeline-item>
-              <a-timeline-item>
                 <p>2020/11/30 13:20:00 跟进人：陈志坚</p>
                 <p>沟通内容:“安心得利”理财</p>
                 <p>办理情况：有意向</p>
@@ -333,6 +328,7 @@ export default {
       this.visible = true;
     },
     onClose() {
+      this.labelDatas = [];
       this.visible = false;
     },
     active(index) {
@@ -361,12 +357,53 @@ export default {
     width: 40%;
     height: 900px;
     border-right: 2px solid #7ab2f7;
-    .label-boxs {
-      display: flex;
+    .label-box {
       height: 100px;
-      align-items: center;
-      justify-content: space-around;
       position: relative;
+      .label-info:nth-child(1) {
+        position: absolute;
+        top: 100px;
+        left: 50px;
+      }
+      .label-info:nth-child(2) {
+        position: absolute;
+        top: 40px;
+        left: 200px;
+      }
+      .label-info:nth-child(3) {
+        position: absolute;
+        top: 40px;
+        left: 350px;
+      }
+      .label-info:nth-child(4) {
+        position: absolute;
+        top: 100px;
+        left: 500px;
+      }
+    }
+    .label-boxs {
+      height: 100px;
+      position: relative;
+      .label-info:nth-child(1) {
+        position: absolute;
+        top: 0px;
+        left: 50px;
+      }
+      .label-info:nth-child(2) {
+        position: absolute;
+        top: 40px;
+        left: 200px;
+      }
+      .label-info:nth-child(3) {
+        position: absolute;
+        top: 40px;
+        left: 350px;
+      }
+      .label-info:nth-child(4) {
+        position: absolute;
+        top: 0px;
+        left: 500px;
+      }
     }
     .Panorama-gif {
       width: 600px;
@@ -552,6 +589,11 @@ export default {
     border: 2px solid #ced0d7;
     margin-left: 30px;
     color: #999999;
+  }
+}
+.ant-timeline-item-content {
+  p {
+    font-size: 24px;
   }
 }
 </style>

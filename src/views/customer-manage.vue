@@ -223,9 +223,7 @@ export default {
     Panorama,
   },
   created() {
-    console.log(211);
     this.dataSource = JSON.parse(localStorage.getItem("customData"));
-    console.log(this.dataSource);
   },
   data() {
     return {
