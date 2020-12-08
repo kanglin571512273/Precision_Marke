@@ -163,7 +163,7 @@
             : row == 2
             ? "私有客户"
             : row == 3
-            ? "共有客户"
+            ? "公有客户"
             : ""
         }}</span>
         <!-- 编辑框 -->
@@ -237,8 +237,8 @@ export default {
         currPage: 1, //当前页
         pageSize: 10,
       },
-      currentBtn: 0, //所有客户、分配客户、私有客户、共有客户
-      btnArr: ["所有客户", "分配客户", "私有客户", "共有客户"],
+      currentBtn: 0, //所有客户、分配客户、私有客户、公有客户
+      btnArr: ["所有客户", "分配客户", "私有客户", "公有客户"],
       isCusAnalysis: false, //是否点击了客户分析
       selectedCheckbox: [], //被勾选的项
       analysisResoult: false, //显示分析结果的表格
@@ -257,6 +257,7 @@ export default {
           title: "分析时间",
           key: "anaTime",
           dataIndex: "anaTime",
+          width: "130px",
         },
       ];
       return columns;
@@ -370,18 +371,23 @@ export default {
       let date = new Date();
       let time = formatDate(date);
       selectUsers.map((item) => {
-        console.log(item);
         let one = dataSource.find((child) => {
-          console.log(child.id == item);
+          if (child.id == item) {
+            child.isNew = false;
+            child.anaTime = time;
+          }
           return child.id == item;
         });
         one.isNew = false;
         one.anaTime = time;
         this.selectedCheckbox.push(one);
       });
-      setTimeout(() => {
+      console.log(dataSource);
+      let timeout = setTimeout(() => {
         this.analysisResoult = true;
         this.spinning = false;
+        localStorage.setItem("customData", JSON.stringify(dataSource));
+        clearTimeout(timeout);
       }, 1500);
     },
     // 编辑
@@ -396,8 +402,9 @@ export default {
         this.$refs.child.dataForm && this.$refs.child.dataForm(currentCustom);
       }, 0);
     },
-    //所有客户、分配客户、私有客户、共有客户
+    //所有客户、分配客户、私有客户、公有客户
     filterDataBtn(index) {
+      this.page.currPage = 1;
       this.currentBtn = index;
       let data = JSON.parse(localStorage.getItem("customData"));
       if (index) {

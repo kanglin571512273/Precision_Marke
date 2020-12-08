@@ -68,18 +68,18 @@ const data = [
     key: 1,
     RecomProducts: "'安心得利'理财",
     intention: false,
-    noIntention: true,
+    noIntention: false,
   },
   {
     key: 2,
     RecomProducts: "网易云联名卡",
-    intention: true,
+    intention: false,
     noIntention: false,
   },
   {
     key: 3,
     RecomProducts: "个人汽车贷款",
-    intention: true,
+    intention: false,
     noIntention: false,
   },
 ];
@@ -91,7 +91,30 @@ export default {
     };
   },
   methods: {
+    reset() {
+      this.data = [
+        {
+          key: 1,
+          RecomProducts: "'安心得利'理财",
+          intention: false,
+          noIntention: false,
+        },
+        {
+          key: 2,
+          RecomProducts: "网易云联名卡",
+          intention: false,
+          noIntention: false,
+        },
+        {
+          key: 3,
+          RecomProducts: "个人汽车贷款",
+          intention: false,
+          noIntention: false,
+        },
+      ];
+    },
     edit(row, index) {
+      // console.log(row);
       if (index == 1) {
         let flag = !row.intention;
         row.intention = flag;
@@ -103,13 +126,14 @@ export default {
       }
     },
     makeSure() {
-      console.log(this.data);
-      this.$emit("hiddenModel");
+      this.$emit("hiddenModel", this.data);
+      this.reset();
     },
     cancle() {
       this.data = data;
       console.log(data, this.data);
-      this.$emit("hiddenModel");
+      this.$emit("closeModel");
+      this.reset();
     },
   },
 };
@@ -117,6 +141,7 @@ export default {
 
 <style lang="less" scoped>
 .followUpFeedback {
+  padding-left: 20px;
   .iconCheck-circle1 {
     color: #e8e8e8;
     font-size: 35px;

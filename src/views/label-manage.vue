@@ -189,7 +189,7 @@ export default {
           onFilter: (value, record) => record.source.indexOf(value) === 0,
         },
         {
-          title: "跟进结果",
+          title: "使用次数",
           key: "resoult",
           dataIndex: "resoult",
         },

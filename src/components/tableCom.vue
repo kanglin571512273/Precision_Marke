@@ -125,10 +125,11 @@
       <!-- 跟进，待跟进 -->
       <div style="text-align: center" slot="indexOperation" slot-scope="row">
         <a-button
-          :class="row.status === '已跟进' ? 'orangeBtn' : 'blueBtn'"
+          :class="row.followUpStatus === '跟进' ? 'orangeBtn' : 'blueBtn'"
           shape="round"
           @click="followUp(row)"
-          >{{ row.status === "已跟进" ? "继续跟进" : "跟进" }}</a-button
+          size="large"
+          >{{ row.followUpStatus === "跟进" ? "继续跟进" : "跟进" }}</a-button
         >
       </div>
     </a-table>
@@ -190,6 +191,7 @@ export default {
         {
           title: "客户姓名",
           key: "customerName",
+          width: "80px",
           // dataIndex: "customerName",
           scopedSlots: {
             filterDropdown: "filterDropdown", //外层的slot Name
@@ -232,6 +234,7 @@ export default {
           key: "RecomProducts",
           dataIndex: "RecomProducts",
           width: "200px",
+          ellipsis: true,
           scopedSlots: { customRender: "RecomProducts" },
         },
         {
@@ -250,7 +253,7 @@ export default {
   },
   created() {
     // this.columns.push(...this.column);
-    // console.log(this.columns);
+    // console.log(this.$route);
   },
   methods: {
     edit(key) {
@@ -299,10 +302,12 @@ export default {
   background: #ffa400;
   color: #fff;
   border: 1px solid#FFA400;
+  font-size: 18px;
+  font-weight: 700;
 }
 .blueBtn {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   background: #0060ff;
   color: #fff;
   border: 1px solid #0060ff;

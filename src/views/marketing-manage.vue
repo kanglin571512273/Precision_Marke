@@ -89,7 +89,10 @@
       :footer="null"
       @cancel="resetForm"
     >
-      <followUpFeedback @hiddenModel="visible = false"></followUpFeedback>
+      <followUpFeedback
+        @hiddenModel="hiddenModel"
+        @closeModel="visible = false"
+      ></followUpFeedback>
     </a-modal>
   </div>
 </template>
@@ -122,7 +125,11 @@ export default {
       btnArr: ["所有客户", "分配客户", "私有客户"],
       active: 0,
       visible: false,
+      currentRow: {}, //跟进 继续跟进的操作时选中的当前项
     };
+  },
+  created() {
+    this.resdata = data.filter((item) => item.customerType !== 3);
   },
   mounted() {
     this.getchart();
@@ -135,6 +142,7 @@ export default {
           title: "状态",
           key: "followUpStatus",
           dataIndex: "followUpStatus",
+          width: "50px",
           filters: [
             { text: "待跟进", value: "待跟进" },
             { text: "已跟进", value: "已跟进" },
@@ -292,9 +300,37 @@ export default {
     edit(id) {
       console.log(id);
     },
+    //点击跟进
     followUp(row) {
-      console.log(row);
+      // console.log(row);
+      this.currentRow = row;
       this.visible = true;
+    },
+    // 跟进弹框中的确定
+    hiddenModel(row) {
+      // console.log(row);
+      let { followUpStatus, RecomProducts, key } = this.currentRow;
+      let arr = [];
+      row.forEach((element) => {
+        if (element.intention) {
+          arr.push(element.RecomProducts);
+        }
+      });
+
+      this.currentRow.followUpStatus = "跟进";
+      this.currentRow.RecomProducts = [...arr, ...RecomProducts];
+      let data = JSON.parse(localStorage.getItem("customData"));
+      this.resdata = data.filter((item) => {
+        if (item.key == key) {
+          item.followUpStatus = "跟进";
+          item.RecomProducts = [...arr, ...RecomProducts];
+        }
+        return item.customerType !== 3;
+      });
+      localStorage.setItem("customData", JSON.stringify(data));
+
+      console.log(arr);
+      this.visible = false;
     },
     handleOk(e) {
       console.log(e);

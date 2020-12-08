@@ -22,18 +22,6 @@ const data = [
     anaTime: "2020-12-02 13:41:50",
     differ: false,
   },
-  {
-    key: "2",
-    customerId: "678974933",
-    customerName: "赵芳芳",
-    customerTel: 10085,
-    customerTags: ["青年才俊", "高收入", "购物狂"],
-    RecomProducts: ["网易云联名卡", "付费卡"], //推荐产品
-    customerType: 1,
-    isNew: true,
-    anaTime: "2020-12-02 13:41:50",
-    differ: true,
-  },
 ];
 export default {
   components: {
@@ -47,6 +35,9 @@ export default {
         pageSize: 10,
       },
     };
+  },
+  created(){
+    this.data = JSON.parse(localStorage.getItem('customData'))
   },
   computed: {
     column() {

@@ -19,13 +19,13 @@
     <div class="layoutF">
       <div class="layoutf">
         <router-link to="/marketingManage">
-                    <span class="iconfont iconyingxiaoguanli"></span>
+          <span class="iconfont iconyingxiaoguanli"></span>
           <span>营销管理</span>
         </router-link>
       </div>
       <div class="layoutf">
         <router-link to="/customerManage">
-        <span class="iconfont iconkehuguanli"></span>
+          <span class="iconfont iconkehuguanli"></span>
           <span>客户管理</span>
         </router-link>
       </div>
@@ -59,15 +59,12 @@ export default {
   methods: {
     loginout() {
       let that = this;
-      // localStorage.removeItem("token");
-      console.log(Modal.confirm, 22222);
       Modal.confirm({
         content: "确定退出登录吗？",
         width: "400px",
         centered: true,
         footer: {},
         onOk() {
-          console.log(2222);
           localStorage.removeItem("token");
           localStorage.removeItem("customData");
           localStorage.removeItem("labelData");
@@ -132,15 +129,15 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 88px;
+    height: 108px;
     background-color: #fff;
-    border-radius: 20px 20px 0 0;
+    border-radius: 40px 40px 0 0;
     display: flex;
-    padding: 0 20px;
+    padding: 10px 20px;
     justify-content: space-between;
     align-content: center;
     align-items: center;
-    font-size: 22px;
+    box-shadow: 1px 1px 10px 0px #ddd;
     .layoutf {
       width: 25%;
     }
@@ -149,8 +146,8 @@ export default {
       display: flex;
       flex-direction: column;
       margin: 0 10px;
-      color: #ccc;
-      font-size: 18px;
+      color: #aaa;
+      font-size: 22px;
       span {
         margin-top: 5px;
       }
@@ -162,10 +159,22 @@ export default {
     }
   }
 }
-.iconfont{
+.iconfont {
   font-size: 40px;
 }
-.icontuichu{
-  color: #0060FF;
+.icontuichu {
+  color: #0060ff;
 }
+</style>
+<style lang="less">
+.index {
+  .ant-modal-confirm-body-wrapper {
+    text-align: center;
+  }
+}
+  .ant-modal-confirm-body {
+    width: 200px;
+    margin: 0 auto;
+    background-color: pink;
+  }
 </style>

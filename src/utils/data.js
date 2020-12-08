@@ -379,7 +379,7 @@ export function customData() {
                 "汇利丰结构性理财",
                 "个人汽车贷款"
             ],
-            "customerType": 3,
+            "customerType": 1,
             "followUpStatus": "待跟进",
             "handeler": "陈志坚",
             "gender": "woman",
@@ -415,7 +415,7 @@ export function customData() {
                 "爱奇艺联名信用卡",
                 "随薪贷"
             ],
-            "customerType": 3,
+            "customerType": 1,
             "followUpStatus": "待跟进",
             "handeler": "陈志坚",
             "gender": "man",
@@ -451,7 +451,7 @@ export function customData() {
                 "汇利丰结构性理财",
                 "随薪贷"
             ],
-            "customerType": 3,
+            "customerType": 1,
             "followUpStatus": "待跟进",
             "handeler": "陈志坚",
             "gender": "woman",
@@ -487,7 +487,7 @@ export function customData() {
                 "网易云音乐联名卡",
                 "随薪贷"
             ],
-            "customerType": 3,
+            "customerType": 1,
             "followUpStatus": "待跟进",
             "handeler": "陈志坚",
             "gender": "man",
@@ -523,7 +523,7 @@ export function customData() {
                 "汇利丰结构性理财",
                 "随薪贷"
             ],
-            "customerType": 3,
+            "customerType": 1,
             "followUpStatus": "待跟进",
             "handeler": "陈志坚",
             "gender": "woman",
@@ -559,7 +559,7 @@ export function customData() {
                 "爱奇艺联名信用卡",
                 "随薪贷"
             ],
-            "customerType": 3,
+            "customerType": 1,
             "followUpStatus": "跟进",
             "handeler": "陈志坚",
             "gender": "man",
@@ -595,7 +595,7 @@ export function customData() {
                 "网易云音乐联名卡",
                 "随薪贷"
             ],
-            "customerType": 3,
+            "customerType": 1,
             "followUpStatus": "跟进",
             "handeler": "陈志坚",
             "gender": "man",
@@ -631,7 +631,7 @@ export function customData() {
                 "汇利丰结构性理财",
                 "随薪贷"
             ],
-            "customerType": 3,
+            "customerType": 1,
             "followUpStatus": "跟进",
             "handeler": "陈志坚",
             "gender": "man",

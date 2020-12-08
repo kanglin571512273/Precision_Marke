@@ -17,7 +17,7 @@
             "汇利丰结构性理财",
             "个人汽车贷款"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": null,
         "handeler": "戴晓军",
         "gender": "man",
@@ -52,7 +52,7 @@
         "RecomProducts": [
             "诗意生活信用卡"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": null,
         "handeler": "李小引",
         "gender": "man",
@@ -450,7 +450,7 @@
             "汇利丰结构性理财",
             "随薪贷"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": "待跟进",
         "handeler": "陈志坚",
         "gender": "woman",
@@ -486,7 +486,7 @@
             "网易云音乐联名卡",
             "随薪贷"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": "待跟进",
         "handeler": "陈志坚",
         "gender": "man",
@@ -522,7 +522,7 @@
             "汇利丰结构性理财",
             "随薪贷"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": "待跟进",
         "handeler": "陈志坚",
         "gender": "woman",
@@ -558,7 +558,7 @@
             "爱奇艺联名信用卡",
             "随薪贷"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": "跟进",
         "handeler": "陈志坚",
         "gender": "man",
@@ -594,7 +594,7 @@
             "网易云音乐联名卡",
             "随薪贷"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": "跟进",
         "handeler": "陈志坚",
         "gender": "man",
@@ -630,7 +630,7 @@
             "汇利丰结构性理财",
             "随薪贷"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": "跟进",
         "handeler": "陈志坚",
         "gender": "man",
@@ -666,7 +666,7 @@
             "“安心得利”理财",
             "随薪贷"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": "跟进",
         "handeler": "陈志坚",
         "gender": "man",
@@ -702,7 +702,7 @@
             "爱奇艺联名信用卡",
             "个人汽车贷款"
         ],
-        "customerType": 3,
+        "customerType": 1,
         "followUpStatus": "跟进",
         "handeler": "陈志坚",
         "gender": "man",
