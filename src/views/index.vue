@@ -25,7 +25,7 @@
       </div>
       <div class="layoutf">
         <router-link to="/customerManage">
-          <span class="iconfont iconkehuguanli"></span>
+          <span class="iconfont iconkehuguanli1"></span>
           <span>客户管理</span>
         </router-link>
       </div>

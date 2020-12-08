@@ -225,7 +225,7 @@ export default {
           width: "50px",
           filters: [
             { text: "待跟进", value: "待跟进" },
-            { text: "已跟进", value: "已跟进" },
+            { text: "已跟进", value: "跟进" },
           ],
           onFilter: (value, record) =>
             record.followUpStatus.indexOf(value) === 0,
