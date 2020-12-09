@@ -6,7 +6,7 @@
       bordered
       @change="handleTableChange"
       :pagination="false"
-      :scroll="{ y: 300 }"
+      :scroll="{ y: 400 }"
       size="default"
     >
       <!-- :row-selection="rowSelection" -->

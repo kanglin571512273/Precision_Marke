@@ -5,19 +5,14 @@
         :data-source="data"
         :columns="columns"
         bordered
+        :scroll="{ y: 400 }"
         :pagination="false"
       >
         <!-- 用户名搜索 -->
         <!-- 搜索弹框 -->
         <div
           slot="filterDropdown"
-          slot-scope="{
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-            column,
-          }"
+          slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
           style="padding: 8px"
         >
           <a-input
@@ -31,21 +26,14 @@
               margin-bottom: 8px;
               display: block;
             "
-            @change="
-              (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
-            "
+            @change="(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])"
             @pressEnter="() => handleSearch(selectedKeys, confirm, column.key)"
           />
           <a-button
             type="primary"
             icon="search"
             size="small"
-            style="
-              width: 90px;
-              margin-right: 8px;
-              height: 25px;
-              font-size: 12px;
-            "
+            style="width: 90px; margin-right: 8px; height: 25px; font-size: 12px"
             @click="() => handleSearch(selectedKeys, confirm, column.key)"
           >
             搜索
@@ -141,11 +129,7 @@ export default {
           onFilter: (
             value,
             record //筛选
-          ) =>
-            record.labelName
-              .toString()
-              .toLowerCase()
-              .includes(value.toLowerCase()),
+          ) => record.labelName.toString().toLowerCase().includes(value.toLowerCase()),
 
           onFilterDropdownVisibleChange: (visible) => {
             //自动聚焦
