@@ -125,11 +125,11 @@
       <!-- 跟进，待跟进 -->
       <div style="text-align: center" slot="indexOperation" slot-scope="row">
         <a-button
-          :class="row.followUpStatus === '跟进' ? 'orangeBtn' : 'blueBtn'"
+          :class="row.followUpStatus === '已跟进' ? 'orangeBtn' : 'blueBtn'"
           shape="round"
           @click="followUp(row)"
           size="large"
-          >{{ row.followUpStatus === "跟进" ? "继续跟进" : "跟进" }}</a-button
+          >{{ row.followUpStatus === "已跟进" ? "继续跟进" : "跟进" }}</a-button
         >
       </div>
     </a-table>
@@ -178,7 +178,7 @@ export default {
         {
           title: "序号",
           key: "index",
-          width: "40px",
+          width: "50px",
           customRender: (t, r, index) => {
             return parseInt((this.currPage - 1) * this.pageSize + index + 1);
           },
@@ -328,8 +328,10 @@ td {
   &::after {
     content: "";
     position: absolute;
-    top: -14px;
-    right: -13px;
+    // top: -20px;
+    // right: -16px; 0.083333rem 0.083333rem;
+    top: -18px;
+    right: -16px;
     background: url(../assets/image/newPeople.png) no-repeat;
     background-size: contain;
     width: 44px;
@@ -341,6 +343,7 @@ td {
   display: block;
 }
 .my-tag {
+  font-size: 18px;
   border: none;
   border-radius: 50px;
   background-color: #eee;

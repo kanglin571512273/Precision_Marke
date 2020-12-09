@@ -525,8 +525,8 @@ export default {
     &::after {
       content: "";
       position: absolute;
-      top: -14px;
-      right: -13px;
+      top: -17px;
+      right: -16px;
       background: url(../assets/image/newPeople.png) no-repeat;
       background-size: contain;
       width: 44px;
@@ -538,6 +538,7 @@ export default {
     display: block;
   }
   .my-tag {
+    font-size: 18px;
     border: none;
     border-radius: 50px;
     background-color: #eee;

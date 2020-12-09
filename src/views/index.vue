@@ -63,6 +63,7 @@ export default {
         content: "确定退出登录吗？",
         width: "400px",
         centered: true,
+        class:'mylogout',
         footer: {},
         onOk() {
           localStorage.removeItem("token");
@@ -167,14 +168,31 @@ export default {
 }
 </style>
 <style lang="less">
-.index {
-  .ant-modal-confirm-body-wrapper {
+  .ant-modal-confirm-body{
+    width: 250px;
+    margin: 20px auto;
     text-align: center;
   }
-}
-  .ant-modal-confirm-body {
-    width: 200px;
-    margin: 0 auto;
-    background-color: pink;
+  .ant-modal-confirm-btns{
+    margin-right: 248px;
+    margin-bottom: 20px;
+    font-size: 34px;
+    .ant-btn{
+      border-radius: 50px;
+      width: 112px;
+      height: 43px;
+      font-size: 18px;
+    }
+    .ant-btn-primary{
+      background-color: #0060FF;
+      border: 1px solid #0060ff;
+    }
+  }
+   .ant-modal-confirm-body .ant-modal-confirm-content  {
+    font-size: 26px;
+   }
+  .anticon-question-circle{
+    margin-top: 6px;
+    font-size: 24px;
   }
 </style>

@@ -59,6 +59,6 @@ export default {
 .customerAnalysis {
   width: 100%;
   height: 100%;
-  padding: 15px;
+  padding: 15px 30px;
 }
 </style>

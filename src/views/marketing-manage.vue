@@ -211,6 +211,7 @@ export default {
   },
   created() {
     this.resdata = data.filter(item => item.customerType !== 3);
+    console.log(data,this.resdata);
   },
   mounted() {
     this.getchart(this.ring);
@@ -227,7 +228,7 @@ export default {
           width: "50px",
           filters: [
             { text: "待跟进", value: "待跟进" },
-            { text: "已跟进", value: "跟进" }
+            { text: "已跟进", value: "已跟进" }
           ],
           onFilter: (value, record) =>
             record.followUpStatus.indexOf(value) === 0
@@ -321,25 +322,11 @@ export default {
           }
         }
       });
-      chart.source(data, {
-        month: {
-          alias: "时间",
-          type: "time",
-          mask: "MM:ss",
-          tickCount: 10,
-          nice: false
-        },
-        temperature: {
-          alias: "平均温度(°C)",
-          min: 10,
-          max: 35
-        }
-      });
 
       chart.axis("temperature", {
         label: {
           formatter: val => {
-            return val + " 户";
+            return val ;
           }
         }
       });
@@ -418,12 +405,12 @@ export default {
         }
       });
 
-      this.currentRow.followUpStatus = "跟进";
+      this.currentRow.followUpStatus = "已跟进";
       this.currentRow.RecomProducts = [...arr, ...RecomProducts];
       let data = JSON.parse(localStorage.getItem("customData"));
       this.resdata = data.filter(item => {
         if (item.key == key) {
-          item.followUpStatus = "跟进";
+          item.followUpStatus = "已跟进";
           item.RecomProducts = [...arr, ...RecomProducts];
         }
         return item.customerType !== 3;
