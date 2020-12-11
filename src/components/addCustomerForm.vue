@@ -66,9 +66,11 @@
             <a-col :span="8">
               <a-form-model-item label="教育状况: " prop="educationStatus">
                 <a-select v-model="form.educationStatus" placeholder="请输入客户教育状况">
-                  <a-select-option :value="1">全日制本科</a-select-option>
-                  <a-select-option :value="2">研究生</a-select-option>
-                  <a-select-option :value="3">高中</a-select-option>
+                  <a-select-option :value="5">博士</a-select-option>
+                  <a-select-option :value="4">硕士</a-select-option>
+                  <a-select-option :value="3">研究生</a-select-option>
+                  <a-select-option :value="2">全日制本科</a-select-option>
+                  <a-select-option :value="1">高中</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
@@ -181,7 +183,7 @@ let form = {
   customerTel: null, //联系电话
   maritalStatus: 1, //婚姻状况
   educationStatus: 1, //教育状况
-  customerType: 1, //您是否为私有客户
+  customerType: 2, //您是否为私有客户
   addr: null, //联系地址
   company: null, //公司单位
   housingLoan: 1, //住房贷款
