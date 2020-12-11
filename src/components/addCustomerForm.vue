@@ -21,8 +21,8 @@
             <a-col :span="8">
               <a-form-model-item label="性别: " prop="gender">
                 <a-select v-model="form.gender" placeholder="请选择客户性别">
-                  <a-select-option value="man"> 男 </a-select-option>
-                  <a-select-option value="woman"> 女 </a-select-option>
+                  <a-select-option value="man">男</a-select-option>
+                  <a-select-option value="woman">女</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
@@ -35,13 +35,10 @@
           <a-row>
             <a-col :span="8">
               <a-form-model-item label="证件类型: " prop="certificatesType">
-                <a-select
-                  v-model="form.certificatesType"
-                  placeholder="请输入客户证件类型"
-                >
-                  <a-select-option :value="1"> 身份证 </a-select-option>
-                  <a-select-option :value="2"> 护照 </a-select-option>
-                  <a-select-option :value="3"> 军官证 </a-select-option>
+                <a-select v-model="form.certificatesType" placeholder="请输入客户证件类型">
+                  <a-select-option :value="1">身份证</a-select-option>
+                  <a-select-option :value="2">护照</a-select-option>
+                  <a-select-option :value="3">军官证</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
@@ -52,7 +49,7 @@
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="联系电话: " prop="customerTel">
-                <a-input v-model="form.customerTel" placeholder="请输入客户电话号码" />
+                <a-input v-model="form.customerTel" placeholder="请输入客户电话号码" :maxLength="11" />
               </a-form-model-item>
             </a-col>
           </a-row>
@@ -60,26 +57,26 @@
             <a-col :span="8">
               <a-form-model-item label="婚姻状况: " prop="maritalStatus">
                 <a-select v-model="form.maritalStatus" placeholder="请输入客户婚姻状况">
-                  <a-select-option :value="1"> 未婚 </a-select-option>
-                  <a-select-option :value="2"> 已婚 </a-select-option>
-                  <a-select-option :value="3"> 离异 </a-select-option>
+                  <a-select-option :value="1">未婚</a-select-option>
+                  <a-select-option :value="2">已婚</a-select-option>
+                  <a-select-option :value="3">离异</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="教育状况: " prop="educationStatus">
                 <a-select v-model="form.educationStatus" placeholder="请输入客户教育状况">
-                  <a-select-option :value="1"> 全日制本科 </a-select-option>
-                  <a-select-option :value="2"> 研究生 </a-select-option>
-                  <a-select-option :value="3"> 高中 </a-select-option>
+                  <a-select-option :value="1">全日制本科</a-select-option>
+                  <a-select-option :value="2">研究生</a-select-option>
+                  <a-select-option :value="3">高中</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="是否私有客户: " prop="customerType">
                 <a-select v-model="form.customerType" placeholder="您是否私有客户">
-                  <a-select-option :value="2"> 是 </a-select-option>
-                  <a-select-option :value="1 && 3"> 否 </a-select-option>
+                  <a-select-option :value="2">是</a-select-option>
+                  <a-select-option :value="1 && 3">否</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
@@ -92,11 +89,7 @@
                 label="联系地址: "
                 prop="addr"
               >
-                <a-input
-                  v-model="form.addr"
-                  placeholder="请输入客户联系地址"
-                  type="textarea"
-                ></a-input>
+                <a-input v-model="form.addr" placeholder="请输入客户联系地址" type="textarea"></a-input>
               </a-form-model-item>
             </a-col>
           </a-row>
@@ -108,11 +101,7 @@
                 label="公司单位: "
                 prop="company"
               >
-                <a-input
-                  v-model="form.company"
-                  placeholder="请输入客户公司单位"
-                  type="textarea"
-                ></a-input>
+                <a-input v-model="form.company" placeholder="请输入客户公司单位" type="textarea"></a-input>
               </a-form-model-item>
             </a-col>
           </a-row>
@@ -133,16 +122,16 @@
             <a-col :span="8">
               <a-form-model-item label="住房贷款: ">
                 <a-select v-model="form.housingLoan" placeholder="请输入客户住房贷款">
-                  <a-select-option :value="1"> 是 </a-select-option>
-                  <a-select-option :value="2"> 否 </a-select-option>
+                  <a-select-option :value="1">是</a-select-option>
+                  <a-select-option :value="2">否</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="个人贷款: ">
                 <a-select v-model="form.personalLoan" placeholder="请输入客户个人贷款">
-                  <a-select-option :value="1"> 是 </a-select-option>
-                  <a-select-option :value="2"> 否 </a-select-option>
+                  <a-select-option :value="1">是</a-select-option>
+                  <a-select-option :value="2">否</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
@@ -151,17 +140,17 @@
             <a-col :span="8">
               <a-form-model-item label="信用情况: ">
                 <a-select v-model="form.credit" placeholder="请输入客户的信用情况">
-                  <a-select-option :value="1"> 良好 </a-select-option>
-                  <a-select-option :value="2"> 一般 </a-select-option>
-                  <a-select-option :value="3"> 差 </a-select-option>
+                  <a-select-option :value="1">良好</a-select-option>
+                  <a-select-option :value="2">一般</a-select-option>
+                  <a-select-option :value="3">差</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="定期存款: ">
                 <a-select v-model="form.timeDeposit" placeholder="请输入客户定期存款">
-                  <a-select-option :value="1"> 是 </a-select-option>
-                  <a-select-option :value="2"> 否 </a-select-option>
+                  <a-select-option :value="1">是</a-select-option>
+                  <a-select-option :value="2">否</a-select-option>
                 </a-select>
               </a-form-model-item>
             </a-col>
@@ -200,6 +189,14 @@ let form = {
   credit: 1, //信用状况
   timeDeposit: 1, //定期存款
 };
+// function handelTel(rule, value, callback) {
+//   let flag = /^1[3|4|5|7|8][0-9]\d{4,8}$/.test(value);
+//   if (typeof value !== "number" && value.toString().length !== 11 && !flag) {
+//     callback("请输入正确的号码格式");
+//   }
+//   this.form.customerTel = value;
+//   callback();
+// }
 export default {
   data() {
     return {
@@ -248,11 +245,21 @@ export default {
             message: "请输入客户证件号码",
             trigger: "blur",
           },
+          {
+            pattern: /^(\d{18,18}|\d{15,15}|\d{17,17}[x|X])$/,
+            message: "请输入准确的证件号码",
+            trigger: "blur",
+          },
         ],
         customerTel: [
           {
             required: true,
             message: "请输入客户电话号码",
+            trigger: "blur",
+          },
+          {
+            pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+            message: "请输入准确的电话号码",
             trigger: "blur",
           },
         ],
