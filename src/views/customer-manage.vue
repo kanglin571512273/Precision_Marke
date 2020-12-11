@@ -2,7 +2,7 @@
   <div class="customerManage">
     <a-spin :spinning="spinning"> </a-spin>
     <div class="container" v-if="analysisResoult">
-      <a-button shape="round" @click="back">返回</a-button>
+      <button class="langPand round mybtn plain" @click="back">返回</button>
       <tableCom :data="selectedCheckbox" :page="page" :column="column"></tableCom>
     </div>
     <div class="container" v-if="!analysisResoult">
