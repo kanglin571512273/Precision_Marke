@@ -259,23 +259,6 @@ const columns = [
   }
 ];
 
-const fitstData = [
-  {
-    key: "1",
-    productType: "理财",
-    productName: "'安心得利'理财",
-    updateTime: "2020/11/30 13:20",
-    resoult: "有意向"
-  },
-  {
-    key: "2",
-    productType: "信用卡",
-    productName: "网易云音乐联名卡",
-    updateTime: "2020/11/15 13:20",
-    resoult: "有意向"
-  }
-];
-
 const data = [
   {
     key: "1",
@@ -303,12 +286,12 @@ export default {
       data,
       columns,
       firstColumns,
-      fitstData,
+      fitstData: [],
       visible: false,
       isShow: 0,
       labelData: [],
       labelDatas: [],
-      key:7
+      key: 1
     };
   },
   mounted() {
@@ -323,20 +306,57 @@ export default {
     },
     onClose() {
       this.visible = false;
-      var aa = {
-        key: this.key++,
-        productType: "贷款",
-        productName: "个人汽车贷款",
-        updateTime: "2020/11/12 13:20",
-        resoult: "不敢兴趣"
-      };
-      this.fitstData.push(aa);
+      this.key = !this.key;
+      console.log(this.key)
+      if (this.key==true) {
+        this.fitstData=[]
+        this.fitstData.push(
+          {
+            key: "1",
+            productType: "理财",
+            productName: "'安心得利'理财",
+            updateTime: "2020/11/30 13:20",
+            resoult: "有意向"
+          },
+          {
+            key: "2",
+            productType: "信用卡",
+            productName: "网易云音乐联名卡",
+            updateTime: "2020/10/15 12:20",
+            resoult: "有意向"
+          }
+        );
+      } else {
+        this.fitstData=[]
+         this.fitstData.push(
+          {
+            key: "3",
+            productType: "理财",
+            productName: "'安心得利'理财",
+            updateTime: "2020/11/30 13:20",
+            resoult: "有意向"
+          },
+          {
+            key: "4",
+            productType: "贷款",
+            productName: "音乐联名卡",
+            updateTime: "2020/10/15 13:20",
+            resoult: "有意向"
+          },
+          {
+            key: "5",
+            productType: "贷款",
+            productName: "个人汽车贷款",
+            updateTime: "2020/11/12  8:20:00",
+            resoult: "无意向"
+          }
+        );
+      }
+
       console.log(this.fitstData, 2222);
     },
     onClose1() {
       this.visible = false;
-      this.fitstData.splice(1);
-      console.log(this.fitstData, 2222);
     },
     active(index) {
       let arrIndex = this.labelDatas.indexOf(index);
