@@ -3,11 +3,7 @@
     <a-spin :spinning="spinning"> </a-spin>
     <div class="container" v-if="analysisResoult">
       <a-button shape="round" @click="back">返回</a-button>
-      <tableCom
-        :data="selectedCheckbox"
-        :page="page"
-        :column="column"
-      ></tableCom>
+      <tableCom :data="selectedCheckbox" :page="page" :column="column"></tableCom>
     </div>
     <div class="container" v-if="!analysisResoult">
       <div class="btn-container">
@@ -56,13 +52,7 @@
         <!-- 搜索弹框 -->
         <div
           slot="filterDropdown"
-          slot-scope="{
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-            column,
-          }"
+          slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
           style="padding: 18px"
         >
           <a-input
@@ -76,21 +66,14 @@
               margin-bottom: 8px;
               display: block;
             "
-            @change="
-              (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
-            "
+            @change="(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])"
             @pressEnter="() => handleSearch(selectedKeys, confirm, column.key)"
           />
           <a-button
             type="primary"
             icon="search"
             size="large"
-            style="
-              width: 90px;
-              margin-right: 8px;
-              height: 25px;
-              font-size: 12px;
-            "
+            style="width: 90px; margin-right: 8px; height: 25px; font-size: 12px"
             @click="() => handleSearch(selectedKeys, confirm, column.key)"
           >
             搜索
@@ -158,13 +141,7 @@
         </span>
         <!-- 客户类别 -->
         <span slot="customerType" slot-scope="row">{{
-          row == 1
-            ? "分配客户"
-            : row == 2
-            ? "私有客户"
-            : row == 3
-            ? "公有客户"
-            : ""
+          row == 1 ? "分配客户" : row == 2 ? "私有客户" : row == 3 ? "公有客户" : ""
         }}</span>
         <!-- 编辑框 -->
         <a-button
@@ -269,9 +246,7 @@ export default {
           key: "index",
           width: "65px",
           customRender: (t, r, index) => {
-            return parseInt(
-              (this.page.currPage - 1) * this.page.pageSize + index + 1
-            );
+            return parseInt((this.page.currPage - 1) * this.page.pageSize + index + 1);
           },
         },
         {
@@ -291,11 +266,7 @@ export default {
           onFilter: (
             value,
             record //筛选
-          ) =>
-            record.customerName
-              .toString()
-              .toLowerCase()
-              .includes(value.toLowerCase()),
+          ) => record.customerName.toString().toLowerCase().includes(value.toLowerCase()),
 
           onFilterDropdownVisibleChange: (visible) => {
             //自动聚焦
@@ -311,12 +282,12 @@ export default {
           key: "customerTel",
           dataIndex: "customerTel",
         },
-        {
-          title: "客户标签",
-          key: "customerTags",
-          dataIndex: "customerTags",
-          scopedSlots: { customRender: "tags" },
-        },
+        // {
+        //   title: "客户标签",
+        //   key: "customerTags",
+        //   dataIndex: "customerTags",
+        //   scopedSlots: { customRender: "tags" },
+        // },
         {
           title: "推荐产品",
           key: "RecomProducts",
@@ -508,8 +479,10 @@ export default {
   .editBtn {
     background: #d78a4e;
     color: #fff;
+    font-size: 22px;
     border: 1px solid #d78a4e;
   }
+
   .customerName {
     color: #0060ff;
     display: block;
@@ -525,7 +498,7 @@ export default {
     &::after {
       content: "";
       position: absolute;
-      top: -17px;
+      top: -25px;
       right: -16px;
       background: url(../assets/image/newPeople.png) no-repeat;
       background-size: contain;
@@ -583,6 +556,14 @@ export default {
   .economicForm,
   .personalForm {
     height: 20px;
+  }
+  .ant-btn .anticon {
+    font-size: 20px;
+  }
+  
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    padding: 24px 16px;
   }
 }
 </style>

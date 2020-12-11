@@ -14,13 +14,7 @@
       <!-- 搜索弹框 -->
       <div
         slot="filterDropdown"
-        slot-scope="{
-          setSelectedKeys,
-          selectedKeys,
-          confirm,
-          clearFilters,
-          column,
-        }"
+        slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
         style="padding: 18px"
       >
         <a-input
@@ -34,9 +28,7 @@
             margin-bottom: 8px;
             display: block;
           "
-          @change="
-            (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
-          "
+          @change="(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])"
           @pressEnter="() => handleSearch(selectedKeys, confirm, column.key)"
         />
         <a-button
@@ -178,7 +170,7 @@ export default {
         {
           title: "序号",
           key: "index",
-          width: "50px",
+          width: "80px",
           customRender: (t, r, index) => {
             return parseInt((this.currPage - 1) * this.pageSize + index + 1);
           },
@@ -191,7 +183,7 @@ export default {
         {
           title: "客户姓名",
           key: "customerName",
-          width: "80px",
+          // width: "80px",
           // dataIndex: "customerName",
           scopedSlots: {
             filterDropdown: "filterDropdown", //外层的slot Name
@@ -201,11 +193,7 @@ export default {
           onFilter: (
             value,
             record //筛选
-          ) =>
-            record.customerName
-              .toString()
-              .toLowerCase()
-              .includes(value.toLowerCase()),
+          ) => record.customerName.toString().toLowerCase().includes(value.toLowerCase()),
 
           onFilterDropdownVisibleChange: (visible) => {
             //自动聚焦
@@ -219,21 +207,21 @@ export default {
         {
           title: "联系电话",
           key: "customerTel",
-          width: "80px",
+          // width: "80px",
           dataIndex: "customerTel",
         },
-        {
-          title: "客户标签",
-          key: "customerTags",
-          dataIndex: "customerTags",
-          width: "200px",
-          scopedSlots: { customRender: "tags" },
-        },
+        // {
+        //   title: "客户标签",
+        //   key: "customerTags",
+        //   dataIndex: "customerTags",
+        //   width: "200px",
+        //   scopedSlots: { customRender: "tags" },
+        // },
         {
           title: "推荐产品",
           key: "RecomProducts",
           dataIndex: "RecomProducts",
-          width: "200px",
+          width: "250px",
           ellipsis: true,
           scopedSlots: { customRender: "RecomProducts" },
         },
@@ -302,11 +290,11 @@ export default {
   background: #ffa400;
   color: #fff;
   border: 1px solid#FFA400;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
 }
 .blueBtn {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   background: #0060ff;
   color: #fff;
@@ -330,7 +318,7 @@ td {
     position: absolute;
     // top: -20px;
     // right: -16px; 0.083333rem 0.083333rem;
-    top: -18px;
+    top: -26px;
     right: -16px;
     background: url(../assets/image/newPeople.png) no-repeat;
     background-size: contain;
@@ -358,9 +346,13 @@ td {
 </style>
 <style lang="less">
 tr.ant-table-row {
-  font-size: 20px;
+  font-size: 24px;
 }
 .ant-table-thead tr {
   font-size: 24px;
+}
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td {
+  padding: 24px 16px;
 }
 </style>

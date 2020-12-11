@@ -224,7 +224,7 @@ export default {
           title: "状态",
           key: "followUpStatus",
           dataIndex: "followUpStatus",
-          width: "50px",
+          // width: "50px",
           filters: [
             { text: "待跟进", value: "待跟进" },
             { text: "已跟进", value: "已跟进" },

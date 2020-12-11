@@ -15,10 +15,7 @@
           <a-row>
             <a-col :span="8">
               <a-form-model-item label="客户姓名: " prop="customerName">
-                <a-input
-                  placeholder="请输入客户姓名"
-                  v-model="form.customerName"
-                />
+                <a-input placeholder="请输入客户姓名" v-model="form.customerName" />
               </a-form-model-item>
             </a-col>
             <a-col :span="8">
@@ -50,28 +47,19 @@
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="证件号码: " prop="identifyNum">
-                <a-input
-                  v-model="form.identifyNum"
-                  placeholder="请输入客户邮箱"
-                />
+                <a-input v-model="form.identifyNum" placeholder="请输入客户邮箱" />
               </a-form-model-item>
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="联系电话: " prop="customerTel">
-                <a-input
-                  v-model="form.customerTel"
-                  placeholder="请输入客户电话号码"
-                />
+                <a-input v-model="form.customerTel" placeholder="请输入客户电话号码" />
               </a-form-model-item>
             </a-col>
           </a-row>
           <a-row>
             <a-col :span="8">
               <a-form-model-item label="婚姻状况: " prop="maritalStatus">
-                <a-select
-                  v-model="form.maritalStatus"
-                  placeholder="请输入客户婚姻状况"
-                >
+                <a-select v-model="form.maritalStatus" placeholder="请输入客户婚姻状况">
                   <a-select-option :value="1"> 未婚 </a-select-option>
                   <a-select-option :value="2"> 已婚 </a-select-option>
                   <a-select-option :value="3"> 离异 </a-select-option>
@@ -80,10 +68,7 @@
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="教育状况: " prop="educationStatus">
-                <a-select
-                  v-model="form.educationStatus"
-                  placeholder="请输入客户教育状况"
-                >
+                <a-select v-model="form.educationStatus" placeholder="请输入客户教育状况">
                   <a-select-option :value="1"> 全日制本科 </a-select-option>
                   <a-select-option :value="2"> 研究生 </a-select-option>
                   <a-select-option :value="3"> 高中 </a-select-option>
@@ -92,10 +77,7 @@
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="是否私有客户: " prop="customerType">
-                <a-select
-                  v-model="form.customerType"
-                  placeholder="您是否私有客户"
-                >
+                <a-select v-model="form.customerType" placeholder="您是否私有客户">
                   <a-select-option :value="2"> 是 </a-select-option>
                   <a-select-option :value="1 && 3"> 否 </a-select-option>
                 </a-select>
@@ -150,10 +132,7 @@
           <a-row>
             <a-col :span="8">
               <a-form-model-item label="住房贷款: ">
-                <a-select
-                  v-model="form.housingLoan"
-                  placeholder="请输入客户住房贷款"
-                >
+                <a-select v-model="form.housingLoan" placeholder="请输入客户住房贷款">
                   <a-select-option :value="1"> 是 </a-select-option>
                   <a-select-option :value="2"> 否 </a-select-option>
                 </a-select>
@@ -161,10 +140,7 @@
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="个人贷款: ">
-                <a-select
-                  v-model="form.personalLoan"
-                  placeholder="请输入客户个人贷款"
-                >
+                <a-select v-model="form.personalLoan" placeholder="请输入客户个人贷款">
                   <a-select-option :value="1"> 是 </a-select-option>
                   <a-select-option :value="2"> 否 </a-select-option>
                 </a-select>
@@ -174,10 +150,7 @@
           <a-row>
             <a-col :span="8">
               <a-form-model-item label="信用情况: ">
-                <a-select
-                  v-model="form.credit"
-                  placeholder="请输入客户的信用情况"
-                >
+                <a-select v-model="form.credit" placeholder="请输入客户的信用情况">
                   <a-select-option :value="1"> 良好 </a-select-option>
                   <a-select-option :value="2"> 一般 </a-select-option>
                   <a-select-option :value="3"> 差 </a-select-option>
@@ -186,10 +159,7 @@
             </a-col>
             <a-col :span="8">
               <a-form-model-item label="定期存款: ">
-                <a-select
-                  v-model="form.timeDeposit"
-                  placeholder="请输入客户定期存款"
-                >
+                <a-select v-model="form.timeDeposit" placeholder="请输入客户定期存款">
                   <a-select-option :value="1"> 是 </a-select-option>
                   <a-select-option :value="2"> 否 </a-select-option>
                 </a-select>
@@ -354,8 +324,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.addCustomerForm{
+.addCustomerForm {
   padding-left: 25px;
+  p {
+    font-size: 20px;
+  }
 }
 /////////////////////按钮
 .btnContainer {
@@ -389,5 +362,25 @@ export default {
   box-shadow: 1px 2px 8px 1px rgba(0, 74, 196, 0.07) !important;
   margin: 20px 0;
   padding: 30px 15px 15px;
+}
+// 表格字体大小
+</style>
+<style lang="less">
+.ant-form-item label {
+  font-size: 20px;
+}
+.ant-input {
+  font-size: 20px;
+  height: 45px;
+}
+.ant-select-selection--single,
+.ant-select-selection__rendered,
+.ant-select-dropdown-menu-item {
+  font-size: 20px;
+  height: 45px;
+  line-height: 45px;
+}
+.ant-select-selection-selected-value {
+  font-size: 20px;
 }
 </style>
