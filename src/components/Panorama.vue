@@ -8,7 +8,7 @@
         :visible="visible"
         :get-container="false"
         :wrap-style="{
-          position: 'absolute',
+          position: 'absolute'
         }"
         @close="onClose"
       >
@@ -29,13 +29,13 @@
               </ul>
               <div class="button-box">
                 <div class="button-item" @click="onClose">确定</div>
-                <div class="button-item" @click="onClose">取消</div>
+                <div class="button-item" @click="onClose1">取消</div>
               </div>
             </div>
           </div>
         </div>
       </a-drawer>
-      <div class="label-boxs">
+      <div class="label-box">
         <span class="label-info">爱旅游</span>
         <span class="label-info">浙江杭州</span>
         <span class="label-info">高收入</span>
@@ -45,10 +45,10 @@
         <div class="gif-font">{{ datas.customerName }}</div>
       </div>
       <div class="label-boxs">
-        <span class="label-info">爱旅游</span>
-        <span class="label-info">浙江杭州</span>
-        <span class="label-info">高收入</span>
-        <span class="label-info">年龄：25</span>
+        <span class="label-info">无贷款</span>
+        <span class="label-info">中风险</span>
+        <span class="label-info">旅游达人</span>
+        <span class="label-info">爱喝茶</span>
       </div>
       <div>
         <div class="label" @click="showDrawer">增加标签</div>
@@ -215,28 +215,28 @@ const firstColumns = [
     width: "65px",
     customRender: (t, r, index) => {
       return parseInt((1 - 1) * 10 + index + 1);
-    },
+    }
   },
   {
     title: "产品类型",
     key: "productType",
-    dataIndex: "productType",
+    dataIndex: "productType"
   },
   {
     title: "产品名称",
     key: "productName",
-    dataIndex: "productName",
+    dataIndex: "productName"
   },
   {
     title: "最近跟进时间",
     key: "updateTime",
-    dataIndex: "updateTime",
+    dataIndex: "updateTime"
   },
   {
     title: "跟进结果",
     key: "resoult",
-    dataIndex: "resoult",
-  },
+    dataIndex: "resoult"
+  }
 ];
 const columns = [
   {
@@ -245,18 +245,18 @@ const columns = [
     width: "65px",
     customRender: (t, r, index) => {
       return parseInt((1 - 1) * 10 + index + 1);
-    },
+    }
   },
   {
     title: "产品名称",
     key: "productName",
-    dataIndex: "productName",
+    dataIndex: "productName"
   },
   {
     title: "是否办理",
     key: "isItHandled",
-    dataIndex: "isItHandled",
-  },
+    dataIndex: "isItHandled"
+  }
 ];
 
 const fitstData = [
@@ -265,44 +265,37 @@ const fitstData = [
     productType: "理财",
     productName: "'安心得利'理财",
     updateTime: "2020/11/30 13:20",
-    resoult: "有意向",
+    resoult: "有意向"
   },
   {
     key: "2",
     productType: "信用卡",
     productName: "网易云音乐联名卡",
     updateTime: "2020/11/15 13:20",
-    resoult: "有意向",
-  },
-  {
-    key: "3",
-    productType: "贷款",
-    productName: "个人汽车贷款",
-    updateTime: "2020/11/12 13:20",
-    resoult: "不敢兴趣",
-  },
+    resoult: "有意向"
+  }
 ];
 
 const data = [
   {
     key: "1",
     productName: "'安心得利'理财",
-    isItHandled: "否",
+    isItHandled: "否"
   },
   {
     key: "2",
     productName: "网易云音乐联名卡",
-    isItHandled: "否",
+    isItHandled: "否"
   },
   {
     key: "3",
     productName: "个人汽车贷款",
-    isItHandled: "否",
-  },
+    isItHandled: "否"
+  }
 ];
 export default {
   props: {
-    datas: Object,
+    datas: Object
   },
   data() {
     return {
@@ -315,6 +308,7 @@ export default {
       isShow: 0,
       labelData: [],
       labelDatas: [],
+      key:7
     };
   },
   mounted() {
@@ -328,8 +322,21 @@ export default {
       this.visible = true;
     },
     onClose() {
-      this.labelDatas = [];
       this.visible = false;
+      var aa = {
+        key: this.key++,
+        productType: "贷款",
+        productName: "个人汽车贷款",
+        updateTime: "2020/11/12 13:20",
+        resoult: "不敢兴趣"
+      };
+      this.fitstData.push(aa);
+      console.log(this.fitstData, 2222);
+    },
+    onClose1() {
+      this.visible = false;
+      this.fitstData.splice(1);
+      console.log(this.fitstData, 2222);
     },
     active(index) {
       let arrIndex = this.labelDatas.indexOf(index);
@@ -343,8 +350,8 @@ export default {
       console.log(this.labelDatas, 2222);
       // this.isShow = index;
       // console.log(index,2222)
-    },
-  },
+    }
+  }
 };
 </script>
 

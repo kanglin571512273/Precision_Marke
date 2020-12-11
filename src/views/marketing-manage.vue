@@ -213,7 +213,7 @@ export default {
     this.resdata = data.filter((item) => item.customerType !== 3);
   },
   mounted() {
-    this.getchart(this.ring);
+    this.getchart(this.ring2);
     this.data = this.data1;
     this.container(this.data);
   },
