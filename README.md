@@ -1,6 +1,6 @@
 # precision_marke
 
-> A Vue.js project
+> 精准营销
 
 ## Build Setup
 
